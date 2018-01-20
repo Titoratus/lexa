@@ -97,6 +97,7 @@ select
 	color: #fff
 	position: relative
 	transition: .25s
+	font-size: .938em
 	&:not(.link_active):hover
 		opacity: .7
 
@@ -119,6 +120,7 @@ select
 .block
 	background: #2a334c
 	padding: 45px 50px
+	padding-bottom: 30px
 	border: 1px solid rgba(170, 197, 255, .12)
 	box-shadow: 0 10px 50px rgba(25, 30, 47, .20)
 	margin: 0 auto
@@ -228,6 +230,11 @@ select
 			color: #000
 	td
 		padding: 10px 10px
+		a
+			text-decoration: none
+			color: rgba(43, 49, 67, .5)
+			&:hover
+				text-decoration: underline
 
 	th, td
 		border: 1px solid rgba(43, 49, 67, .12)
@@ -238,7 +245,7 @@ select
 
 	tr:hover
 		td
-			background: #ebeef5
+			background: rgba(43, 49, 67, .05)
 
 .table__cap
 	color: #fff
@@ -256,3 +263,14 @@ select
 	&:hover
 		background: #39af39
 		color: #fff
+
+.msg
+	width: 370px
+	padding: 14px 0
+	text-align: center
+	margin: 0 auto
+
+.msg_green
+	background: #4fa24f
+	color: #fff
+	text-shadow: 0 2px 5px rgba(22, 95, 22, .5)

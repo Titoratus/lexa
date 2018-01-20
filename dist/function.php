@@ -182,7 +182,7 @@
 		'$ORabota', '$OMestoR',	'$OPhoner', '$OAdres')");
 		//Если запрос пройдет успешно то в переменную result вернется true
 		if($result == 'true') {
-			echo "Ваши данные успешно добавлены";
+			echo "<div class='msg msg_green'>Ваши данные успешно добавлены</div>";
 		} else {
 			echo "Ваши данные не добавлены";
 		}
