@@ -12,7 +12,7 @@
 		$result = mysql_query("SELECT * FROM $group WHERE id=$id");
 		$row = mysql_fetch_array($result);
 ?>
-<form name="forma" action="doc2.php?doc_id=<?php echo $id ?>" method="post">
+<form name="forma" action="doc2.php?doc_id=<?php echo $id; ?>" method="post">
 		<div class="block block_view">
 			<h2 class="block__title">Студент</h2>
 

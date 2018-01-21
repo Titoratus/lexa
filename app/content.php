@@ -6,12 +6,8 @@
 	} elseif ($_SESSION['priv'] == "admin") {
 		echo "Вы админ!";
 	} else {
-		if (isset($_POST['submit'])){
-			$table = $_SESSION['Table'];
-			add_person($table);
-		} //Обработка нажатия кнопки и запуск скрипта создания таблицы в БД
 ?>
-<form name="forma" action="content.php" method="post">
+<form id="new_student" name="forma" action="content.php" method="post">
 		<div class="block">
 			<h2 class="block__title">Студент</h2>
 

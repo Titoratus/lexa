@@ -1,7 +1,7 @@
 <?php
 	$page = "Студенты";
 	include ('header.php');
-	if (!(isset($_SESSION['login']))){
+	if (!isset($_SESSION['login'])){
 		echo "Пожалуйста, войдите в учетную запись!";
 	} elseif ($_SESSION['priv']== "admin") {
 		echo "Вы админ!";
@@ -9,10 +9,6 @@
 	} else { 
 		$group = $_SESSION['Table'];
 		$result = mysql_query("SELECT * FROM $group");
-		if (isset($_GET['del_id'])) {
-			$id = $_GET['del_id'];
-			delet($group,$id);
-		}
 		if (isset($_GET['sort_id'])) {
 			$st = $_GET['sort_id'];
 			echo "Отсортировано по '$st'";
@@ -76,12 +72,13 @@
 			} else{
 				echo '<td>Не проживает</td>';
 			};
-			echo
-			'<td>'.$row['Progivaet'].'</td>
-			<td>'.$row['Phone'].'</td>
-			<td><a href="views.php?vie_id='.$row['id'].'">Просмотр</a></td>
-			<td><a href="person.php?red_id='.$row['id'].'">Редактировать</a></td>
-			<td><a href="student.php?del_id='.$row['id'].'">Удалить</a></td></tr>';
+?>
+			<td><?php echo $row['Progivaet']; ?></td>
+			<td><?php echo $row['Phone']; ?></td>
+			<td><a class="view_stud" data-view_stud="<?php echo $row["id"]; ?>">Просмотр</a></td>
+			<td><a class="edit_stud" data-edit_stud="<?php echo $row["id"]; ?>">Редактировать</a></td>
+			<td><a class="del_stud" data-del_stud="<?php echo $row["id"]; ?>">Удалить</a></td></tr>
+<?php
 			$i++;
 		}		
 ?>
