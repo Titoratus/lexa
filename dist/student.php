@@ -1,7 +1,7 @@
 <?php
 	$page = "Студенты";
 	include ('header.php');
-	if (!(isset($_SESSION['login']))){
+	if (!isset($_SESSION['login'])){
 		echo "Пожалуйста, войдите в учетную запись!";
 	} elseif ($_SESSION['priv']== "admin") {
 		echo "Вы админ!";
@@ -9,17 +9,13 @@
 	} else { 
 		$group = $_SESSION['Table'];
 		$result = mysql_query("SELECT * FROM $group");
-		if (isset($_GET['del_id'])) {
-			$id = $_GET['del_id'];
-			delet($group,$id);
-		}
 		if (isset($_GET['sort_id'])) {
 			$st = $_GET['sort_id'];
 			echo "Отсортировано по '$st'";
 			$result = mysql_query("SELECT * FROM $group order by $st");
 		}
 ?>
-<form action='' method='POST'>
+<form class="form_table" action='' method='POST'>
 	<table class="table">
 		<caption class="table__cap">Таблица  студентов <? echo $_SESSION['kurs'] ?> группы <div class="load_student">Скачать</div></caption>
 		<tr>
@@ -66,7 +62,7 @@
 		while ($row = mysql_fetch_array($result)){
 			$h=$row['id'];
 			echo 
-			'<td><b>'.$i."</b></td>
+			'<td>'.$i."</td>
 			<td>".$row['LastName'].'</td> 
 			<td>'.$row['FirstName'].'</td>
 			<td>'.$row['Otchestvo'].'</td>
@@ -76,27 +72,24 @@
 			} else{
 				echo '<td>Не проживает</td>';
 			};
-			echo
-			'<td>'.$row['Progivaet'].'</td>
-			<td>'.$row['Phone'].'</td>
-			<td><a href="views.php?vie_id='.$row['id'].'">Просмотр</a></td>
-			<td><a href="person.php?red_id='.$row['id'].'">Редактировать</a></td>
-			<td><a href="student.php?del_id='.$row['id'].'">Удалить</a></td></tr>';
+?>
+			<td><?php echo $row['Progivaet']; ?></td>
+			<td><?php echo $row['Phone']; ?></td>
+			<td><a class="view_stud" data-view_stud="<?php echo $row["id"]; ?>">Просмотр</a></td>
+			<td><a class="edit_stud" data-edit_stud="<?php echo $row["id"]; ?>">Редактировать</a></td>
+			<td><a class="del_stud" data-del_stud="<?php echo $row["id"]; ?>">Удалить</a></td></tr>
+<?php
 			$i++;
 		}		
 ?>
 	</table>
 </form>
-<form method='post'>
-	<?php
-		if (isset($_POST['testing'])){
-			header("Location: /viborka.php".$_POST['viborka']);
-		}
-	?>
-	Проживание в общежитие: <input type='radio' value='?viborka_id=Obshaga' name='viborka' checked><br>
-	Студенты с ОВЗ:<input type='radio' value='?viborka_id=Invalidnost' name='viborka'><br>
-	<input type='submit' name='testing'>
-</form>
+
+	<input type='radio' class="hidden radio_sort" id="dormitory" name='selection'>
+	<label data-sort="Obshaga" class="radio" for="dormitory">Проживание в общежитии</label>
+	
+	<input type='radio' class="hidden radio_sort" id="ovz" name='selection'>
+	<label data-sort="Invalidnost" class="radio" for="ovz">Студенты с ОВЗ</label>
 <?php
 	}
 

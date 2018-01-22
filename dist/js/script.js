@@ -48,3 +48,110 @@ $(document).on('submit', '#new_user', function(e) {
 $(document).on('click', '.load_student', function() {
 	document.location.href = "doc1.php";
 });
+
+
+//Новый студент
+$(document).on('submit', '#new_student', function(e) {
+	var form = $(this);
+	$.ajax({
+	       data: form.serialize(),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+	       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close msg__close_refresh'></span></div></div>");
+	       	$(".msg-popup").fadeIn();
+	       	$(".msg").append(data);
+	       } 
+	});	
+	e.preventDefault();
+});
+
+//Закрыть окно
+$(document).on('click', '.msg__close', function() {
+	$(".msg-popup").fadeOut();
+	if($(this).hasClass("msg__close_refresh")) {
+		location.reload();
+	}
+	else {
+		setTimeout("$('.msg-popup').remove()", 300);
+	}
+});
+
+
+//Удаление студента
+$(document).on('click', '.del_stud', function() {
+	if(confirm("Вы уверены, что хотите удалить студента?")){
+		var del = $(this);
+		$(".msg-popup").fadeOut();
+		$.ajax({
+		       data: "del_stud="+$(this).attr("data-del_stud"),
+		       type: "post",
+		       url: "functions.php",
+		       success: function(data) {
+		       		window.location.href = "student.php";
+		       } 
+		});
+	}
+	else return false;
+});
+
+
+//Редактирование студента
+$(document).on('click', '.edit_stud', function() {
+	$(".msg-popup").fadeOut();
+	$(this).addClass("edit_active");
+	$.ajax({
+	       data: "edit_stud="+$(this).attr("data-edit_stud"),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+	       	$("body").append("<div class='msg-popup'></div>");
+	       	$(".msg-popup").html(data);
+	       	$(".msg-popup").fadeIn();
+	       	$(".block").append("<span class='msg__close msg__close_white'></span>")
+	       } 
+	});
+});
+
+//Сохранить изменения
+$(document).on('submit', '#form_save', function(e) {
+	var form = $(this);
+	$.ajax({
+	       data: "edit_stud_save=1&stud_save="+$(".edit_active").attr("data-edit_stud")+"&"+form.serialize(),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+	       	alert(data);
+	       	window.location.href = "student.php";
+	       }
+	});	
+	e.preventDefault();
+});
+
+//Просмотр студента
+$(document).on('click', '.view_stud', function() {
+	$.ajax({
+	       data: "view_stud="+$(this).attr("data-view_stud"),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+	       	$("body").append("<div class='msg-popup'></div>");
+	       	$(".msg-popup").html(data);
+	       	$(".msg-popup").fadeIn();
+	       	$(".block").append("<span class='msg__close msg__close_white'></span>")
+	       } 
+	});
+});
+
+//Соритровка студентов по ОВЗ и общаге
+$(document).on('click', '.radio', function() {
+	var sort = $(this).attr("data-sort");
+	$.ajax({
+	       data: "sel_id="+sort,
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+	       		$(".table").html(data);
+	       } 
+	});	
+});

@@ -6,12 +6,8 @@
 	} elseif ($_SESSION['priv'] == "admin") {
 		echo "Вы админ!";
 	} else {
-		if (isset($_POST['submit'])){
-			$table = $_SESSION['Table'];
-			add_person($table);
-		} //Обработка нажатия кнопки и запуск скрипта создания таблицы в БД
 ?>
-<form name="forma" action="content.php" method="post">
+<form id="new_student" name="forma" action="content.php" method="post">
 		<div class="block">
 			<h2 class="block__title">Студент</h2>
 
@@ -39,12 +35,12 @@
 				<label class="block__label" for="Specialnost">Специальность</label> 
 				<select class="block__field" id="Specialnost" name="Specialnost" required>
 					<option></option>
-					<option value="ПРЕПОДАВАНИЕ В НАЧАЛЬНЫХ КЛАССАХ">ПРЕПОДАВАНИЕ В НАЧАЛЬНЫХ КЛАССАХ</option>
-					<option value="ДОШКОЛЬНОЕ ОБРАЗОВАНИЕ">ДОШКОЛЬНОЕ ОБРАЗОВАНИЕ</option>
-					<option value="ИЗОБРАЗИТЕЛЬНОЕ ИСКУССТВО И ЧЕРЧЕНИЕ">ИЗОБРАЗИТЕЛЬНОЕ ИСКУССТВО И ЧЕРЧЕНИЕ</option>
-					<option value="ФИЗИЧЕСКАЯ КУЛЬТУРА">ФИЗИЧЕСКАЯ КУЛЬТУРА</option>
-					<option value="ПРИКЛАДНАЯ ИНФОРМАТИКА">ПРИКЛАДНАЯ ИНФОРМАТИКА</option>
-					<option value="СОЦИАЛЬНАЯ РАБОТА">СОЦИАЛЬНАЯ РАБОТА</option>
+					<option value="Преподавание в начальных классах">Преподавание в начальных классах</option>
+					<option value="Дошкольное образование">Дошкольное образование</option>
+					<option value="Изобразительное искусство и черчение">Изобразительное искусство и черчение</option>
+					<option value="Физическая культура">Физическая культура</option>
+					<option value="Прикладная информатика">Прикладная информатика</option>
+					<option value="Социальная работа">Социальная работа</option>
 				</select>
 			</div>
 			

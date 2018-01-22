@@ -1,6 +1,6 @@
 <?php
 	include ('header.php');
-	if (!(isset($_SESSION['login']))){
+	if (!isset($_SESSION['login'])){
 		echo "Пожалуйста, войдите в учетную запись!";
 	} elseif ($_SESSION['priv']== "admin") {
 		echo "Вы админ!";
@@ -19,7 +19,7 @@
 		}
 ?>
 <form action='' method='post'>
-	<table border="0">
+	<table class="table">
 		<caption>Таблица  студентов <? echo $_SESSION['kurs'] ?> группы</caption>
 		<tr>
 			<th>№</th>

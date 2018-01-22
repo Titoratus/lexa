@@ -31,62 +31,6 @@
 		echo $user_data['LastName'];
 	}
 	
-	function delet($name,$id){
-		$result = mysql_query ("DELETE FROM $name WHERE id='$id'");
-		header("Location: /student.php");
-	}
-	
-	function edit($name,$id){
-		$FirstName = $_POST['FirstName'];
-		$LastName = $_POST['LastName'];
-		$Otchestvo = $_POST['Otchestvo'];
-		$NumberGroup = $_POST['NumberGroup']; 
-		$Specialnost = $_POST['Specialnost'];
-		$BirthDate = $_POST['BirthDate'];
-		$Phone = $_POST['Phone'];
-		$Propiska = $_POST['Propiska']; 
-		$Obshaga = $_POST['Obshaga'];
-		$Progivaet = $_POST['Progivaet'];
-		$GroupHealth = $_POST['GroupHealth'];
-		$Invalidnost = $_POST['Invalidnost']; 
-		$KDN = $_POST['KDN']; 
-		$Class = $_POST['Class'];
-		$SrBallAt = $_POST['SrBallAt'];
-		$Rabota = $_POST['Rabota'];
-		$Hobbi = $_POST['Hobbi'];
-		$Family = $_POST['Family'];
-		$Obespechenie = $_POST['Obespechenie'];	
-		$Maloobespech = $_POST['Maloobespech'];	
-		$Mnogodet = $_POST['Mnogodet'];	
-		$Socialrisk = $_POST['Socialrisk'];	
-		$FIOFather = $_POST['FIOFather'];
-		$FPensioner = $_POST['FPensioner'];
-		$FRabota = $_POST['FRabota'];
-		$FMestoR = $_POST['FMestoR'];
-		$FPhoner = $_POST['FPhoner'];
-		$FAdres = $_POST['FAdres'];	
-		$FIOMother = $_POST['FIOMother'];
-		$MPensioner = $_POST['MPensioner'];
-		$MRabota = $_POST['MRabota'];
-		$MMestoR = $_POST['MMestoR'];
-		$MPhoner = $_POST['MPhoner'];
-		$MAdres = $_POST['MAdres'];			
-		$FIOOpekun = $_POST['FIOOpekun'];
-		$OPensioner = $_POST['OPensioner'];
-		$ORabota = $_POST['ORabota'];
-		$OMestoR = $_POST['OMestoR'];
-		$OPhoner = $_POST['OPhoner'];
-		$OAdres = $_POST['OAdres'];	
-		$result = mysql_query ("UPDATE $name SET FirstName='$FirstName', LastName='$LastName', Otchestvo='$Otchestvo', NumberGroup='$NumberGroup'
-			, Specialnost='$Specialnost', BirthDate='$BirthDate', Phone='$Phone', Propiska='$Propiska', Obshaga='$Obshaga', Progivaet='$Progivaet'
-			, GroupHealth='$GroupHealth', Invalidnost='$Invalidnost', KDN='$KDN', Class='$Class', SrBallAt='$SrBallAt', Rabota='$Rabota'
-			, Hobbi='$Hobbi', Family='$Family', Obespechenie='$Obespechenie', Maloobespech='$Maloobespech', Mnogodet='$Mnogodet', Socialrisk='$Socialrisk', FIOFather='$FIOFather', FPensioner='$FPensioner', FRabota='$FRabota'
-			, FMestoR='$FMestoR', FPhoner='$FPhoner', FAdres='$FAdres', FIOMother='$FIOMother', MPensioner='$MPensioner', MRabota='$MRabota'
-			, MMestoR='$MMestoR', MPhoner='$MPhoner', MAdres='$MAdres', FIOOpekun='$FIOOpekun', OPensioner='$OPensioner', ORabota='$ORabota'
-			, OMestoR='$OMestoR', OPhoner='$OPhoner', OAdres='$OAdres' WHERE id='$id'");
-		header("Location: /student.php");
-	}
-	
 	function create_bd($name){
 		mysql_query("CREATE TABLE $name	(
 		id int auto_increment primary key,
@@ -130,62 +74,6 @@
 		OMestoR VARCHAR(50),
 		OPhoner VARCHAR(12),
 		OAdres VARCHAR(50)) ") Or die(mysql_error()); //Создание таблиц и разделов
-	}
-	
-	function add_person($name){
-		$FirstName = $_POST['FirstName'];
-		$LastName = $_POST['LastName'];
-		$Otchestvo = $_POST['Otchestvo'];
-		$NumberGroup = $_POST['NumberGroup']; 
-		$Specialnost = $_POST['Specialnost'];
-		$BirthDate = $_POST['BirthDate'];
-		$Phone = $_POST['Phone'];
-		$Propiska = $_POST['Propiska']; 
-		$Obshaga = $_POST['Obshaga'];
-		$Progivaet = $_POST['Progivaet'];
-		$GroupHealth = $_POST['GroupHealth'];
-		$Invalidnost = $_POST['Invalidnost']; 
-		$KDN = $_POST['KDN']; 
-		$Class = $_POST['Class'];
-		$SrBallAt = $_POST['SrBallAt'];
-		$Rabota = $_POST['Rabota'];
-		$Hobbi = $_POST['Hobbi'];
-		$Family = $_POST['Family'];
-		$Obespechenie = $_POST['Obespechenie'];	
-		$Maloobespech = $_POST['Maloobespech'];	
-		$Mnogodet = $_POST['Mnogodet'];	
-		$Socialrisk = $_POST['Socialrisk'];			
-		$FIOFather = $_POST['FIOFather'];
-		$FPensioner = $_POST['FPensioner'];
-		$FRabota = $_POST['FRabota'];
-		$FMestoR = $_POST['FMestoR'];
-		$FPhoner = $_POST['FPhoner'];
-		$FAdres = $_POST['FAdres'];	
-		$FIOMother = $_POST['FIOMother'];
-		$MPensioner = $_POST['MPensioner'];
-		$MRabota = $_POST['MRabota'];
-		$MMestoR = $_POST['MMestoR'];
-		$MPhoner = $_POST['MPhoner'];
-		$MAdres = $_POST['MAdres'];			
-		$FIOOpekun = $_POST['FIOOpekun'];
-		$OPensioner = $_POST['OPensioner'];
-		$ORabota = $_POST['ORabota'];
-		$OMestoR = $_POST['OMestoR'];
-		$OPhoner = $_POST['OPhoner'];
-		$OAdres = $_POST['OAdres'];	
-		$result = mysql_query("INSERT INTO $name (FirstName, LastName, Otchestvo, NumberGroup, Specialnost, BirthDate, Phone, Propiska, Obshaga, 
-		Progivaet, GroupHealth, Invalidnost, KDN, Class, SrBallAt, Rabota, Hobbi, Family, Obespechenie, Maloobespech, Mnogodet, Socialrisk, FIOFather, FPensioner, FRabota, FMestoR, FPhoner, FAdres,
-		FIOMother, MPensioner, MRabota, MMestoR, MPhoner, MAdres, FIOOpekun, OPensioner, ORabota, OMestoR, OPhoner, OAdres) 
-		VALUES ('$FirstName', '$LastName', '$Otchestvo', '$NumberGroup', '$Specialnost', '$BirthDate', '$Phone', '$Propiska', '$Obshaga', '$Progivaet',
-		'$GroupHealth', '$Invalidnost', '$KDN', '$Class', '$SrBallAt', '$Rabota', '$Hobbi', '$Family', '$Obespechenie', '$Maloobespech', '$Mnogodet', '$Socialrisk', '$FIOFather', '$FPensioner', '$FRabota', 
-		'$FMestoR',	'$FPhoner', '$FAdres', '$FIOMother', '$MPensioner', '$MRabota', '$MMestoR',	'$MPhoner', '$MAdres', '$FIOOpekun', '$OPensioner',
-		'$ORabota', '$OMestoR',	'$OPhoner', '$OAdres')");
-		//Если запрос пройдет успешно то в переменную result вернется true
-		if($result == 'true') {
-			echo "<div class='msg msg_green'>Ваши данные успешно добавлены</div>";
-		} else {
-			echo "Ваши данные не добавлены";
-		}
 	}
 	
 	function reg($login, $pass, $priv, $group, $year){
