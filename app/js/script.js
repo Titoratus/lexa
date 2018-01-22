@@ -142,3 +142,16 @@ $(document).on('click', '.view_stud', function() {
 	       } 
 	});
 });
+
+//Соритровка студентов по ОВЗ и общаге
+$(document).on('click', '.radio', function() {
+	var sort = $(this).attr("data-sort");
+	$.ajax({
+	       data: "sel_id="+sort,
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+	       		$(".table").html(data);
+	       } 
+	});	
+});

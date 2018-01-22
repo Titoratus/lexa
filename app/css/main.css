@@ -21,7 +21,11 @@ input[type="checkbox"] {
   display: none; }
 
 select {
-  position: relative; }
+  position: relative;
+  padding: 5px; }
+
+.hidden {
+  display: none; }
 
 .login {
   background: #2b3143;
@@ -64,7 +68,7 @@ select {
   height: 54px;
   text-align: center;
   line-height: 54px;
-  font: 1.125em "Raleway-SemiBold", sans-serif;
+  font: 1.05em "Raleway-SemiBold", sans-serif;
   margin-top: 35px;
   width: 100%;
   color: #fff;
@@ -145,6 +149,8 @@ select {
   margin-bottom: 20px;
   margin-top: 0;
   vertical-align: top; }
+  .block_view .field-wrap .block__label {
+    text-indent: 0; }
 
 .block__label {
   display: block;
@@ -224,20 +230,24 @@ select {
   cursor: pointer;
   margin-top: 15px; }
 
+.form_table {
+  width: 100%; }
+
 .table {
   border-collapse: collapse;
   background: #fff;
   color: #000;
   margin: 40px 0;
   position: relative;
-  margin: 0 auto; }
+  width: 100%; }
   .table th {
     padding: 15px 20px; }
     .table th a {
       text-decoration: none;
       color: #000; }
   .table td {
-    padding: 10px 10px; }
+    padding: 10px 10px;
+    font-family: Arial; }
     .table td a {
       text-decoration: none;
       color: rgba(43, 49, 67, 0.5);
@@ -315,3 +325,23 @@ select {
 
 .msg__close_white {
   background-image: url(../img/close_white.png); }
+
+.radio {
+  display: inline-block;
+  padding: 10px 25px;
+  border: 1px solid #fff;
+  background: none;
+  font-size: .95em;
+  opacity: .5;
+  -webkit-transition: .25s;
+  -o-transition: .25s;
+  transition: .25s;
+  font-family: Arial;
+  cursor: pointer; }
+  .radio:hover {
+    opacity: 1; }
+
+.radio_sort:checked + label {
+  opacity: 1;
+  color: #ffa43f;
+  border-color: #ffa43f; }

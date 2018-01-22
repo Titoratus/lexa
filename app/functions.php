@@ -107,12 +107,12 @@ if(isset($_POST["edit_stud"])){
 			<label for="Specialnost" class="block__label">Специальность</label>
 			<select class="block__field" id="Specialnost" name="Specialnost" required>
 				<option></option>
-				<option value="ПРЕПОДАВАНИЕ В НАЧАЛЬНЫХ КЛАССАХ" <?php if ($row['Specialnost']=='ПРЕПОДАВАНИЕ В НАЧАЛЬНЫХ КЛАССАХ'){echo 'selected';}?>>ПРЕПОДАВАНИЕ В НАЧАЛЬНЫХ КЛАССАХ</option>
-				<option value="ДОШКОЛЬНОЕ ОБРАЗОВАНИЕ" <?php if ($row['Specialnost']=='ДОШКОЛЬНОЕ ОБРАЗОВАНИЕ'){echo 'selected';}?>>ДОШКОЛЬНОЕ ОБРАЗОВАНИЕ</option>
-				<option value="ИЗОБРАЗИТЕЛЬНОЕ ИСКУССТВО И ЧЕРЧЕНИЕ" <?php if ($row['Specialnost']=='ИЗОБРАЗИТЕЛЬНОЕ ИСКУССТВО И ЧЕРЧЕНИЕ'){echo 'selected';}?>>ИЗОБРАЗИТЕЛЬНОЕ ИСКУССТВО И ЧЕРЧЕНИЕ</option>
-				<option value="ФИЗИЧЕСКАЯ КУЛЬТУРА" <?php if ($row['Specialnost']=='ФИЗИЧЕСКАЯ КУЛЬТУРА'){echo 'selected';}?>>ФИЗИЧЕСКАЯ КУЛЬТУРА</option>
-				<option value="ПРИКЛАДНАЯ ИНФОРМАТИКА" <?php if ($row['Specialnost']=='ПРИКЛАДНАЯ ИНФОРМАТИКА'){echo 'selected';}?>>ПРИКЛАДНАЯ ИНФОРМАТИКА</option>
-				<option value="СОЦИАЛЬНАЯ РАБОТА" <?php if ($row['Specialnost']=='СОЦИАЛЬНАЯ РАБОТА'){echo 'selected';}?>>СОЦИАЛЬНАЯ РАБОТА</option>
+				<option value="Преподавание в начальных классах" <?php if ($row['specialnost']=='Преподавание в начальных классах'){echo 'selected';}?>>Преподавание в начальных классах</option>
+				<option value="Дошкольное образование" <?php if ($row['specialnost']=='Дошкольное образование'){echo 'selected';}?>>Дошкольное образование</option>
+				<option value="Изобразительное искусство и черчение" <?php if ($row['specialnost']=='Изобразительное искусство и черчение'){echo 'selected';}?>>Изобразительное искусство и черчение</option>
+				<option value="Физическая культура" <?php if ($row['specialnost']=='Физическая культура'){echo 'selected';}?>>Физическая культура</option>
+				<option value="Прикладная информатика" <?php if ($row['specialnost']=='Прикладная информатика'){echo 'selected';}?>>Прикладная информатика</option>
+				<option value="Социальная работа" <?php if ($row['specialnost']=='Социальная работа'){echo 'selected';}?>>Социальная работа</option>
 			</select>
 		</div>
 
@@ -559,6 +559,84 @@ if(isset($_POST["view_stud"])){
 		<input class="block__btn" type="submit" name="doc" value="Скачать">
 	</div>
 </form>
+<?php
+}
+
+	//Сортировка по общаге и ОВЗ
+if(isset($_POST["sel_id"])){
+	$group = $_SESSION["Table"];
+	$result = mysql_query("SELECT * FROM $group");
+	$id = $_POST["sel_id"];
+	$result = mysql_query("SELECT * FROM $group where $id='checked'");
+?>
+	<table class="table">
+		<caption class="table__cap">Таблица  студентов <?php echo $_SESSION['kurs'] ?> группы <div class="load_student">Скачать</div></caption>
+		<tr>
+			<th>№</th>
+			<th>
+				<?php 
+					echo '<a href="?sort_id=LastName">Фамилия</a>';
+				?>
+			</th>
+			<th>
+				<?php 
+					echo '<a href="?sort_id=FirstName">Имя</a>';
+				?>
+			</th>
+			<th>
+				<?php 
+					echo '<a href="?sort_id=Otchestvo">Отчество</a>';
+				?>
+			</th>
+			<th>
+				<?php 
+					echo '<a href="?sort_id=BirthDate">Дата рождения</a>';
+				?>
+			</th>
+			<th>
+				<?php 
+					echo '<a href="?sort_id=Obshaga">Общежитие</a>';
+				?>
+			</th>
+			<th>
+				<?php 
+					echo '<a href="?sort_id=Progivaet">Адрес проживания</a>';
+				?>
+			</th>
+			<th>
+				<?php 
+					echo '<a href="?sort_id=Phone">Телефон</a>';
+				?>
+			</th>
+		</tr>
+<?php
+		echo"<tr>";
+		$i=1;
+		while ($row = mysql_fetch_array($result)){
+			$h=$row['id'];
+			echo 
+			'<td>'.$i."</td>
+			<td>".$row['LastName'].'</td> 
+			<td>'.$row['FirstName'].'</td>
+			<td>'.$row['Otchestvo'].'</td>
+			<td>'.$row['BirthDate'].'</td>';
+			if ($row['Obshaga']=='checked'){
+				echo '<td>Проживает</td>';
+			} else{
+				echo '<td>Не проживает</td>';
+			};
+?>
+			<td><?php echo $row['Progivaet']; ?></td>
+			<td><?php echo $row['Phone']; ?></td>
+			<td><a class="view_stud" data-view_stud="<?php echo $row["id"]; ?>">Просмотр</a></td>
+			<td><a class="edit_stud" data-edit_stud="<?php echo $row["id"]; ?>">Редактировать</a></td>
+			<td><a class="del_stud" data-del_stud="<?php echo $row["id"]; ?>">Удалить</a></td></tr>
+<?php
+			$i++;
+		}		
+?>
+	</table>
+
 <?php
 }
 ?>
