@@ -77,6 +77,8 @@ $(document).on('click', '.msg__close', function() {
 	}
 });
 
+
+//Удаление студента
 $(document).on('click', '.del_stud', function() {
 	if(confirm("Вы уверены, что хотите удалить студента?")){
 		var del = $(this);
@@ -93,6 +95,8 @@ $(document).on('click', '.del_stud', function() {
 	else return false;
 });
 
+
+//Редактирование студента
 $(document).on('click', '.edit_stud', function() {
 	$(".msg-popup").fadeOut();
 	$(this).addClass("edit_active");
@@ -109,6 +113,7 @@ $(document).on('click', '.edit_stud', function() {
 	});
 });
 
+//Сохранить изменения
 $(document).on('submit', '#form_save', function(e) {
 	var form = $(this);
 	$.ajax({
@@ -116,13 +121,14 @@ $(document).on('submit', '#form_save', function(e) {
 	       type: "post",
 	       url: "functions.php",
 	       success: function(data) {
-	       	alert("Успешно!");
+	       	alert(data);
 	       	window.location.href = "student.php";
 	       }
 	});	
 	e.preventDefault();
 });
 
+//Просмотр студента
 $(document).on('click', '.view_stud', function() {
 	$.ajax({
 	       data: "view_stud="+$(this).attr("data-view_stud"),
