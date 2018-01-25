@@ -182,9 +182,11 @@ select
 	margin-bottom: 22px
 	border: 1px solid transparent
 	border-bottom: 1px solid hsla(0,0%,100%,.07)
-	text-transform: capitalize
+	display: block
 	&:focus
 		border: 1px solid #3399ff
+	&:first-letter
+		text-transform: uppercase
 
 .field_nocap
 	text-transform: none

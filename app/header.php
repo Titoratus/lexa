@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><?php echo $page; //Вывод заголовка активной вкладки ?></title>
 	<script src="js/font-loader.js"></script>
 	<link rel="stylesheet" href="css/libs.min.css">
@@ -9,7 +10,7 @@
 </head>
 <body>
 	<?php
-		include ('bd.php');
+		include("bd.php");
 		include("function.php");
 		if (!(isset($_SESSION['login']))){
 			//Кек
