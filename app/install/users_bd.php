@@ -1,9 +1,9 @@
 ﻿<?php
 	include("../bd.php");
-	$host_bd = 'sql303.byethost7.com'; //Хост
-	$user_bd = 'b7_19728308'; //Имя пользователя (логин)
-	$pass_bd = 'Jadeij05'; //Пароль пользователя
-	$name_bd = 'b7_19728308_lich'; //Имя базы данных
+	$host_bd = ''; //Хост
+	$user_bd = ''; //Имя пользователя (логин)
+	$pass_bd = ''; //Пароль пользователя
+	$name_bd = ''; //Имя базы данных
 	$name_tb = 'users'; //Имя таблицы
 	$config_tb = 'config';
 	mysqli_query($load, "CREATE TABLE $name_tb	(
