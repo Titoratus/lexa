@@ -6,6 +6,7 @@
 	if(isset($_POST['FirstName'])){
 		$table = $_SESSION['Table'];
 		function add_person($name){
+			$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
 			$FirstName = $_POST['FirstName'];
 			$LastName = $_POST['LastName'];
 			$Otchestvo = $_POST['Otchestvo'];
@@ -46,7 +47,7 @@
 			$OMestoR = $_POST['OMestoR'];
 			$OPhoner = $_POST['OPhoner'];
 			$OAdres = $_POST['OAdres'];	
-			$result = mysql_query("INSERT INTO $name (FirstName, LastName, Otchestvo, NumberGroup, Specialnost, BirthDate, Phone, Propiska, Obshaga, 
+			$result = mysqli_query($load, "INSERT INTO $name (FirstName, LastName, Otchestvo, NumberGroup, Specialnost, BirthDate, Phone, Propiska, Obshaga, 
 			Progivaet, GroupHealth, Invalidnost, KDN, Class, SrBallAt, Rabota, Hobbi, Family, Obespechenie, Maloobespech, Mnogodet, Socialrisk, FIOFather, FPensioner, FRabota, FMestoR, FPhoner, FAdres,
 			FIOMother, MPensioner, MRabota, MMestoR, MPhoner, MAdres, FIOOpekun, OPensioner, ORabota, OMestoR, OPhoner, OAdres) 
 			VALUES ('$FirstName', '$LastName', '$Otchestvo', '$NumberGroup', '$Specialnost', '$BirthDate', '$Phone', '$Propiska', '$Obshaga', '$Progivaet',
@@ -67,10 +68,11 @@
 //Удалить студента
 if(isset($_POST["del_stud"])){
 	$group = $_SESSION['Table'];
-	$result = mysql_query("SELECT * FROM $group");
+	$result = mysqli_query($load, "SELECT * FROM $group");
 	$id = $_POST["del_stud"];
 	function delet($name,$id){
-		$result = mysql_query ("DELETE FROM $name WHERE id='$id'");
+		$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
+		$result = mysqli_query($load, "DELETE FROM $name WHERE id='$id'");
 	}		
 	delet($group,$id);
 }
@@ -80,8 +82,8 @@ if(isset($_POST["del_stud"])){
 if(isset($_POST["edit_stud"])){
 	$group = $_SESSION['Table'];
 	$id = $_POST["edit_stud"];
-	$result = mysql_query("SELECT * FROM $group WHERE id=$id");
-	$row = mysql_fetch_array($result);
+	$result = mysqli_query($load, "SELECT * FROM $group WHERE id=$id");
+	$row = mysqli_fetch_array($result);
 	$table = $_SESSION['Table'];
 ?>
 <form id="form_save" action="" method="post">
@@ -293,6 +295,7 @@ if(isset($_POST["edit_stud"])){
 //Сохранить изменения
 if(isset($_POST["edit_stud_save"])){
 	function edit($name,$id){
+		$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
 		$FirstName = $_POST['FirstName'];
 		$LastName = $_POST['LastName'];
 		$Otchestvo = $_POST['Otchestvo'];
@@ -333,7 +336,7 @@ if(isset($_POST["edit_stud_save"])){
 		$OMestoR = $_POST['OMestoR'];
 		$OPhoner = $_POST['OPhoner'];
 		$OAdres = $_POST['OAdres'];	
-		$result = mysql_query("UPDATE $name SET FirstName='$FirstName', LastName='$LastName', Otchestvo='$Otchestvo', NumberGroup='$NumberGroup'
+		$result = mysqli_query($load, "UPDATE $name SET FirstName='$FirstName', LastName='$LastName', Otchestvo='$Otchestvo', NumberGroup='$NumberGroup'
 			, Specialnost='$Specialnost', BirthDate='$BirthDate', Phone='$Phone', Propiska='$Propiska', Obshaga='$Obshaga', Progivaet='$Progivaet'
 			, GroupHealth='$GroupHealth', Invalidnost='$Invalidnost', KDN='$KDN', Class='$Class', SrBallAt='$SrBallAt', Rabota='$Rabota'
 			, Hobbi='$Hobbi', Family='$Family', Obespechenie='$Obespechenie', Maloobespech='$Maloobespech', Mnogodet='$Mnogodet', Socialrisk='$Socialrisk', FIOFather='$FIOFather', FPensioner='$FPensioner', FRabota='$FRabota'
@@ -352,8 +355,8 @@ if(isset($_POST["view_stud"])){
 		$table = $_SESSION['Table'];
 		$id = $_POST["view_stud"];
 		$group = $_SESSION['Table'];
-		$result = mysql_query("SELECT * FROM $group WHERE id=$id");
-		$row = mysql_fetch_array($result);
+		$result = mysqli_query($load, "SELECT * FROM $group WHERE id=$id");
+		$row = mysqli_fetch_array($result);
 ?>
 <form name="forma" action="doc2.php?doc_id=<?php echo $id; ?>" method="post">
 		<div class="block block_view">
@@ -565,12 +568,11 @@ if(isset($_POST["view_stud"])){
 	//Сортировка по общаге и ОВЗ
 if(isset($_POST["sel_id"])){
 	$group = $_SESSION["Table"];
-	$result = mysql_query("SELECT * FROM $group");
+	$result = mysqli_query($load, "SELECT * FROM $group");
 	$id = $_POST["sel_id"];
-	$result = mysql_query("SELECT * FROM $group where $id='checked'");
+	$result = mysqli_query($load, "SELECT * FROM $group where $id='checked'");
 ?>
-	<table class="table">
-		<caption class="table__cap">Таблица  студентов <?php echo $_SESSION['kurs'] ?> группы <div class="load_student">Скачать</div></caption>
+	<table class="table">		
 		<tr>
 			<th>№</th>
 			<th>
@@ -612,7 +614,7 @@ if(isset($_POST["sel_id"])){
 <?php
 		echo"<tr>";
 		$i=1;
-		while ($row = mysql_fetch_array($result)){
+		while ($row = mysqli_fetch_array($result)){
 			$h=$row['id'];
 			echo 
 			'<td>'.$i."</td>
@@ -638,5 +640,67 @@ if(isset($_POST["sel_id"])){
 	</table>
 
 <?php
+}
+
+if(isset($_POST["year"])){
+	function create_bd($name){
+		$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
+		mysqli_query($load, "CREATE TABLE $name	(
+		id int auto_increment primary key,
+		FirstName VARCHAR(40),
+		LastName VARCHAR(40),
+		Otchestvo VARCHAR(40),
+		NumberGroup VARCHAR(3),
+		Specialnost VARCHAR(40),
+		BirthDate VARCHAR(40),
+		Phone VARCHAR(12),
+		Propiska VARCHAR(40),
+		Obshaga VARCHAR(10),
+		Progivaet VARCHAR(50),
+		GroupHealth VARCHAR(30),
+		Invalidnost VARCHAR(10),
+		KDN VARCHAR(10),
+		Class VARCHAR(10),
+		SrBallAt VARCHAR(5),
+		Rabota VARCHAR(50),
+		Hobbi VARCHAR(50),
+		Family VARCHAR(50),
+		Obespechenie VARCHAR(50),
+		Maloobespech VARCHAR(50),
+		Mnogodet VARCHAR(50),
+		Socialrisk VARCHAR(50),
+		FIOFather VARCHAR(50),
+		FPensioner VARCHAR(10),
+		FRabota VARCHAR(10),
+		FMestoR VARCHAR(50),
+		FPhoner VARCHAR(12),
+		FAdres VARCHAR(50),
+		FIOMother VARCHAR(50),
+		MPensioner VARCHAR(10),
+		MRabota VARCHAR(10),
+		MMestoR VARCHAR(50),
+		MPhoner VARCHAR(12),
+		MAdres VARCHAR(50),
+		FIOOpekun VARCHAR(50),
+		OPensioner VARCHAR(10),
+		ORabota VARCHAR(10),
+		OMestoR VARCHAR(50),
+		OPhoner VARCHAR(12),
+		OAdres VARCHAR(50))") Or die("Произошла ошибка!"); //Создание таблиц и разделов
+	}
+	$groups = $_POST['number'].'_'.$_POST['year'];	
+	$login = $_POST["login"];
+	$pass = $_POST["pass"];
+	$priv = $_POST["priv"];
+	$group = $_POST["number"];
+	$year = $_POST["year"];
+	$pass = md5($pass);
+	$result = mysqli_query($load, "INSERT INTO users (user, pass, priv, grup, year)
+	VALUES ('$login', '$pass', '$priv', '$group', '$year')");
+	$ob = $group.'_'.$year;
+	$result = mysqli_query($load, "INSERT INTO config (groups, years, obshee)
+	VALUES ('$group', '$year', '$ob')");
+	create_bd($groups);
+	echo "Пользователь успешно добавлен!";
 }
 ?>

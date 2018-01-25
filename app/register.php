@@ -40,16 +40,6 @@
 	</div>
 </form>
 <?php
-	if (isset($_POST['but'])){
-		if ($_POST['pass'] == $_POST['confpass']){
-			$groups = $_POST['number'].'_'.$_POST['year'];
-			reg($_POST['login'], $_POST['pass'], $_POST['priv'], $_POST['number'], $_POST['year']);
-			create_bd($groups);
-			echo "Пользователь успешно добавлен!";
-		} else {
-			echo "Ошибка!";
-		}
-	}
 } else {
 	echo "Вы не администратор!";
 	}

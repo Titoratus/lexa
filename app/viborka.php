@@ -6,16 +6,16 @@
 		echo "Вы админ!";
 	} else { 
 		$group = $_SESSION['Table'];
-		$result = mysql_query("SELECT * FROM $group");
+		$result = mysqli_query($load, "SELECT * FROM $group");
 		$id = $_GET['viborka_id'];
 		if (isset($_GET['viborka_id'])) {
 			echo $id;
-			$result = mysql_query("SELECT * FROM $group where $id='checked'");
+			$result = mysqli_query($load, "SELECT * FROM $group where $id='checked'");
 		}
 		if (isset($_GET['sort_id'])) {
 			$st = $_GET['sort_id'];
 			echo "Отсортировано по '$st'";
-			$result = mysql_query("SELECT * FROM $group order by $st");
+			$result = mysqli_query($load, "SELECT * FROM $group order by $st");
 		}
 ?>
 <form action='' method='post'>
@@ -47,7 +47,7 @@
 <?php
 		echo"<tr>";
 		$i=1;
-		while ($row = mysql_fetch_array($result)){
+		while ($row = mysqli_fetch_array($result)){
 			$h=$row['id'];
 			echo 
 			'<td><b>'.$i."</b></td>

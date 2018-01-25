@@ -2,8 +2,8 @@
 include ('header.php');
 $group = $_SESSION['Table'];
 $id = $_GET['doc_id'];
-$result = mysql_query("SELECT * FROM $group WHERE id=$id");
-$row = mysql_fetch_array($result);
+$result = mysqli_query($load, "SELECT * FROM $group WHERE id=$id");
+$row = mysqli_fetch_array($result);
 header('Content-type: application/vnd.ms-word');
 header('Content-Disposition: attachment;Filename=' .  $row['LastName'].' '.$row['FirstName'] . '.doc');
 header("Content-Transfer-Encoding: binary");

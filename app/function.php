@@ -5,8 +5,8 @@
 	if(isset($_POST["e_login"])){
 		$e_login=$_POST['e_login'];
 		$e_password=md5($_POST['e_password']);
-		$query = mysql_query("SELECT * FROM `users` WHERE `user` ='$e_login'");
-		$user_data = mysql_fetch_array($query);				
+		$query = mysqli_query($load, "SELECT * FROM `users` WHERE `user` ='$e_login'");
+		$user_data = mysqli_fetch_array($query);				
 		if ($user_data['pass']==$e_password){
 			$_SESSION['login'] = $e_login;
 			$_SESSION['group'] = $user_data['grup'];
@@ -26,13 +26,13 @@
 		
 	function infa($id){
 		$group = $_SESSION['Table'];
-		$query=mysql_query("SELECT * FROM $group WHERE `id` ='$id'");
-		$user_data = mysql_fetch_array($query);	
+		$query=mysqli_query($load, "SELECT * FROM $group WHERE `id` ='$id'");
+		$user_data = mysqli_fetch_array($query);	
 		echo $user_data['LastName'];
 	}
 	
 	function create_bd($name){
-		mysql_query("CREATE TABLE $name	(
+		mysqli_query($load, "CREATE TABLE $name	(
 		id int auto_increment primary key,
 		FirstName VARCHAR(40),
 		LastName VARCHAR(40),
@@ -78,10 +78,10 @@
 	
 	function reg($login, $pass, $priv, $group, $year){
 		$pass = md5($pass);
-		$result = mysql_query("INSERT INTO users (user, pass, priv, grup, year)
+		$result = mysqli_query($load, "INSERT INTO users (user, pass, priv, grup, year)
 		VALUES ('$login', '$pass', '$priv', '$group', '$year')");
 		$ob = $group.'_'.$year;
-		$result = mysql_query("INSERT INTO config (groups, years, obshee)
+		$result = mysqli_query($load, "INSERT INTO config (groups, years, obshee)
 		VALUES ('$group', '$year', '$ob')");
 	}
 ?>

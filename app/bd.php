@@ -1,7 +1,5 @@
 <?php
-	mysql_connect("localhost","root", "") or die(mysql_error());
-	mysql_select_db("lich_bd") or die("Could not select database");
-	mysql_query("SET CHARACTER SET UTF8");
-	mysql_query("SET NAMES UTF8");
-	$load= mysqli_connect("localhost","root", "", "lich_bd");
+	$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
+	mysqli_query($load, "SET NAMES 'utf8'");
+	mysqli_query($load, "SET CHARACTER SET 'utf8'");	
 ?>

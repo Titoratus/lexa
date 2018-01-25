@@ -9,8 +9,8 @@
 		$id = $_GET['red_id'];
 		$group = $_SESSION['Table'];
 		$id = $_GET['vie_id'];
-		$result = mysql_query("SELECT * FROM $group WHERE id=$id");
-		$row = mysql_fetch_array($result);
+		$result = mysqli_query($load, "SELECT * FROM $group WHERE id=$id");
+		$row = mysqli_fetch_array($result);
 ?>
 <form name="forma" action="doc2.php?doc_id=<?php echo $id; ?>" method="post">
 		<div class="block block_view">

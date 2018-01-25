@@ -8,16 +8,20 @@
 		
 	} else { 
 		$group = $_SESSION['Table'];
-		$result = mysql_query("SELECT * FROM $group");
+		$result = mysqli_query($load, "SELECT * FROM $group");
 		if (isset($_GET['sort_id'])) {
 			$st = $_GET['sort_id'];
 			echo "Отсортировано по '$st'";
-			$result = mysql_query("SELECT * FROM $group order by $st");
+			$result = mysqli_query($load, "SELECT * FROM $group order by $st");
 		}
 ?>
+<h1 class="table__cap">Таблица  студентов <? echo $_SESSION['kurs'] ?> группы <div class="load_student">Скачать</div></h1>
+<input type='radio' class="hidden radio_sort" id="dormitory" name='selection'>
+<label data-sort="Obshaga" class="radio" for="dormitory">Проживание в общежитии</label>
+<input type='radio' class="hidden radio_sort" id="ovz" name='selection'>
+<label data-sort="Invalidnost" class="radio" for="ovz">Студенты с ОВЗ</label>
 <form class="form_table" action='' method='POST'>
-	<table class="table">
-		<caption class="table__cap">Таблица  студентов <? echo $_SESSION['kurs'] ?> группы <div class="load_student">Скачать</div></caption>
+	<table class="table">		
 		<tr>
 			<th>№</th>
 			<th>
@@ -59,7 +63,7 @@
 <?php
 		echo"<tr>";
 		$i=1;
-		while ($row = mysql_fetch_array($result)){
+		while ($row = mysqli_fetch_array($result)){
 			$h=$row['id'];
 			echo 
 			'<td>'.$i."</td>
@@ -84,12 +88,6 @@
 ?>
 	</table>
 </form>
-
-	<input type='radio' class="hidden radio_sort" id="dormitory" name='selection'>
-	<label data-sort="Obshaga" class="radio" for="dormitory">Проживание в общежитии</label>
-	
-	<input type='radio' class="hidden radio_sort" id="ovz" name='selection'>
-	<label data-sort="Invalidnost" class="radio" for="ovz">Студенты с ОВЗ</label>
 <?php
 	}
 

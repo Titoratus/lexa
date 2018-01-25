@@ -185,7 +185,8 @@ select {
   text-indent: 15px;
   margin-bottom: 22px;
   border: 1px solid transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  text-transform: capitalize; }
   .block__field:focus {
     border: 1px solid #3399ff; }
 
@@ -238,6 +239,7 @@ select {
   background: #fff;
   color: #000;
   margin: 40px 0;
+  margin-top: 22px;
   position: relative;
   width: 100%; }
   .table th {
@@ -266,9 +268,11 @@ select {
 .table__cap {
   color: #fff;
   font: 20px "Raleway-Bold", sans-serif;
-  margin-bottom: 35px; }
+  margin-bottom: 35px;
+  text-align: center; }
 
 .load_student {
+  margin: 0 auto;
   padding: 7px 0;
   border: 1px solid #39af39;
   font: 14px "Raleway-SemiBold", sans-serif;
@@ -328,8 +332,7 @@ select {
 
 .radio {
   display: inline-block;
-  padding: 10px 25px;
-  border: 1px solid #fff;
+  padding: 0 20px;
   background: none;
   font-size: .95em;
   opacity: .5;
@@ -337,11 +340,11 @@ select {
   -o-transition: .25s;
   transition: .25s;
   font-family: Arial;
-  cursor: pointer; }
+  cursor: pointer;
+  border: none; }
   .radio:hover {
     opacity: 1; }
 
 .radio_sort:checked + label {
   opacity: 1;
-  color: #ffa43f;
-  border-color: #ffa43f; }
+  color: #ffa43f; }

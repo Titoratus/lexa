@@ -34,12 +34,11 @@ $(document).on('submit', '#new_user', function(e) {
 	$.ajax({
 	       data: form.serialize(),
 	       type: "post",
-	       url: "function.php",
+	       url: "functions.php",
 	       success: function(data) {
-	       		$(".popup").show();
-	       		//trim удаляет лишние пробелы, которые есть в response
-	       		if($.trim(data) === "error") { $(".popup").html("Ошибка"); }
-	       		else if($.trim(data) === "no_error"){ $(".popup").html("Пользователь успешно добавлен!"); }
+		       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close msg__close_refresh'></span></div></div>");
+		       	$(".msg-popup").fadeIn();
+		       	$(".msg").append($.trim(data));		   
 	       } 
 	});	
 	e.preventDefault();
@@ -58,10 +57,13 @@ $(document).on('submit', '#new_student', function(e) {
 	       type: "post",
 	       url: "functions.php",
 	       success: function(data) {
-	       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close msg__close_refresh'></span></div></div>");
+	       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close'></span></div></div>");
 	       	$(".msg-popup").fadeIn();
 	       	$(".msg").append(data);
-	       } 
+	       	form.find("input[type='text']").val('');
+	       	form.find("input[type='checkbox']").prop("checked", false);
+	       	form.find("select").prop("selectedIndex", 0);
+	       }
 	});	
 	e.preventDefault();
 });

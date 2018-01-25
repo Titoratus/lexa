@@ -7,8 +7,8 @@
 	} else {
 	$group = $_SESSION['Table'];
 	$id = $_GET['red_id'];
-	$result = mysql_query("SELECT * FROM $group WHERE id=$id");
-	$row = mysql_fetch_array($result);
+	$result = mysqli_query($load, "SELECT * FROM $group WHERE id=$id");
+	$row = mysqli_fetch_array($result);
 	$table = $_SESSION['Table'];
 	if (isset($_POST['submit'])){
 		edit($table,$id);

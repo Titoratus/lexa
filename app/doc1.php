@@ -3,7 +3,7 @@ include ('header.php');
 $group = $_SESSION['Table'];
 $id = $_GET['doc_id'];
 $st='LastName';
-$result = mysql_query("SELECT * FROM $group order by $st");
+$result = mysqli_query($load, "SELECT * FROM $group order by $st");
 header('Content-type: application/vnd.ms-word');
 header('Content-Disposition: attachment;Filename=' . 'Список '.$_SESSION['kurs'].' группы.doc');
 header("Content-Transfer-Encoding: binary");
@@ -26,7 +26,7 @@ echo '<html><body>';
 
 <?php
 	$i=1;
-		while ($row = mysql_fetch_array($result)){
+		while ($row = mysqli_fetch_array($result)){
 			$h=$row['id'];
 			echo 
 			'<td><b>'.$i."</b></td>

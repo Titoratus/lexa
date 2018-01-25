@@ -1,7 +1,7 @@
 <?php
 	$page = "Главная";
 	include ("header.php");
-	if (!(isset($_SESSION['login']))){
+	if (!isset($_SESSION['login'])){
 ?>
 
 <form id="loginForm" class="login" method="POST" action="">
