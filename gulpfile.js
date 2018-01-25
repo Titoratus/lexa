@@ -45,13 +45,10 @@ gulp.task('scripts', function(){
 
 gulp.task('css-libs', ['sass'], function(){
 	return gulp.src([
-		'app/css/normalize.css',
-		'app/css/font-awesome.min.css',
-		'app/css/aos.css',
 		'app/css/main.css'
 	])
-	.pipe(concatCss('libs.min.css'))
 	.pipe(cssnano())
+	.pipe(rename("main.min.css"))
 	.pipe(gulp.dest('app/css'))
 });
 
