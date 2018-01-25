@@ -10,15 +10,15 @@
 		<h2 class="block__subtitle block__subtitle_nm">Новый пользователь</h2>
 		<div class="field-wrap">
 			<label for="login" class="block__label">Логин</label>
-			<input class="block__field" type="text" id="login" name="login">
+			<input class="block__field field_nocap" type="text" id="login" name="login">
 		</div>
 		<div class="field-wrap">
 			<label for="pass" class="block__label">Пароль</label>
-			<input class="block__field" type="password" id="pass" name="pass">
+			<input class="block__field field_nocap" type="password" id="pass" name="pass">
 		</div>
 		<div class="field-wrap">
 			<label for="confpass" class="block__label">Повторите пароль</label>
-			<input class="block__field" type="password" id="confpass" name="confpass">
+			<input class="block__field field_nocap" type="password" id="confpass" name="confpass">
 		</div>
 		<div class="field-wrap">
 			<label for="priv" class="block__label">Привилегии</label>
@@ -30,11 +30,11 @@
 		</div>
 		<div class="field-wrap">
 			<label for="number" class="block__label">Номер группы</label>
-			<input type="text" class="block__field" id="number" name="number">
+			<input type="text" class="block__field field_nocap" id="number" name="number">
 		</div>
 		<div class="field-wrap">
 			<label for="year" class="block__label">Год поступления</label>
-			<input type="text" class="block__field" id="year" name="year">
+			<input type="text" class="block__field field_nocap" id="year" name="year">
 		</div>
 		<input type="submit" class="block__btn" value="Добавить пользователя" name="but">
 	</div>

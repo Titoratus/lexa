@@ -190,6 +190,9 @@ select {
   .block__field:focus {
     border: 1px solid #3399ff; }
 
+.field_nocap {
+  text-transform: none; }
+
 .block__field:checked + .block__label span {
   background: #3399ff;
   -webkit-box-shadow: 0 0 30px -1px #3399ff;

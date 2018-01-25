@@ -6,7 +6,7 @@
 	if(isset($_POST['FirstName'])){
 		$table = $_SESSION['Table'];
 		function add_person($name){
-			$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
+			$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");	
 			$FirstName = $_POST['FirstName'];
 			$LastName = $_POST['LastName'];
 			$Otchestvo = $_POST['Otchestvo'];
