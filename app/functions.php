@@ -6,7 +6,7 @@
 	if(isset($_POST['FirstName'])){
 		$table = $_SESSION['Table'];
 		function add_person($name){
-			$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");	
+			$load = mysqli_connect("localhost","root", "", "lich") or die("Ошибка подключения к БД!");	
 			$FirstName = $_POST['FirstName'];
 			$LastName = $_POST['LastName'];
 			$Otchestvo = $_POST['Otchestvo'];
@@ -71,7 +71,7 @@ if(isset($_POST["del_stud"])){
 	$result = mysqli_query($load, "SELECT * FROM $group");
 	$id = $_POST["del_stud"];
 	function delet($name,$id){
-		$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
+		$load = mysqli_connect("localhost","root", "", "lich") or die("Ошибка подключения к БД!");	
 		$result = mysqli_query($load, "DELETE FROM $name WHERE id='$id'");
 	}		
 	delet($group,$id);
@@ -295,7 +295,7 @@ if(isset($_POST["edit_stud"])){
 //Сохранить изменения
 if(isset($_POST["edit_stud_save"])){
 	function edit($name,$id){
-		$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
+		$load = mysqli_connect("localhost","root", "", "lich") or die("Ошибка подключения к БД!");	
 		$FirstName = $_POST['FirstName'];
 		$LastName = $_POST['LastName'];
 		$Otchestvo = $_POST['Otchestvo'];
@@ -644,7 +644,7 @@ if(isset($_POST["sel_id"])){
 
 if(isset($_POST["year"])){
 	function create_bd($name){
-		$load = mysqli_connect("sql303.byethost7.com","b7_19728308", "Jadeij05", "b7_19728308_lich") or die("Ошибка подключения к БД!");
+		$load = mysqli_connect("localhost","root", "", "lich") or die("Ошибка подключения к БД!");	
 		mysqli_query($load, "CREATE TABLE $name	(
 		id int auto_increment primary key,
 		FirstName VARCHAR(40),

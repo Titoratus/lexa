@@ -1,9 +1,9 @@
 ﻿<?php
 	include("../bd.php");
-	$host_bd = ''; //Хост
-	$user_bd = ''; //Имя пользователя (логин)
+	$host_bd = 'localhost'; //Хост
+	$user_bd = 'root'; //Имя пользователя (логин)
 	$pass_bd = ''; //Пароль пользователя
-	$name_bd = ''; //Имя базы данных
+	$name_bd = 'lich'; //Имя базы данных
 	$name_tb = 'users'; //Имя таблицы
 	$config_tb = 'config';
 	mysqli_query($load, "CREATE TABLE $name_tb	(
