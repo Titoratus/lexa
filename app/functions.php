@@ -78,7 +78,7 @@ if(isset($_POST["edit_stud"])){
 	$row = mysqli_fetch_array($result);
 	$table = $_SESSION["Table"];
 ?>
-<form id="form_save" action="" method="post">
+<form class="popup-inline" id="form_save" action="" method="post">
 	<div class="block">
 		<h2 class="block__title">Студент</h2>
 		<div class="field-wrap">
@@ -346,7 +346,7 @@ if(isset($_POST["view_stud"])){
 		$result = mysqli_query($load, "SELECT * FROM $group WHERE id='$id'");
 		$row = mysqli_fetch_array($result);
 ?>
-<form name="forma" action="doc2.php?doc_id=<?php echo $id; ?>" method="post">
+<form class="popup-inline" name="forma" action="doc2.php?doc_id=<?php echo $id; ?>" method="post">
 		<div class="block block_view">
 			<h2 class="block__title">Студент</h2>
 

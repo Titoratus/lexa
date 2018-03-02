@@ -26,6 +26,9 @@ select
 	position: relative
 	padding: 5px
 
+.popup-inline
+	display: inline-block
+
 .hidden
 	display: none
 
@@ -172,7 +175,7 @@ select
 
 .block__field
 	border: none
-	background: #22283b
+	background-color: #22283b
 	font: .875em $medium
 	color: #fff
 	height: 36px
@@ -297,6 +300,7 @@ select
 	display: none
 	box-sizing: border-box
 	overflow-y: auto
+	text-align: center
 
 .msg
 	width: 400px
@@ -345,3 +349,10 @@ select
 .radio_sort:checked + label
 	opacity: 1
 	color: #ffa43f
+
+select
+  -webkit-appearance: none
+  -moz-appearance: none
+  background: url(../img/arr.png) no-repeat 94% 50%
+  &::-ms-expand
+    display: none
