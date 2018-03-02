@@ -80,7 +80,7 @@ $(document).on('click', '.msg__close', function() {
 		location.reload();
 	}
 	else {
-		setTimeout("$('.msg-popup').remove()", 300);
+		setTimeout("$('.msg-popup').remove()", 500);
 	}
 });
 
@@ -148,6 +148,23 @@ $(document).on('click', '.view_stud', function() {
 	       	$(".block").append("<span class='msg__close msg__close_white'></span>")
 	       } 
 	});
+});
+
+
+//Закрытие окна popup по клику на него
+$(document).on("click", ".msg-popup", function(e){
+	if(e.target == this) {
+		$(".msg-popup").fadeOut();
+		setTimeout("$('.msg-popup').remove()", 500);
+	}
+});
+
+$(document).keyup(function(e) {
+	if(e.keyCode == 27)
+		if($(".msg-popup").length){
+			$(".msg-popup").fadeOut();
+			setTimeout("$('.msg-popup').remove()", 500);
+		}
 });
 
 //Соритровка студентов по ОВЗ и общаге

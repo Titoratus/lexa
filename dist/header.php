@@ -5,7 +5,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><?php echo $page; //Вывод заголовка активной вкладки ?></title>
 	<script src="js/font-loader.js"></script>
-	<link rel="stylesheet" href="css/main.min.css">
+	<link rel="stylesheet" href="css/libs.min.css">
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 	<?php

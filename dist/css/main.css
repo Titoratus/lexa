@@ -24,6 +24,9 @@ select {
   position: relative;
   padding: 5px; }
 
+.popup-inline {
+  display: inline-block; }
+
 .hidden {
   display: none; }
 
@@ -176,7 +179,7 @@ select {
 
 .block__field {
   border: none;
-  background: #22283b;
+  background-color: #22283b;
   font: 0.875em "Raleway-SemiBold", sans-serif;
   color: #fff;
   height: 36px;
@@ -299,7 +302,8 @@ select {
   display: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  overflow-y: auto; }
+  overflow-y: auto;
+  text-align: center; }
 
 .msg {
   width: 400px;
@@ -353,3 +357,10 @@ select {
 .radio_sort:checked + label {
   opacity: 1;
   color: #ffa43f; }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url(../img/arr.png) no-repeat 94% 50%; }
+  select::-ms-expand {
+    display: none; }
