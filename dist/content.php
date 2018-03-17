@@ -34,7 +34,7 @@
 			<div class="field-wrap">
 				<label class="block__label" for="Specialnost">Специальность</label> 
 				<select class="block__field" id="Specialnost" name="Specialnost" required>
-					<option></option>
+					<option selected disabled></option>
 					<option value="Преподавание в начальных классах">Преподавание в начальных классах</option>
 					<option value="Дошкольное образование">Дошкольное образование</option>
 					<option value="Изобразительное искусство и черчение">Изобразительное искусство и черчение</option>
@@ -67,7 +67,7 @@
 			<div class="field-wrap">
 				<label class="block__label" for="GroupHealth">Группа здоровья</label> 
 				<select class="block__field" id="GroupHealth" name="GroupHealth" required>
-					<option></option>
+					<option selected disabled></option>
 					<option value="I">I</option>
 					<option value="II">II</option>
 					<option value="I">III</option>
@@ -79,7 +79,7 @@
 			<div class="field-wrap">
 				<label class="block__label" for="Class">Образование (9/11)</label>
 				<select class="block__field" id="Class" name="Class" required>
-					<option></option>
+					<option selected disabled></option>
 					<option value="9">9</option>
 					<option value="11">11</option>
 				</select>
@@ -123,7 +123,7 @@
 		<div class="field-wrap">
 			<label class="block__label" for="">Семья</label>
 			<select class="block__field" name="Family" required>
-				<option></option>
+				<option selected disabled></option>
 				<option value="Полная">Полная</option>
 				<option value="Неполная">Неполная</option>
 				<option value="Сирота">Сирота</option>
@@ -132,7 +132,7 @@
 		<div class="field-wrap">
 			<label class="block__label" for="">Обеспечение</label>
 			<select class="block__field" name="Obespechenie">
-				<option></option>
+				<option selected disabled></option>
 				<option value="Гос.обеспечение">Гос.обеспечение</option>
 				<option value="Опекун">Опекун</option>
 			</select>

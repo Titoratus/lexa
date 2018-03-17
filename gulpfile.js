@@ -23,7 +23,7 @@ gulp.task('sass', function(){
 
 gulp.task('browser-sync', function(){
 	browserSync.init({
-	    proxy: "localhost/lexa/app",
+	    proxy: "localhost/leha/app",
 	    port: 8000
 	 });	
 	browserSync({

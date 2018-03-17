@@ -58,7 +58,7 @@ $(document).on('click', '.load_student', function() {
 $(document).on('submit', '#new_student', function(e) {
 	var form = $(this);
 	$.ajax({
-	       data: form.serialize(),
+	       data: "new_stud=1&"+form.serialize(),
 	       type: "post",
 	       url: "functions.php",
 	       success: function(data) {
@@ -128,7 +128,6 @@ $(document).on('submit', '#form_save', function(e) {
 	       type: "post",
 	       url: "functions.php",
 	       success: function(data) {
-	       	alert(data);
 	       	window.location.href = "student.php";
 	       }
 	});	
@@ -178,4 +177,20 @@ $(document).on('click', '.radio', function() {
 	       		$(".table").html(data);
 	       } 
 	});	
+});
+
+
+//Подтверждение пароля
+$(document).on("keyup keydown focus", "#confpass", function(){
+	if($("#pass").val() == "") return false;
+	if($(this).val() == $("#pass").val()) $(this).css("border-color", "#42bd5d");
+	else $(this).css("border-color", "#e04646");
+});
+
+$(document).on("blur", "#confpass", function(){
+	$(this).css("border-color", "#22283b");
+});
+
+$(document).on("keyup keydown", "#pass", function(){
+	$("#confpass").val("");
 });

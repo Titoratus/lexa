@@ -3,7 +3,7 @@
 	include("bd.php");
 
 	//Новый студент
-	if(isset($_POST["FirstName"])){
+	if(isset($_POST["new_stud"])){
 		$table = $_SESSION["Table"];
 		$FirstName = $_POST["FirstName"];
 		$LastName = $_POST["LastName"];
@@ -78,7 +78,7 @@ if(isset($_POST["edit_stud"])){
 	$row = mysqli_fetch_array($result);
 	$table = $_SESSION["Table"];
 ?>
-<form class="popup-inline" id="form_save" action="" method="post">
+<form class="popup-inline" id="form_save" method="post">
 	<div class="block">
 		<h2 class="block__title">Студент</h2>
 		<div class="field-wrap">
@@ -100,7 +100,6 @@ if(isset($_POST["edit_stud"])){
 		<div class="field-wrap">
 			<label for="Specialnost" class="block__label">Специальность</label>
 			<select class="block__field" id="Specialnost" name="Specialnost" required>
-				<option></option>
 				<option value="Преподавание в начальных классах" <?php if ($row["Specialnost"]=="Преподавание в начальных классах"){echo "selected";}?>>Преподавание в начальных классах</option>
 				<option value="Дошкольное образование" <?php if ($row["Specialnost"]=="Дошкольное образование"){echo "selected";}?>>Дошкольное образование</option>
 				<option value="Изобразительное искусство и черчение" <?php if ($row["Specialnost"]=="Изобразительное искусство и черчение"){echo "selected";}?>>Изобразительное искусство и черчение</option>
@@ -129,7 +128,6 @@ if(isset($_POST["edit_stud"])){
 		<div class="field-wrap">
 			<label for="GroupHealth" class="block__label">Группа здоровья</label> 
 			<select id="GroupHealth" class="block__field" name="GroupHealth" required>
-				<option></option>
 				<option value="I" <?php if ($row["GroupHealth"]=="I"){echo "selected";}?>>I</option>
 				<option value="II" <?php if ($row["GroupHealth"]=="II"){echo "selected";}?>>II</option>
 				<option value="III" <?php if ($row["GroupHealth"]=="III"){echo "selected";}?>>III</option>
@@ -140,7 +138,6 @@ if(isset($_POST["edit_stud"])){
 		<div class="field-wrap">
 			<label for="Class" class="block__label">Образование (9/11)</label>
 			<select class="block__field" id="Class" name="Class" required>
-				<option></option>
 				<option value="9" <?php if ($row["Class"]=="9"){echo "selected";}?>>9</option>
 				<option value="11" <?php if ($row["Class"]=="11"){echo "selected";}?>>11</option>
 			</select>
@@ -175,7 +172,6 @@ if(isset($_POST["edit_stud"])){
 		<div class="field-wrap">
 			<label for="Family" class="block__label">Семья</label>
 			<select class="block__field" id="Family" name="Family" required>
-				<option></option>
 				<option value="Полная" <?php if ($row["Family"]=="Полная"){echo "selected";}?>>Полная</option>
 				<option value="Неполная" <?php if ($row["Family"]=="Неполная"){echo "selected";}?>>Неполная</option>
 				<option value="Сирота" <?php if ($row["Family"]=="Сирота"){echo "selected";}?>>Сирота</option>
@@ -184,7 +180,6 @@ if(isset($_POST["edit_stud"])){
 		<div class="field-wrap">
 			<label for="Obespechenie" class="block__label">Обеспечение</label> 
 			<select class="block__field" id="Obespechenie" name="Obespechenie" >
-				<option></option>
 				<option value="Гос.обеспечение" <?php if ($row["Obespechenie"]=="Гос.обеспечение"){echo "selected";}?>>Гос.обеспечение</option>
 				<option value="Опекун" <?php if ($row["Obespechenie"]=="Опекун"){echo "selected";}?>>Опекун</option>
 			</select>
@@ -287,7 +282,7 @@ if(isset($_POST["edit_stud"])){
 //Сохранить изменения
 if(isset($_POST["edit_stud_save"])){
 		$table = $_SESSION["Table"];
-		$id = $_POST["stud_save"];	
+		$id = $_POST["stud_save"];
 		$FirstName = $_POST["FirstName"];
 		$LastName = $_POST["LastName"];
 		$Otchestvo = $_POST["Otchestvo"];
@@ -327,7 +322,7 @@ if(isset($_POST["edit_stud_save"])){
 		$ORabota = isset($_POST["ORabota"]) ? "checked" : "";
 		$OMestoR = $_POST["OMestoR"];
 		$OPhoner = $_POST["OPhoner"];
-		$OAdres = $_POST["OAdres"];	
+		$OAdres = $_POST["OAdres"];
 		$result = mysqli_query($load, "UPDATE $table SET FirstName='$FirstName', LastName='$LastName', Otchestvo='$Otchestvo', NumberGroup='$NumberGroup'
 			, Specialnost='$Specialnost', BirthDate='$BirthDate', Phone='$Phone', Propiska='$Propiska', Obshaga='$Obshaga', Progivaet='$Progivaet'
 			, GroupHealth='$GroupHealth', Invalidnost='$Invalidnost', KDN='$KDN', Class='$Class', SrBallAt='$SrBallAt', Rabota='$Rabota'
