@@ -2,274 +2,299 @@
 	session_start();
 	include("bd.php");
 
+	//Вход
+	if(isset($_POST["e_login"])){
+		$e_login = $_POST["e_login"];
+		$e_password = md5($_POST["e_password"]);
+		$query = mysqli_query($load, "SELECT * FROM users WHERE username = '$e_login'");
+		if(mysqli_num_rows($query) == 0) die("error");
+
+		$user_data = mysqli_fetch_array($query);				
+		if($user_data["pass"] == $e_password){
+			setcookie("curator", "$e_login", time() + 7200);
+			$query = mysqli_query($load, "SELECT uid FROM users WHERE username = '$e_login'");
+			$query = mysqli_fetch_array($query);
+			$uid = $query["uid"];
+			$query = mysqli_query($load, "SELECT g_name FROM groups WHERE g_curator = '$uid'");
+			$query = mysqli_fetch_array($query);
+			$group = $query["g_name"];
+			//Куки с ID группы
+			setcookie("group", "$group", time() + 7200);
+			//Если админ, то set куки
+			if($user_data["admin"] == 1) setcookie("admin", "1", time() + 7200);
+		} else die("error");
+	}
+
 	//Новый студент
 	if(isset($_POST["new_stud"])){
-		$table = $_SESSION["Table"];
-		$FirstName = $_POST["FirstName"];
-		$LastName = $_POST["LastName"];
-		$Otchestvo = $_POST["Otchestvo"];
-		$NumberGroup = $_POST["NumberGroup"]; 
-		$Specialnost = $_POST["Specialnost"];
-		$BirthDate = $_POST["BirthDate"];
-		$Phone = $_POST["Phone"];
-		$Propiska = $_POST["Propiska"]; 
-		$Obshaga = isset($_POST["Obshaga"]) ? "checked" : "";
-		$Progivaet = $_POST["Progivaet"];
-		$GroupHealth = $_POST["GroupHealth"];
-		$Invalidnost = isset($_POST["Invalidnost"]) ? "checked" : ""; 
-		$KDN = isset($_POST["KDN"]) ? "checked" : ""; 
-		$Class = $_POST["Class"];
-		$SrBallAt = $_POST["SrBallAt"];
-		$Rabota = $_POST["Rabota"];
-		$Hobbi = $_POST["Hobbi"];
-		$Family = $_POST["Family"];
-		$Obespechenie = $_POST["Obespechenie"];	
-		$Maloobespech = isset($_POST["Maloobespech"]) ? "checked" : "";
-		$Mnogodet = isset($_POST["Mnogodet"]) ? "checked" : "";	
-		$Socialrisk = isset($_POST["Socialrisk"]) ? "checked" : "";		
-		$FIOFather = $_POST["FIOFather"];
-		$FPensioner = isset($_POST["FPensioner"]) ? "checked" : "";
-		$FRabota = isset($_POST["FRabota"]) ? "checked" : "";
-		$FMestoR = $_POST["FMestoR"];
-		$FPhoner = $_POST["FPhoner"];
-		$FAdres = $_POST["FAdres"];	
-		$FIOMother = $_POST["FIOMother"];
-		$MPensioner = isset($_POST["MPensioner"]) ? "checked" : "";
-		$MRabota = isset($_POST["MRabota"]) ? "checked" : "";
-		$MMestoR = $_POST["MMestoR"];
-		$MPhoner = $_POST["MPhoner"];
-		$MAdres = $_POST["MAdres"];			
-		$FIOOpekun = $_POST["FIOOpekun"];
-		$OPensioner = isset($_POST["OPensioner"]) ? "checked" : "";
-		$ORabota = isset($_POST["ORabota"]) ? "checked" : "";
-		$OMestoR = $_POST["OMestoR"];
-		$OPhoner = $_POST["OPhoner"];
-		$OAdres = $_POST["OAdres"];	
-		$result = mysqli_query($load, "INSERT INTO $table (FirstName, LastName, Otchestvo, NumberGroup, Specialnost, BirthDate, Phone, Propiska, Obshaga, 
-		Progivaet, GroupHealth, Invalidnost, KDN, Class, SrBallAt, Rabota, Hobbi, Family, Obespechenie, Maloobespech, Mnogodet, Socialrisk, FIOFather, FPensioner, FRabota, FMestoR, FPhoner, FAdres,
-		FIOMother, MPensioner, MRabota, MMestoR, MPhoner, MAdres, FIOOpekun, OPensioner, ORabota, OMestoR, OPhoner, OAdres) 
-		VALUES ('$FirstName', '$LastName', '$Otchestvo', '$NumberGroup', '$Specialnost', '$BirthDate', '$Phone', '$Propiska', '$Obshaga', '$Progivaet',
-		'$GroupHealth', '$Invalidnost', '$KDN', '$Class', '$SrBallAt', '$Rabota', '$Hobbi', '$Family', '$Obespechenie', '$Maloobespech', '$Mnogodet', '$Socialrisk', '$FIOFather', '$FPensioner', '$FRabota', 
-		'$FMestoR',	'$FPhoner', '$FAdres', '$FIOMother', '$MPensioner', '$MRabota', '$MMestoR',	'$MPhoner', '$MAdres', '$FIOOpekun', '$OPensioner',
-		'$ORabota', '$OMestoR',	'$OPhoner', '$OAdres')");
-		//Если запрос пройдет успешно то в переменную result вернется true
-		if($result == "true") {
-			echo "Ваши данные успешно добавлены!";
-		} else {
-			echo "Ваши данные не добавлены!";
-		}
+		$name = $_POST["name"];
+		$lastname = $_POST["lastname"];
+		$father = $_POST["father"];
+		$group_num = $_COOKIE["group"]; 
+		$speciality = $_POST["speciality"];
+		$birthdate = $_POST["birthdate"];
+		$phone = $_POST["phone"];
+		$registration = $_POST["registration"]; 
+		$dormitory = isset($_POST["dormitory"]) ? "1" : "0";
+		$residence = $_POST["residence"];
+		$grouphealth = $_POST["grouphealth"];
+		$disability = isset($_POST["disability"]) ? "1" : "0";
+		$kdn = isset($_POST["kdn"]) ? "1" : "0";
+		$class = $_POST["class"];
+		$midmark = $_POST["midmark"];
+		$work = $_POST["work"];
+		$hobby = $_POST["hobby"];
+		$family = $_POST["family"];
+		$security = $_POST["security"];	
+		$lowincome = isset($_POST["lowincome"]) ? "1" : "0";
+		$children = isset($_POST["children"]) ? "1" : "0";	
+		$socialrisk = isset($_POST["socialrisk"]) ? "1" : "0";		
+		$father_name = $_POST["father_name"];
+		$f_pensioner = isset($_POST["f_pensioner"]) ? "1" : "0";
+		$f_work = isset($_POST["f_work"]) ? "1" : "0";
+		$f_workplace = $_POST["f_workplace"];
+		$f_phone = $_POST["f_phone"];
+		$f_address = $_POST["f_address"];	
+		$mother_name = $_POST["mother_name"];
+		$m_pensioner = isset($_POST["m_pensioner"]) ? "1" : "0";
+		$m_work = isset($_POST["m_work"]) ? "1" : "0";
+		$m_workplace = $_POST["m_workplace"];
+		$m_phone = $_POST["m_phone"];
+		$m_address = $_POST["m_address"];			
+		$guardian_name = $_POST["guardian_name"];
+		$g_pensioner = isset($_POST["g_pensioner"]) ? "1" : "0";
+		$g_work = isset($_POST["g_work"]) ? "1" : "0";
+		$g_workplace = $_POST["g_workplace"];
+		$g_phone = $_POST["g_phone"];
+		$g_address = $_POST["g_address"];
+
+		$result = mysqli_query($load, "INSERT INTO `students` (`id`, `name`, `lastname`, `father`, `group_num`, `speciality`, `birthdate`, `phone`, `registration`, `dormitory`, `residence`, `grouphealth`, `disability`, `kdn`, `class`, `midmark`, `work`, `hobby`, `family`, `security`, `lowincome`, `children`, `socialrisk`, `father_name`, `f_pensioner`, `f_work`, `f_workplace`, `f_phone`, `f_address`, `mother_name`, `m_pensioner`, `m_work`, `m_workplace`, `m_phone`, `m_address`, `guardian_name`, `g_pensioner`, `g_work`, `g_workplace`, `g_phone`, `g_address`)
+		                               VALUES (NULL, '$name', '$lastname', '$father', '$group_num', '$speciality', '$birthdate', '$phone', '$registration', '$dormitory', '$residence', '$grouphealth', '$disability', '$kdn', '$class', '$midmark', '$work', '$hobby', '$family', '$security', '$lowincome', '$children', '$socialrisk', '$father_name', '$f_pensioner', '$f_work', '$f_workplace', '$f_phone', '$f_address', '$mother_name', '$m_pensioner', '$m_work', '$m_workplace', '$m_phone', '$m_address', '$guardian_name', '$g_pensioner', '$g_work', '$g_workplace', '$g_phone', '$g_address')");
+
+		if($result) echo "Ваши данные успешно добавлены!";
+		else echo "<span class='info_error'>Ваши данные не добавлены!</span>";
 	}
 
 
 //Удалить студента
 if(isset($_POST["del_stud"])){
-	$group = $_SESSION["Table"];
-	$result = mysqli_query($load, "SELECT * FROM $group");
 	$id = $_POST["del_stud"];
-	$result = mysqli_query($load, "DELETE FROM $group WHERE id='$id'");
+	$result = mysqli_query($load, "DELETE FROM students WHERE id='$id'");
 }
 
 
 //Редактировать студента
 if(isset($_POST["edit_stud"])){
-	$group = $_SESSION["Table"];
 	$id = $_POST["edit_stud"];
-	$result = mysqli_query($load, "SELECT * FROM $group WHERE id='$id'");
+	if(isset($_COOKIE["admin"])) $result = mysqli_query($load, "SELECT * FROM students WHERE id = '$id' ORDER BY lastname ASC");
+	else {
+		$group = $_COOKIE["group"];
+		$result = mysqli_query($load, "SELECT * FROM students WHERE id = '$id' AND group_num = '$group' ORDER BY lastname ASC");
+	}
 	$row = mysqli_fetch_array($result);
-	$table = $_SESSION["Table"];
 ?>
 <form class="popup-inline" id="form_save" method="post">
 	<div class="block">
 		<h2 class="block__title">Студент</h2>
 		<div class="field-wrap">
-			<label for="FirstName" class="block__label">Имя</label>
-			<input class="block__field" id="FirstName" name="FirstName" type="text" value="<?php echo $row["FirstName"]; ?>">
+			<label for="name" class="block__label">Имя</label>
+			<input class="block__field" id="name" name="name" type="text" value="<?php echo $row["name"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="LastName" class="block__label">Фамилия</label>
-			<input class="block__field" id="LastName" name="LastName" type="text" value="<?php echo $row["LastName"]; ?>">
+			<label for="lastname" class="block__label">Фамилия</label>
+			<input class="block__field" id="lastname" name="lastname" type="text" value="<?php echo $row["lastname"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="Otchestvo" class="block__label">Отчество</label>
-			<input class="block__field" id="Otchestvo" name="Otchestvo" type="text" value="<?php echo $row["Otchestvo"]; ?>">
+			<label for="father" class="block__label">Отчество</label>
+			<input class="block__field" id="father" name="father" type="text" value="<?php echo $row["father"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="NumberGroup" class="block__label">Номер группы</label>
-			<input class="block__field" id="NumberGroup" name="NumberGroup" type="text" value="<?php echo $row["NumberGroup"]; ?>">
+			<label for="group_num" class="block__label">Номер группы</label>
+			<select class="block__field" id="group_num" name="group_num" required>
+				<?php
+					$query = mysqli_query($load, "SELECT DISTINCT group_num FROM students"); 
+					while($group = mysqli_fetch_array($query)){
+				?>
+						<option value="<?php echo $group["group_num"]; ?>" <?php echo $group["group_num"] == $row["group_num"] ? "selected" : ""; ?>><?php echo $group["group_num"]; ?></option>
+				<?php
+
+					}
+				?>
+		  </select>
 		</div>
 		<div class="field-wrap">
-			<label for="Specialnost" class="block__label">Специальность</label>
-			<select class="block__field" id="Specialnost" name="Specialnost" required>
-				<option value="Преподавание в начальных классах" <?php if ($row["Specialnost"]=="Преподавание в начальных классах"){echo "selected";}?>>Преподавание в начальных классах</option>
-				<option value="Дошкольное образование" <?php if ($row["Specialnost"]=="Дошкольное образование"){echo "selected";}?>>Дошкольное образование</option>
-				<option value="Изобразительное искусство и черчение" <?php if ($row["Specialnost"]=="Изобразительное искусство и черчение"){echo "selected";}?>>Изобразительное искусство и черчение</option>
-				<option value="Физическая культура" <?php if ($row["Specialnost"]=="Физическая культура"){echo "selected";}?>>Физическая культура</option>
-				<option value="Прикладная информатика" <?php if ($row["Specialnost"]=="Прикладная информатика"){echo "selected";}?>>Прикладная информатика</option>
-				<option value="Социальная работа" <?php if ($row["Specialnost"]=="Социальная работа"){echo "selected";}?>>Социальная работа</option>
+			<label for="speciality" class="block__label">Специальность</label>
+			<select class="block__field" id="speciality" name="speciality" required>
+				<option value="Преподавание в начальных классах" <?php if ($row["speciality"]=="Преподавание в начальных классах"){echo "selected";}?>>Преподавание в начальных классах</option>
+				<option value="Дошкольное образование" <?php if ($row["speciality"]=="Дошкольное образование"){echo "selected";}?>>Дошкольное образование</option>
+				<option value="Изобразительное искусство и черчение" <?php if ($row["speciality"]=="Изобразительное искусство и черчение"){echo "selected";}?>>Изобразительное искусство и черчение</option>
+				<option value="Физическая культура" <?php if ($row["speciality"]=="Физическая культура"){echo "selected";}?>>Физическая культура</option>
+				<option value="Прикладная информатика" <?php if ($row["speciality"]=="Прикладная информатика"){echo "selected";}?>>Прикладная информатика</option>
+				<option value="Социальная работа" <?php if ($row["speciality"]=="Социальная работа"){echo "selected";}?>>Социальная работа</option>
 			</select>
 		</div>
 
 		<div class="field-wrap">
-			<label for="BirthDate" class="block__label">Дата рождения</label> 
-			<input id="BirthDate" class="block__field" name="BirthDate" type="date" value="<?php echo ($row["BirthDate"]); ?>">
+			<label for="birthdate" class="block__label">Дата рождения</label> 
+			<input id="birthdate" class="block__field" name="birthdate" type="date" value="<?php echo $row["birthdate"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="Phone" class="block__label">Номер телефона</label> 
-			<input id="Phone" class="block__field" name="Phone" type="text" value="<?php echo ($row["Phone"]); ?>">
+			<label for="phone" class="block__label">Номер телефона</label> 
+			<input id="phone" class="block__field" name="phone" type="text" value="<?php echo $row["phone"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="Propiska" class="block__label">Адрес прописки</label> 
-			<input id="Propiska" class="block__field" name="Propiska" type="text" value="<?php echo ($row["Propiska"]); ?>">
+			<label for="registration" class="block__label">Адрес прописки</label> 
+			<input id="registration" class="block__field" name="registration" type="text" value="<?php echo $row["registration"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="Progivaet" class="block__label">Адрес проживания</label> 
-			<input id="Progivaet" class="block__field" name="Progivaet" type="text" value="<?php echo ($row["Progivaet"]); ?>">
+			<label for="residence" class="block__label">Адрес проживания</label> 
+			<input id="residence" class="block__field" name="residence" type="text" value="<?php echo $row["residence"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="GroupHealth" class="block__label">Группа здоровья</label> 
-			<select id="GroupHealth" class="block__field" name="GroupHealth" required>
-				<option value="I" <?php if ($row["GroupHealth"]=="I"){echo "selected";}?>>I</option>
-				<option value="II" <?php if ($row["GroupHealth"]=="II"){echo "selected";}?>>II</option>
-				<option value="III" <?php if ($row["GroupHealth"]=="III"){echo "selected";}?>>III</option>
-				<option value="IV" <?php if ($row["GroupHealth"]=="IV"){echo "selected";}?>>IV</option>
-				<option value="V" <?php if ($row["GroupHealth"]=="V"){echo "selected";}?>>V</option>
+			<label for="grouphealth" class="block__label">Группа здоровья</label> 
+			<select id="grouphealth" class="block__field" name="grouphealth" required>
+				<option value="I" <?php if ($row["grouphealth"]=="I"){echo "selected";}?>>I</option>
+				<option value="II" <?php if ($row["grouphealth"]=="II"){echo "selected";}?>>II</option>
+				<option value="III" <?php if ($row["grouphealth"]=="III"){echo "selected";}?>>III</option>
+				<option value="IV" <?php if ($row["grouphealth"]=="IV"){echo "selected";}?>>IV</option>
+				<option value="V" <?php if ($row["grouphealth"]=="V"){echo "selected";}?>>V</option>
 			</select>
 		</div>
 		<div class="field-wrap">
-			<label for="Class" class="block__label">Образование (9/11)</label>
-			<select class="block__field" id="Class" name="Class" required>
-				<option value="9" <?php if ($row["Class"]=="9"){echo "selected";}?>>9</option>
-				<option value="11" <?php if ($row["Class"]=="11"){echo "selected";}?>>11</option>
+			<label for="class" class="block__label">Образование (9/11)</label>
+			<select class="block__field" id="class" name="class" required>
+				<option value="9" <?php if ($row["class"]=="9"){echo "selected";}?>>9</option>
+				<option value="11" <?php if ($row["class"]=="11"){echo "selected";}?>>11</option>
 			</select>
 		</div>
 		<div class="field-wrap">
-			<label for="SrBallAt" class="block__label">Средний балл аттестата</label> 
-			<input class="block__field" id="SrBallAt" name="SrBallAt" type="text" value="<?php echo ($row["SrBallAt"]); ?>">
+			<label for="midmark" class="block__label">Средний балл аттестата</label> 
+			<input class="block__field" id="midmark" name="midmark" type="text" value="<?php echo $row["midmark"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="Rabota" class="block__label">Подработка</label> 
-			<input class="block__field" id="Rabota" name="Rabota" type="text" value="<?php echo ($row["Rabota"]); ?>">
+			<label for="work" class="block__label">Подработка</label> 
+			<input class="block__field" id="work" name="work" type="text" value="<?php echo $row["work"]; ?>">
 		</div>
 	<div class="field-wrap">
-		<label for="Hobbi" class="block__label">Кружки,секции</label> 
-		<input class="block__field" id="Hobbi" name="Hobbi" type="text" value="<?php echo ($row["Hobbi"]); ?>">
+		<label for="hobby" class="block__label">Кружки,секции</label> 
+		<input class="block__field" id="hobby" name="hobby" type="text" value="<?php echo $row["hobby"]; ?>">
 	</div>
 		<div class="field-wrap">
-			<input id="Obshaga" class="block__field" name="Obshaga" type="checkbox" value="checked" <?php echo $row["Obshaga"]; ?>>
-			<label for="Obshaga" class="block__label"><span></span>Проживание в общежитии</label> 			
+			<input class="block__field" id="dormitory" name="dormitory" type="checkbox" <?php echo $row["dormitory"] == 1 ? "checked" : ""; ?>>
+			<label for="dormitory" class="block__label"><span></span>Проживание в общежитии</label> 			
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="Invalidnost" name="Invalidnost" type="checkbox" value="checked" <?php echo ($row["Invalidnost"]); ?>>
-			<label for="Invalidnost" class="block__label"><span></span>Студент с ОВЗ</label> 			
+			<input class="block__field" id="disability" name="disability" type="checkbox" <?php echo $row["disability"] == 1 ? "checked" : ""; ?>>
+			<label for="disability" class="block__label"><span></span>Студент с ОВЗ</label> 			
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="KDN" name="KDN" type="checkbox" value="checked" <?php echo ($row["KDN"]); ?>>
-			<label for="KDN" class="block__label"><span></span>Состоящий на учете в КДН</label> 			
+			<input class="block__field" id="kdn" name="kdn" type="checkbox" <?php echo $row["kdn"] == 1 ? "checked" : ""; ?>>
+			<label for="kdn" class="block__label"><span></span>Состоящий на учете в КДН</label> 			
 		</div>	
 </div>
 	<div class="block">	
 		<h2 class="block__title">Семья</h2>
 		<div class="field-wrap">
-			<label for="Family" class="block__label">Семья</label>
-			<select class="block__field" id="Family" name="Family" required>
-				<option value="Полная" <?php if ($row["Family"]=="Полная"){echo "selected";}?>>Полная</option>
-				<option value="Неполная" <?php if ($row["Family"]=="Неполная"){echo "selected";}?>>Неполная</option>
-				<option value="Сирота" <?php if ($row["Family"]=="Сирота"){echo "selected";}?>>Сирота</option>
+			<label for="family" class="block__label">Семья</label>
+			<select class="block__field" id="family" name="family" required>
+				<option value="Полная" <?php if ($row["family"]=="Полная"){echo "selected";}?>>Полная</option>
+				<option value="Неполная" <?php if ($row["family"]=="Неполная"){echo "selected";}?>>Неполная</option>
+				<option value="Сирота" <?php if ($row["family"]=="Сирота"){echo "selected";}?>>Сирота</option>
 			</select>
 		</div>
 		<div class="field-wrap">
-			<label for="Obespechenie" class="block__label">Обеспечение</label> 
-			<select class="block__field" id="Obespechenie" name="Obespechenie" >
-				<option value="Гос.обеспечение" <?php if ($row["Obespechenie"]=="Гос.обеспечение"){echo "selected";}?>>Гос.обеспечение</option>
-				<option value="Опекун" <?php if ($row["Obespechenie"]=="Опекун"){echo "selected";}?>>Опекун</option>
+			<label for="security" class="block__label">Обеспечение</label> 
+			<select class="block__field" id="security" name="security" >
+				<option value="Гос.обеспечение" <?php if ($row["security"]=="Гос.обеспечение"){echo "selected";}?>>Гос.обеспечение</option>
+				<option value="Опекун" <?php if ($row["security"]=="Опекун"){echo "selected";}?>>Опекун</option>
 			</select>
 		</div>
 		<h3 class="block__subtitle">Отец</h3>
 		<div class="field-wrap">
-			<label for="FIOFather" class="block__label">ФИО отца</label>
-			<input class="block__field" id="FIOFather" name="FIOFather" type="text" value="<?php echo ($row["FIOFather"]); ?>">
+			<label for="father_name" class="block__label">ФИО отца</label>
+			<input class="block__field" id="father_name" name="father_name" type="text" value="<?php echo $row["father_name"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="FMestoR" class="block__label">Место работы</label>
-			<input class="block__field" id="FMestoR" name="FMestoR" type="text" value="<?php echo ($row["FMestoR"]); ?>">
+			<label for="f_workplace" class="block__label">Место работы</label>
+			<input class="block__field" id="f_workplace" name="f_workplace" type="text" value="<?php echo $row["f_workplace"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="FPhoner" class="block__label">Номер телефона</label>
-			<input class="block__field" id="FPhoner" name="FPhoner" type="text" value="<?php echo ($row["FPhoner"]); ?>">
+			<label for="f_phone" class="block__label">Номер телефона</label>
+			<input class="block__field" id="f_phone" name="f_phone" type="text" value="<?php echo $row["f_phone"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="FAdres" class="block__label">Адрес проживания</label>
-			<input class="block__field" id="FAdres" name="FAdres" type="text" value="<?php echo ($row["FAdres"]); ?>">
+			<label for="f_address" class="block__label">Адрес проживания</label>
+			<input class="block__field" id="f_address" name="f_address" type="text" value="<?php echo $row["f_address"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="FPensioner" name="FPensioner" type="checkbox" value="checked" <?php echo ($row["FPensioner"]); ?>>
-			<label for="FPensioner" class="block__label"><span></span>Пенсионер</label>			
+			<input class="block__field" id="f_pensioner" name="f_pensioner" type="checkbox" value="checked" <?php echo $row["f_pensioner"] == 1 ? "checked" : ""; ?>>
+			<label for="f_pensioner" class="block__label"><span></span>Пенсионер</label>			
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="FRabota" name="FRabota" type="checkbox" value="checked" <?php echo ($row["FRabota"]); ?>>
-			<label for="FRabota" class="block__label"><span></span>Работа</label>			
+			<input class="block__field" id="f_work" name="f_work" type="checkbox" value="checked" <?php echo $row["f_work"] == 1 ? "checked" : ""; ?>>
+			<label for="f_work" class="block__label"><span></span>Работа</label>			
 		</div>
 		<h3 class="block__subtitle">Мать</h3>
 		<div class="field-wrap">
-			<label for="FIOMother" class="block__label">ФИО матери</label>
-			<input class="block__field" id="FIOMother" name="FIOMother" type="text" value="<?php echo ($row["FIOMother"]); ?>">
+			<label for="mother_name" class="block__label">ФИО матери</label>
+			<input class="block__field" id="mother_name" name="mother_name" type="text" value="<?php echo $row["mother_name"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="MMestoR" class="block__label">Место работы</label>
-			<input class="block__field" id="MMestoR" name="MMestoR" type="text" value="<?php echo ($row["MMestoR"]); ?>">
+			<label for="m_workplace" class="block__label">Место работы</label>
+			<input class="block__field" id="m_workplace" name="m_workplace" type="text" value="<?php echo $row["m_workplace"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="MPhoner" class="block__label">Номер телефона</label>
-			<input class="block__field" id="MPhoner" name="MPhoner" type="text" value="<?php echo ($row["MPhoner"]); ?>">
+			<label for="m_phone" class="block__label">Номер телефона</label>
+			<input class="block__field" id="m_phone" name="m_phone" type="text" value="<?php echo $row["m_phone"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="MAdres" class="block__label">Адрес проживания</label>
-			<input class="block__field" id="MAdres" name="MAdres" type="text" value="<?php echo ($row["MAdres"]); ?>">
+			<label for="m_address" class="block__label">Адрес проживания</label>
+			<input class="block__field" id="m_address" name="m_address" type="text" value="<?php echo $row["m_address"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="MPensioner" name="MPensioner" type="checkbox" value="checked" <?php echo ($row["MPensioner"]); ?>>
-			<label for="MPensioner" class="block__label"><span></span>Пенсионер</label>			
+			<input class="block__field" id="m_pensioner" name="m_pensioner" type="checkbox" value="checked" <?php echo $row["m_pensioner"] == 1 ? "checked" : ""; ?>>
+			<label for="m_pensioner" class="block__label"><span></span>Пенсионер</label>			
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="MRabota" name="MRabota" type="checkbox" value="checked" <?php echo ($row["MRabota"]); ?>>
-			<label for="MRabota" class="block__label"><span></span>Работа</label>			
+			<input class="block__field" id="m_work" name="m_work" type="checkbox" value="checked" <?php echo $row["m_work"] == 1 ? "checked" : ""; ?>>
+			<label for="m_work" class="block__label"><span></span>Работа</label>			
 		</div>		
 		<h3 class="block__subtitle">Опекун</h3>
 		<div class="field-wrap">
-			<label for="FIOOpekun" class="block__label">ФИО опекуна</label>
-			<input class="block__field" id="FIOOpekun" name="FIOOpekun" type="text" value="<?php echo ($row["FIOOpekun"]); ?>">
+			<label for="guardian_name" class="block__label">ФИО опекуна</label>
+			<input class="block__field" id="guardian_name" name="guardian_name" type="text" value="<?php echo $row["guardian_name"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="OMestoR" class="block__label">Место работы</label>
-			<input class="block__field" id="OMestoR" name="OMestoR" type="text" value="<?php echo ($row["OMestoR"]); ?>">
+			<label for="g_workplace" class="block__label">Место работы</label>
+			<input class="block__field" id="g_workplace" name="g_workplace" type="text" value="<?php echo $row["g_workplace"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="OPhoner" class="block__label">Номер телефона</label>
-			<input class="block__field" id="OPhoner" name="OPhoner" type="text" value="<?php echo ($row["OPhoner"]); ?>">
+			<label for="g_phone" class="block__label">Номер телефона</label>
+			<input class="block__field" id="g_phone" name="g_phone" type="text" value="<?php echo $row["g_phone"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<label for="OAdres" class="block__label">Адрес проживания</label>
-			<input class="block__field" id="OAdres" name="OAdres" type="text" value="<?php echo ($row["OAdres"]); ?>">
+			<label for="g_address" class="block__label">Адрес проживания</label>
+			<input class="block__field" id="g_address" name="g_address" type="text" value="<?php echo $row["g_address"]; ?>">
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="OPensioner" name="OPensioner" type="checkbox" value="checked" <?php echo ($row["OPensioner"]); ?>>
-			<label for="OPensioner" class="block__label"><span></span>Пенсионер</label>			
+			<input class="block__field" id="g_pensioner" name="g_pensioner" type="checkbox" value="checked" <?php echo $row["g_pensioner"] == 1 ? "checked" : ""; ?>>
+			<label for="g_pensioner" class="block__label"><span></span>Пенсионер</label>			
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="ORabota" name="ORabota" type="checkbox" value="checked" <?php echo ($row["ORabota"]); ?>>
-			<label for="ORabota" class="block__label"><span></span>Работа</label>	
+			<input class="block__field" id="g_work" name="g_work" type="checkbox" value="checked" <?php echo $row["g_work"] == 1 ? "checked" : ""; ?>>
+			<label for="g_work" class="block__label"><span></span>Работа</label>	
 		</div>		
 		<div class="field-wrap">
-			<input class="block__field" id="Maloobespech" name="Maloobespech" type="checkbox" value="checked" <?php echo ($row["Maloobespech"]); ?>>
-			<label for="Maloobespech" class="block__label"><span></span>Малообеспеченные</label>			
+			<input class="block__field" id="lowincome" name="lowincome" type="checkbox" value="checked" <?php echo $row["lowincome"] == 1 ? "checked" : ""; ?>>
+			<label for="lowincome" class="block__label"><span></span>Малообеспеченные</label>			
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="Mnogodet" name="Mnogodet" type="checkbox" value="checked" <?php echo ($row["Mnogodet"]); ?>>
-			<label for="Mnogodet" class="block__label"><span></span>Многодетные</label>			
+			<input class="block__field" id="children" name="children" type="checkbox" value="checked" <?php echo $row["children"] == 1 ? "checked" : ""; ?>>
+			<label for="children" class="block__label"><span></span>Многодетные</label>			
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="Socialrisk" name="Socialrisk" type="checkbox" value="checked" <?php echo ($row["Socialrisk"]); ?>>
-			<label for="Socialrisk" class="block__label"><span></span>Семья социального риска</label>			
+			<input class="block__field" id="socialrisk" name="socialrisk" type="checkbox" value="checked" <?php echo $row["socialrisk"] == 1 ? "checked" : ""; ?>>
+			<label for="socialrisk" class="block__label"><span></span>Семья социального риска</label>			
 		</div>	
 		<input name="submit" class="block__btn" type="submit" value="Сохранить изменения">		
 	</div>
@@ -278,67 +303,68 @@ if(isset($_POST["edit_stud"])){
 <?php
 	}
 
-
 //Сохранить изменения
 if(isset($_POST["edit_stud_save"])){
-		$table = $_SESSION["Table"];
 		$id = $_POST["stud_save"];
-		$FirstName = $_POST["FirstName"];
-		$LastName = $_POST["LastName"];
-		$Otchestvo = $_POST["Otchestvo"];
-		$NumberGroup = $_POST["NumberGroup"]; 
-		$Specialnost = $_POST["Specialnost"];
-		$BirthDate = $_POST["BirthDate"];
-		$Phone = $_POST["Phone"];
-		$Propiska = $_POST["Propiska"]; 
-		$Obshaga = isset($_POST["Obshaga"]) ? "checked" : "";
-		$Progivaet = $_POST["Progivaet"];
-		$GroupHealth = $_POST["GroupHealth"];
-		$Invalidnost = isset($_POST["Invalidnost"]) ? "checked" : ""; 
-		$KDN = isset($_POST["KDN"]) ? "checked" : ""; 
-		$Class = $_POST["Class"];
-		$SrBallAt = $_POST["SrBallAt"];
-		$Rabota = $_POST["Rabota"];
-		$Hobbi = $_POST["Hobbi"];
-		$Family = $_POST["Family"];
-		$Obespechenie = $_POST["Obespechenie"];	
-		$Maloobespech = isset($_POST["Maloobespech"]) ? "checked" : "";
-		$Mnogodet = isset($_POST["Mnogodet"]) ? "checked" : "";	
-		$Socialrisk = isset($_POST["Socialrisk"]) ? "checked" : "";		
-		$FIOFather = $_POST["FIOFather"];
-		$FPensioner = isset($_POST["FPensioner"]) ? "checked" : "";
-		$FRabota = isset($_POST["FRabota"]) ? "checked" : "";
-		$FMestoR = $_POST["FMestoR"];
-		$FPhoner = $_POST["FPhoner"];
-		$FAdres = $_POST["FAdres"];	
-		$FIOMother = $_POST["FIOMother"];
-		$MPensioner = isset($_POST["MPensioner"]) ? "checked" : "";
-		$MRabota = isset($_POST["MRabota"]) ? "checked" : "";
-		$MMestoR = $_POST["MMestoR"];
-		$MPhoner = $_POST["MPhoner"];
-		$MAdres = $_POST["MAdres"];			
-		$FIOOpekun = $_POST["FIOOpekun"];
-		$OPensioner = isset($_POST["OPensioner"]) ? "checked" : "";
-		$ORabota = isset($_POST["ORabota"]) ? "checked" : "";
-		$OMestoR = $_POST["OMestoR"];
-		$OPhoner = $_POST["OPhoner"];
-		$OAdres = $_POST["OAdres"];
-		$result = mysqli_query($load, "UPDATE $table SET FirstName='$FirstName', LastName='$LastName', Otchestvo='$Otchestvo', NumberGroup='$NumberGroup'
-			, Specialnost='$Specialnost', BirthDate='$BirthDate', Phone='$Phone', Propiska='$Propiska', Obshaga='$Obshaga', Progivaet='$Progivaet'
-			, GroupHealth='$GroupHealth', Invalidnost='$Invalidnost', KDN='$KDN', Class='$Class', SrBallAt='$SrBallAt', Rabota='$Rabota'
-			, Hobbi='$Hobbi', Family='$Family', Obespechenie='$Obespechenie', Maloobespech='$Maloobespech', Mnogodet='$Mnogodet', Socialrisk='$Socialrisk', FIOFather='$FIOFather', FPensioner='$FPensioner', FRabota='$FRabota'
-			, FMestoR='$FMestoR', FPhoner='$FPhoner', FAdres='$FAdres', FIOMother='$FIOMother', MPensioner='$MPensioner', MRabota='$MRabota'
-			, MMestoR='$MMestoR', MPhoner='$MPhoner', MAdres='$MAdres', FIOOpekun='$FIOOpekun', OPensioner='$OPensioner', ORabota='$ORabota'
-			, OMestoR='$OMestoR', OPhoner='$OPhoner', OAdres='$OAdres' WHERE id='$id'");
+		$name = $_POST["name"];
+		$lastname = $_POST["lastname"];
+		$father = $_POST["father"];
+		$group_num = $_POST["group_num"]; 
+		$speciality = $_POST["speciality"];
+		$birthdate = $_POST["birthdate"];
+		$phone = $_POST["phone"];
+		$registration = $_POST["registration"]; 
+		$dormitory = isset($_POST["dormitory"]) ? "1" : "0";
+		$residence = $_POST["residence"];
+		$grouphealth = $_POST["grouphealth"];
+		$disability = isset($_POST["disability"]) ? "1" : "0";
+		$kdn = isset($_POST["kdn"]) ? "1" : "0";
+		$class = $_POST["class"];
+		$midmark = $_POST["midmark"];
+		$work = $_POST["work"];
+		$hobby = $_POST["hobby"];
+		$family = $_POST["family"];
+		$security = $_POST["security"];	
+		$lowincome = isset($_POST["lowincome"]) ? "1" : "0";
+		$children = isset($_POST["children"]) ? "1" : "0";	
+		$socialrisk = isset($_POST["socialrisk"]) ? "1" : "0";		
+		$father_name = $_POST["father_name"];
+		$f_pensioner = isset($_POST["f_pensioner"]) ? "1" : "0";
+		$f_work = isset($_POST["f_work"]) ? "1" : "0";
+		$f_workplace = $_POST["f_workplace"];
+		$f_phone = $_POST["f_phone"];
+		$f_address = $_POST["f_address"];	
+		$mother_name = $_POST["mother_name"];
+		$m_pensioner = isset($_POST["m_pensioner"]) ? "1" : "0";
+		$m_work = isset($_POST["m_work"]) ? "1" : "0";
+		$m_workplace = $_POST["m_workplace"];
+		$m_phone = $_POST["m_phone"];
+		$m_address = $_POST["m_address"];			
+		$guardian_name = $_POST["guardian_name"];
+		$g_pensioner = isset($_POST["g_pensioner"]) ? "1" : "0";
+		$g_work = isset($_POST["g_work"]) ? "1" : "0";
+		$g_workplace = $_POST["g_workplace"];
+		$g_phone = $_POST["g_phone"];
+		$g_address = $_POST["g_address"];
+ 		
+		$result = mysqli_query($load, "UPDATE students SET name='$name', lastname='$lastname', father='$father', group_num='$group_num'
+			, speciality='$speciality', birthdate='$birthdate', phone='$phone', registration='$registration', dormitory='$dormitory', residence='$residence'
+			, grouphealth='$grouphealth', disability='$disability', kdn='$kdn', class='$class', midmark='$midmark', work='$work'
+			, hobby='$hobby', family='$family', security='$security', lowincome='$lowincome', children='$children', socialrisk='$socialrisk', father_name='$father_name', f_pensioner='$f_pensioner', f_work='$f_work'
+			, f_workplace='$f_workplace', f_phone='$f_phone', f_address='$f_address', mother_name='$mother_name', m_pensioner='$m_pensioner', m_work='$m_work'
+			, m_workplace='$m_workplace', m_phone='$m_phone', m_address='$m_address', guardian_name='$guardian_name', g_pensioner='$g_pensioner', g_work='$g_work'
+			, g_workplace='$g_workplace', g_phone='$g_phone', g_address='$g_address' WHERE id='$id'");
 }
 
 
 //Просмотр студента
 if(isset($_POST["view_stud"])){
-		$table = $_SESSION["Table"];
 		$id = $_POST["view_stud"];
-		$group = $_SESSION["Table"];
-		$result = mysqli_query($load, "SELECT * FROM $group WHERE id='$id'");
+		if(isset($_COOKIE["group"])){
+			$group = $_COOKIE["group"];
+			$result = mysqli_query($load, "SELECT * FROM students WHERE id='$id' AND group_num = '$group'");
+		}
+		else $result = mysqli_query($load, "SELECT * FROM students WHERE id='$id'");
 		$row = mysqli_fetch_array($result);
 ?>
 <form class="popup-inline" name="forma" action="doc2.php?doc_id=<?php echo $id; ?>" method="post">
@@ -347,86 +373,86 @@ if(isset($_POST["view_stud"])){
 
 			<div class="field-wrap">
 				<label class="block__label" for="FirstName">Имя</label>
-				<?php echo $row["FirstName"]; ?>
+				<?php echo $row["name"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="LastName">Фамилия</label>
-				<?php echo $row["LastName"]; ?>
+				<?php echo $row["lastname"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Otchestvo">Отчество</label>
-				<?php echo $row["Otchestvo"]; ?>
+				<?php echo $row["father"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="NumberGroup">Номер группы</label>
-				<?php echo $row["NumberGroup"]; ?>
+				<?php echo $row["group_num"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Specialnost">Специальность</label> 
-				<?php echo $row["Specialnost"]; ?>
+				<?php echo $row["speciality"]; ?>
 			</div>
 			
 			<div class="field-wrap">
 				<label class="block__label" for="BirthDate">Дата рождения</label>
-				<?php echo $row["BirthDate"]; ?>
+				<?php echo $row["birthdate"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Phone">Номер телефона</label>
-				<?php echo $row["Phone"]; ?>
+				<?php echo $row["phone"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Propiska">Адрес прописки</label>
-				<?php echo $row["Propiska"]; ?>
+				<?php echo $row["registration"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Progivaet">Адрес проживания</label>
-				<?php echo $row["Progivaet"]; ?>
+				<?php echo $row["residence"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="GroupHealth">Группа здоровья</label> 
-				<?php echo $row["GroupHealth"]; ?>
+				<?php echo $row["grouphealth"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Class">Образование (9/11)</label>
-				<?php echo $row["Class"]; ?>
+				<?php echo $row["class"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="SrBallAt">Средний балл аттестата</label>
-				<?php echo $row["SrBallAt"]; ?>
+				<?php echo $row["midmark"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Rabota">Подработка</label>
-				<?php echo $row["Rabota"]; ?>
+				<?php echo $row["work"]; ?>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="Hobbi">Кружки, секции</label>
-				<?php echo $row["Hobbi"]; ?>
+				<?php echo $row["hobby"]; ?>
 			</div>
 
 			<div class="field-wrap">				
-				<input class="block__field" type="checkbox" <?php echo $row["Obshaga"]; ?> disabled>
+				<input class="block__field" type="checkbox" <?php echo $row["dormitory"] == 1 ? "checked" : ""; ?> disabled>
 				<label class="block__label label_inline" for="Obshaga"><span></span>Проживание в общежитии</label>
 			</div>
 
 			<div class="field-wrap">				
-				<input class="block__field" type="checkbox" <?php echo $row["Invalidnost"]; ?> disabled>
+				<input class="block__field" type="checkbox" <?php echo $row["disability"] == 1 ? "checked" : ""; ?> disabled>
 				<label class="block__label label_inline" for="Invalidnost"><span></span>Студент с ОВЗ</label>
 			</div>		
 
 			<div class="field-wrap">				
-				<input class="block__field" type="checkbox" <?php echo $row["KDN"]; ?> disabled>
+				<input class="block__field" type="checkbox" <?php echo $row["kdn"] == 1 ? "checked" : ""; ?> disabled>
 				<label class="block__label label_inline" for="KDN"><span></span>Состоящий на учете в КДН</label>
 			</div>				
 
@@ -437,64 +463,64 @@ if(isset($_POST["view_stud"])){
 		<h2 class="block__title">Семья</h2>
 		<div class="field-wrap">
 			<label class="block__label" for="">Семья</label>
-			<?php echo $row["Family"]?>
+			<?php echo $row["family"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="">Обеспечение</label>
-			<?php echo $row["Obespechenie"]?>
+			<?php echo $row["security"]; ?>
 		</div>
 
 		<h3 class="block__subtitle">Отец</h3>
 		<div class="field-wrap">
 			<label class="block__label" for="">ФИО отца</label>
-			<?php echo $row["FIOFather"]; ?>
+			<?php echo $row["father_name"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="">Место работы</label>
-			<?php echo $row["FMestoR"]; ?>
+			<?php echo $row["f_workplace"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="">Номер телефона</label>
-			<?php echo $row["FPhoner"]; ?>
+			<?php echo $row["f_phone"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="">Адрес проживания</label>
-			<?php echo $row["FAdres"]; ?>
+			<?php echo $row["f_address"]; ?>
 		</div>
 
 		<div class="field-wrap">
-			<input class="block__field" type="checkbox" <?php echo $row["FPensioner"]; ?> disabled>
+			<input class="block__field" type="checkbox" <?php echo $row["f_pensioner"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="FPensioner"><span></span>Пенсионер</label>
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" type="checkbox" <?php echo $row["FRabota"]; ?> disabled>
+			<input class="block__field" type="checkbox" <?php echo $row["f_work"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="FRabota"><span></span>Работа</label>
 		</div>
 
 		<h3 class="block__subtitle">Мать</h3>
 		<div class="field-wrap">
 			<label class="block__label" for="FIOMother">ФИО матери</label>
-			<?php echo $row["FIOMother"]; ?>
+			<?php echo $row["mother_name"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="MMestoR">Место работы</label>
-			<?php echo $row["MMestoR"]; ?>
+			<?php echo $row["m_workplace"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="MPhoner">Номер телефона</label>
-			<?php echo $row["MPhoner"]; ?>
+			<?php echo $row["m_phone"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="MAdres">Адрес проживания</label>
-			<?php echo $row["MAdres"]; ?>
+			<?php echo $row["m_address"]; ?>
 		</div>
 
 		<div class="field-wrap">
-			<input type="checkbox" <?php echo $row["MPensioner"]; ?> disabled>
+			<input type="checkbox" class="block__field" <?php echo $row["m_pensioner"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="MPensioner"><span></span>Пенсионер</label>
 		</div>
 		<div class="field-wrap">
-			<input type="checkbox" <?php echo $row["MRabota"]; ?> disabled>
+			<input type="checkbox" class="block__field" <?php echo $row["m_work"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="MRabota"><span></span>Работа</label>
 		</div>
 
@@ -502,43 +528,43 @@ if(isset($_POST["view_stud"])){
 		<h3 class="block__subtitle">Опекун</h3>
 		<div class="field-wrap">
 			<label class="block__label" for="FIOOpekun">ФИО опекуна</label>
-			<?php echo $row["FIOOpekun"]; ?>
+			<?php echo $row["guardian_name"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="OMestoR">Место работы</label>
-			<?php echo $row["OMestoR"]; ?>
+			<?php echo $row["g_workplace"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="OPhoner">Номер телефона</label>
-			<?php echo $row["OPhoner"]; ?>
+			<?php echo $row["g_phone"]; ?>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="OAdres">Адрес проживания</label>
-			<?php echo $row["OAdres"]; ?>
+			<?php echo $row["g_address"]; ?>
 		</div>
 
 		<div class="field-wrap">
-			<input type="checkbox" <?php echo $row["OPensioner"]; ?> disabled>
+			<input type="checkbox" class="block__field" <?php echo $row["g_pensioner"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="OPensioner"><span></span>Пенсионер</label>			
 		</div>
 
 		<div class="field-wrap">
-			<input type="checkbox" <?php echo $row["ORabota"]; ?> disabled>
+			<input type="checkbox" class="block__field" <?php echo $row["g_work"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="ORabota"><span></span>Работа</label>	
 		</div>				
 
 		<div class="field-wrap">
-			<input type="checkbox" <?php echo $row["Maloobespech"]; ?> disabled>
+			<input type="checkbox" class="block__field" <?php echo $row["lowincome"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="Maloobespech"><span></span>Малообеспеченные</label>
 		</div>
 
 		<div class="field-wrap">
-			<input type="checkbox" <?php echo $row["Mnogodet"]; ?> disabled>
+			<input type="checkbox" class="block__field" <?php echo $row["children"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="Mnogodet"><span></span>Многодетные</label>
 		</div>
 
 		<div class="field-wrap">
-			<input type="checkbox" <?php echo $row["Socialrisk"]; ?> disabled>
+			<input type="checkbox" class="block__field" <?php echo $row["socialrisk"] == 1 ? "checked" : ""; ?> disabled>
 			<label class="block__label" for="Socialrisk"><span></span>Семья социального риска</label>
 		</div>
 
@@ -548,138 +574,84 @@ if(isset($_POST["view_stud"])){
 <?php
 }
 
-	//Сортировка по общаге и ОВЗ
+//Сортировка
 if(isset($_POST["sel_id"])){
-	$group = $_SESSION["Table"];
-	$result = mysqli_query($load, "SELECT * FROM $group");
 	$id = $_POST["sel_id"];
-	$result = mysqli_query($load, "SELECT * FROM $group where $id='checked'");
-?>
-	<table class="table">		
+	if(isset($_COOKIE["admin"])) $result = mysqli_query($load, "SELECT * FROM students WHERE $id = '1' ORDER BY lastname ASC");
+	else {
+		$group = $_COOKIE["group"];
+		$result = mysqli_query($load, "SELECT * FROM students WHERE $id = '1' AND group_num = '$group' ORDER BY lastname ASC");		
+	}
+?>	
 		<tr>
 			<th>№</th>
-			<th>
-				<?php 
-					echo "<a href='?sort_id=LastName'>Фамилия</a>";
-				?>
-			</th>
-			<th>
-				<?php 
-					echo "<a href='?sort_id=FirstName'>Имя</a>";
-				?>
-			</th>
-			<th>
-				<?php 
-					echo "<a href='?sort_id=Otchestvo'>Отчество</a>";
-				?>
-			</th>
-			<th>
-				<?php 
-					echo "<a href='?sort_id=BirthDate'>Дата рождения</a>";
-				?>
-			</th>
-			<th>
-				<?php 
-					echo "<a href='?sort_id=Obshaga'>Общежитие</a>";
-				?>
-			</th>
-			<th>
-				<?php 
-					echo "<a href='?sort_id=Progivaet'>Адрес проживания</a>";
-				?>
-			</th>
-			<th>
-				<?php 
-					echo "<a href='?sort_id=Phone'>Телефон</a>";
-				?>
-			</th>
+			<th><a class="sort_table" data-sort="lastname">Фамилия</a></th>
+			<th><a class="sort_table" data-sort="name">Имя</a></th>
+			<th><a class="sort_table" data-sort="father">Отчество</a></th>
+			<th><a class="sort_table" data-sort="birthdate">Дата рождения</a></th>
+			<th><a class="sort_table" data-sort="dormitory">Общежитие</a></th>
+			<th><a class="sort_table" data-sort="registration">Адрес проживания</a></th>
+			<th><a class="sort_table" data-sort="phone">Телефон</a></th>
+			<?php if(isset($_COOKIE["admin"])){ ?>
+				<th><a>Группа</a></th>
+			<?php } ?>
+		</tr>
+
+<?php
+		$i = 1;
+		while($stud = mysqli_fetch_array($result)){
+			$h = $stud["id"];
+?>
+		<tr>
+			<td><?php echo $i; ?></td>
+			<td><?php echo $stud['lastname']; ?></td> 
+			<td><?php echo $stud['name']; ?></td>
+			<td><?php echo $stud['father']; ?></td>
+			<td><?php echo $stud['birthdate']; ?></td>
+<?php
+			if($stud["dormitory"] == "1") echo "<td>Проживает</td>";
+			else echo "<td>Не проживает</td>";
+?>
+			<td><?php echo $stud["residence"]; ?></td>
+			<td><?php echo $stud["phone"]; ?></td>
+			<?php if(isset($_COOKIE["admin"])) { ?>
+			<td><?php echo $stud["group_num"]; ?></td>
+			<?php } ?>
+			<td><a class="view_stud" data-view_stud="<?php echo $stud["id"]; ?>">Просмотр</a></td>
+			<td><a class="edit_stud" data-edit_stud="<?php echo $stud["id"]; ?>">Редактировать</a></td>
+			<td><a class="del_stud" data-del_stud="<?php echo $stud["id"]; ?>">Удалить</a></td>
 		</tr>
 <?php
-		echo"<tr>";
-		$i=1;
-		while ($row = mysqli_fetch_array($result)){
-			$h=$row["id"];
-			echo 
-			"<td>".$i."</td>
-			<td>".$row["LastName"]."</td> 
-			<td>".$row["FirstName"]."</td>
-			<td>".$row["Otchestvo"]."</td>
-			<td>".$row["BirthDate"]."</td>";
-			if ($row["Obshaga"]=="checked"){
-				echo "<td>Проживает</td>";
-			} else{
-				echo "<td>Не проживает</td>";
-			};
-?>
-			<td><?php echo $row["Progivaet"]; ?></td>
-			<td><?php echo $row["Phone"]; ?></td>
-			<td><a class="view_stud" data-view_stud="<?php echo $row["id"]; ?>">Просмотр</a></td>
-			<td><a class="edit_stud" data-edit_stud="<?php echo $row["id"]; ?>">Редактировать</a></td>
-			<td><a class="del_stud" data-del_stud="<?php echo $row["id"]; ?>">Удалить</a></td></tr>
-<?php
 			$i++;
-		}		
-?>
-	</table>
-
-<?php
+		}
 }
 
+//Новый пользователь
 if(isset($_POST["year"])){
-		$groups = $_POST["number"]."_".$_POST["year"];	
-		mysqli_query($load, "CREATE TABLE $groups	(
-		id int auto_increment primary key,
-		FirstName VARCHAR(40),
-		LastName VARCHAR(40),
-		Otchestvo VARCHAR(40),
-		NumberGroup VARCHAR(3),
-		Specialnost VARCHAR(40),
-		BirthDate VARCHAR(40),
-		Phone VARCHAR(12),
-		Propiska VARCHAR(40),
-		Obshaga VARCHAR(10),
-		Progivaet VARCHAR(50),
-		GroupHealth VARCHAR(30),
-		Invalidnost VARCHAR(10),
-		KDN VARCHAR(10),
-		Class VARCHAR(10),
-		SrBallAt VARCHAR(5),
-		Rabota VARCHAR(50),
-		Hobbi VARCHAR(50),
-		Family VARCHAR(50),
-		Obespechenie VARCHAR(50),
-		Maloobespech VARCHAR(50),
-		Mnogodet VARCHAR(50),
-		Socialrisk VARCHAR(50),
-		FIOFather VARCHAR(50),
-		FPensioner VARCHAR(10),
-		FRabota VARCHAR(10),
-		FMestoR VARCHAR(50),
-		FPhoner VARCHAR(12),
-		FAdres VARCHAR(50),
-		FIOMother VARCHAR(50),
-		MPensioner VARCHAR(10),
-		MRabota VARCHAR(10),
-		MMestoR VARCHAR(50),
-		MPhoner VARCHAR(12),
-		MAdres VARCHAR(50),
-		FIOOpekun VARCHAR(50),
-		OPensioner VARCHAR(10),
-		ORabota VARCHAR(10),
-		OMestoR VARCHAR(50),
-		OPhoner VARCHAR(12),
-		OAdres VARCHAR(50))") Or die("Произошла ошибка!"); //Создание таблиц и разделов
-	$login = $_POST["login"];
-	$pass = $_POST["pass"];
-	$priv = $_POST["priv"];
+	$username = $_POST["login"];
+	$pass = md5($_POST["pass"]);
+	$confpass = $_POST["confpass"];
+	$admin = $_POST["priv"] == "admin" ? "1" : "0";
+	$confpass = $_POST["confpass"];
 	$group = $_POST["number"];
 	$year = $_POST["year"];
-	$pass = md5($pass);
-	$result = mysqli_query($load, "INSERT INTO users (user, pass, priv, grup, year)
-	VALUES ('$login', '$pass', '$priv', '$group', '$year')");
-	$ob = $group."_".$year;
-	$result = mysqli_query($load, "INSERT INTO config (groups, years, obshee)
-	VALUES ('$group', '$year', '$ob')");
+
+	$query = mysqli_query($load, "SELECT username FROM users WHERE username = '$username'");
+	if(mysqli_num_rows($query)) die("<span class='info_error'>Пользователь с таким логином уже есть!</span>");
+
+	$query = mysqli_query($load, "SELECT g_name FROM groups WHERE g_name = '$group'");
+	if(mysqli_num_rows($query)) die("<span class='info_error'>Такая группа уже есть!</span>");
+	
+	if(!($_POST["pass"] == $confpass)) die("<span class='info_error'>Пароли не совпадают!</span>");
+
+	$query = mysqli_query($load, "INSERT INTO users (`uid`, `username`, `pass`, `admin`) VALUES (NULL, '$username', '$pass', '$admin')");
+	if(!$query) die("<span class='info_error'>Не удалось добавить пользователя :(</span>");
+
 	echo "Пользователь успешно добавлен!";
+	$getuid = mysqli_query($load, "SELECT uid FROM users WHERE username = '$username'");
+	$getuid = mysqli_fetch_array($getuid);
+	$uid = $getuid["uid"];
+
+	$query = mysqli_query($load, "INSERT INTO groups (`g_name`, `g_year`, `g_curator`) VALUES ('$group', '$year', '$uid')");
 }
 ?>

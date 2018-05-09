@@ -1,9 +1,9 @@
 <?php
 	$page = "Администраторская";
 	include ('header.php');
-	if (!isset($_SESSION['login'])){
+	if (!isset($_COOKIE["curator"])){
 		echo "Пожалуйста, войдите в учетную запись!";
-	} elseif ($_SESSION['priv']== "admin") {
+	} else if(isset($_COOKIE["admin"])){
 ?>
 <form id="new_user" method="POST" action="">
 	<div class="block">
@@ -40,9 +40,7 @@
 	</div>
 </form>
 <?php
-} else {
-	echo "Вы не администратор!";
-	}
+} else echo "Вы не администратор!";
 
-	include("footer.php");
+include("footer.php");
 ?>

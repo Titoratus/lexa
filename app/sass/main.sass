@@ -337,7 +337,7 @@ select
 .msg__close_white
 	background-image: url(../img/close_white.png)
 
-.radio
+.filter_title
 	display: inline-block
 	padding: 0 20px
 	background: none
@@ -350,7 +350,7 @@ select
 	&:hover
 		opacity: 1
 
-.radio_sort:checked + label
+.filter:checked + label
 	opacity: 1
 	color: #ffa43f
 
@@ -360,3 +360,20 @@ select
   background: url(../img/arr.png) no-repeat 94% 50%
   &::-ms-expand
     display: none
+
+.info_error
+	color: #bd3737
+
+.del_stud, .view_stud, .edit_stud
+	width: 18px
+	height: 18px
+	display: block
+
+.view_stud
+	background: url(../img/tools.png)
+
+.del_stud
+	background: url(../img/tools.png) 100% 50%
+
+.edit_stud
+	background: url(../img/tools.png) 50% 50%

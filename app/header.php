@@ -11,22 +11,18 @@
 <body>
 	<?php
 		include("bd.php");
-		include("function.php");
-		if (!(isset($_SESSION['login']))){
-			//Кек
-		} elseif ($_SESSION['priv']== "admin") {
+		if(isset($_COOKIE["admin"])){
 	?>
 	<header>
 		<ul class="top-line">
-			<li class="top-line__elem"><a class='<?php echo $page == 'Главная' ? 'link_active' : '' ?> top-line__link' href='index.php'>Главная</a></li>
-			<li class="top-line__elem"><a class='<?php echo $page == 'Добавление' ? 'link_active' : '' ?> top-line__link' href='content.php'>Добавление</a></li>
+			<li class="top-line__elem"><a class='<?php echo $page == 'Главная' ? 'link_active' : '' ?> top-line__link' href='index.php'>Главная</a></li>		
 			<li class="top-line__elem"><a class='<?php echo $page == 'Студенты' ? 'link_active' : '' ?> top-line__link' href='student.php'>Студенты</a></li>
 			<li class="top-line__elem"><a class='<?php echo $page == 'Администраторская' ? 'link_active' : '' ?> top-line__link' href='register.php'>Администраторская</a></li>
 			<li class="top-line__elem"><a class='top-line__link exit' href='exit.php'>Выход</a></li>
 		</ul>
 	</header>
 
-	<?php } else { ?>
+	<?php } else if(isset($_COOKIE["curator"])){ ?>
 
 	<header>
 		<ul class="top-line">

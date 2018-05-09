@@ -1,39 +1,37 @@
 <?php
 	$page = "Добавление";
 	include ("header.php");
-	if(!isset($_SESSION['login'])){
-		header("Location: index.php");
-	} elseif ($_SESSION['priv'] == "admin") {
-		echo "Вы админ!";
-	} else {
+	if(!isset($_COOKIE["curator"])) header("Location: index.php");
+	else if(isset($_COOKIE["admin"])) echo "Вы админ!";
+	else {
 ?>
 <form id="new_student" name="forma" action="content.php" method="post">
 		<div class="block">
 			<h2 class="block__title">Студент</h2>
 
 			<div class="field-wrap">
-				<label class="block__label" for="FirstName">Имя</label>
-				<input class="block__field" id="FirstName" name="FirstName" type="text" autocomplete="off">
+				<label class="block__label" for="name">Имя</label>
+				<input class="block__field" id="name" name="name" type="text" autocomplete="off">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="LastName">Фамилия</label>
-				<input class="block__field" id="LastName" name="LastName" type="text" autocomplete="off">
+				<label class="block__label" for="lastname">Фамилия</label>
+				<input class="block__field" id="lastname" name="lastname" type="text" autocomplete="off">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Otchestvo">Отчество</label>
-				<input class="block__field" id="Otchestvo" name="Otchestvo" type="text" autocomplete="off">
+				<label class="block__label" for="father">Отчество</label>
+				<input class="block__field" id="father" name="father" type="text" autocomplete="off">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="NumberGroup">Номер группы</label>
-				<input class="block__field" id="NumberGroup" name="NumberGroup" type="text" autocomplete="off">
+				<label class="block__label">Номер группы</label>
+				<input class="block__field" type="text" value="<?php echo $_COOKIE["group"]; ?>" disabled>
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Specialnost">Специальность</label> 
-				<select class="block__field" id="Specialnost" name="Specialnost" required>
+				<label class="block__label" for="speciality">Специальность</label> 
+				<select class="block__field" id="speciality" name="speciality" required>
 					<option selected disabled></option>
 					<option value="Преподавание в начальных классах">Преподавание в начальных классах</option>
 					<option value="Дошкольное образование">Дошкольное образование</option>
@@ -45,40 +43,40 @@
 			</div>
 			
 			<div class="field-wrap">
-				<label class="block__label" for="BirthDate">Дата рождения</label>
-				<input class="block__field" id="BirthDate" name="BirthDate" type="date">
+				<label class="block__label" for="birthdate">Дата рождения</label>
+				<input class="block__field" id="birthdate" name="birthdate" type="date">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Phone">Номер телефона</label>
-				<input class="block__field" id="Phone" name="Phone" type="text">
+				<label class="block__label" for="phone">Номер телефона</label>
+				<input class="block__field" id="phone" name="phone" type="text">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Propiska">Адрес прописки</label>
-				<input class="block__field" id="Propiska" name="Propiska" type="text">
+				<label class="block__label" for="registration">Адрес прописки</label>
+				<input class="block__field" id="registration" name="registration" type="text">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Progivaet">Адрес проживания</label>
-				<input class="block__field" id="Progivaet" name="Progivaet" type="text">
+				<label class="block__label" for="residence">Адрес проживания</label>
+				<input class="block__field" id="residence" name="residence" type="text">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="GroupHealth">Группа здоровья</label> 
-				<select class="block__field" id="GroupHealth" name="GroupHealth" required>
+				<label class="block__label" for="grouphealth">Группа здоровья</label> 
+				<select class="block__field" id="grouphealth" name="grouphealth" required>
 					<option selected disabled></option>
 					<option value="I">I</option>
 					<option value="II">II</option>
-					<option value="I">III</option>
-					<option value="II">IV</option>
-					<option value="I">V</option>
+					<option value="III">III</option>
+					<option value="IV">IV</option>
+					<option value="V">V</option>
 				</select>
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Class">Образование (9/11)</label>
-				<select class="block__field" id="Class" name="Class" required>
+				<label class="block__label" for="class">Образование (9/11)</label>
+				<select class="block__field" id="class" name="class" required>
 					<option selected disabled></option>
 					<option value="9">9</option>
 					<option value="11">11</option>
@@ -86,33 +84,33 @@
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="SrBallAt">Средний балл аттестата</label>
-				<input class="block__field" id="SrBallAt" name="SrBallAt" type="text">
+				<label class="block__label" for="midmark">Средний балл аттестата</label>
+				<input class="block__field" id="midmark" name="midmark" type="text">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Rabota">Подработка</label>
-				<input class="block__field" id="Rabota" name="Rabota" type="text">
+				<label class="block__label" for="work">Подработка</label>
+				<input class="block__field" id="work" name="work" type="text">
 			</div>
 
 			<div class="field-wrap">
-				<label class="block__label" for="Hobbi">Кружки, секции</label>
-				<input class="block__field" id="Hobbi" name="Hobbi" type="text">
+				<label class="block__label" for="hobby">Кружки, секции</label>
+				<input class="block__field" id="hobby" name="hobby" type="text">
 			</div>
 
 			<div class="field-wrap">				
-				<input class="block__field field_inline field_chk" id="Obshaga" name="Obshaga" type="checkbox" value="checked">
-				<label class="block__label label_inline" for="Obshaga"><span></span>Проживание в общежитии</label>
+				<input class="block__field field_inline field_chk" id="dormitory" name="dormitory" type="checkbox" value="checked">
+				<label class="block__label label_inline" for="dormitory"><span></span>Проживание в общежитии</label>
 			</div>
 
 			<div class="field-wrap">				
-				<input class="block__field field_inline field_chk" id="Invalidnost" name="Invalidnost" type="checkbox" value="checked">
-				<label class="block__label label_inline" for="Invalidnost"><span></span>Студент с ОВЗ</label>
+				<input class="block__field field_inline field_chk" id="disability" name="disability" type="checkbox" value="checked">
+				<label class="block__label label_inline" for="disability"><span></span>Студент с ОВЗ</label>
 			</div>		
 
 			<div class="field-wrap">				
-				<input class="block__field field_inline field_chk" id="KDN" name="KDN" type="checkbox" value="checked">
-				<label class="block__label label_inline" for="KDN"><span></span>Состоящий на учете в КДН</label>
+				<input class="block__field field_inline field_chk" id="kdn" name="kdn" type="checkbox" value="checked">
+				<label class="block__label label_inline" for="kdn"><span></span>Состоящий на учете в КДН</label>
 			</div>				
 
 		</div>
@@ -121,8 +119,8 @@
 	<div class="block">	
 		<h2 class="block__title">Семья</h2>
 		<div class="field-wrap">
-			<label class="block__label" for="">Семья</label>
-			<select class="block__field" name="Family" required>
+			<label class="block__label" for="family">Семья</label>
+			<select class="block__field" id="family" name="family" required>
 				<option selected disabled></option>
 				<option value="Полная">Полная</option>
 				<option value="Неполная">Неполная</option>
@@ -130,8 +128,8 @@
 			</select>
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="">Обеспечение</label>
-			<select class="block__field" name="Obespechenie">
+			<label class="block__label" for="security">Обеспечение</label>
+			<select class="block__field" id="security" name="security">
 				<option selected disabled></option>
 				<option value="Гос.обеспечение">Гос.обеспечение</option>
 				<option value="Опекун">Опекун</option>
@@ -140,100 +138,100 @@
 
 		<h3 class="block__subtitle">Отец</h3>
 		<div class="field-wrap">
-			<label class="block__label" for="">ФИО отца</label>
-			<input class="block__field" name="FIOFather" type="text">
+			<label class="block__label" for="father_name">ФИО отца</label>
+			<input class="block__field" id="father_name" name="father_name" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="">Место работы</label>
-			<input class="block__field" name="FMestoR" type="text">
+			<label class="block__label" for="f_workplace">Место работы</label>
+			<input class="block__field" id="f_workplace" name="f_workplace" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="">Номер телефона</label>
-			<input class="block__field" name="FPhoner" type="text">
+			<label class="block__label" for="f_phone">Номер телефона</label>
+			<input class="block__field" id="f_phone" name="f_phone" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="">Адрес проживания</label>
-			<input class="block__field" name="FAdres" type="text">
+			<label class="block__label" for="f_address">Адрес проживания</label>
+			<input class="block__field" id="f_address" name="f_address" type="text">
 		</div>
 
 		<div class="field-wrap">
-			<input class="block__field" id="FPensioner" name="FPensioner" type="checkbox" value="checked">
-			<label class="block__label" for="FPensioner"><span></span>Пенсионер</label>
+			<input class="block__field" id="f_pensioner" name="f_pensioner" type="checkbox" value="checked">
+			<label class="block__label" for="f_pensioner"><span></span>Пенсионер</label>
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="FRabota" name="FRabota" type="checkbox" value="checked">
-			<label class="block__label" for="FRabota"><span></span>Работа</label>
+			<input class="block__field" id="f_work" name="f_work" type="checkbox" value="checked">
+			<label class="block__label" for="f_work"><span></span>Работа</label>
 		</div>
 
 		<h3 class="block__subtitle">Мать</h3>
 		<div class="field-wrap">
-			<label class="block__label" for="FIOMother">ФИО матери</label>
-			<input class="block__field" id="FIOMother" name="FIOMother" type="text">
+			<label class="block__label" for="mother_name">ФИО матери</label>
+			<input class="block__field" id="mother_name" name="mother_name" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="MMestoR">Место работы</label>
-			<input class="block__field" id="MMestoR" name="MMestoR" type="text">
+			<label class="block__label" for="m_workplace">Место работы</label>
+			<input class="block__field" id="m_workplace" name="m_workplace" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="MPhoner">Номер телефона</label>
-			<input class="block__field" id="MPhoner" name="MPhoner" type="text">
+			<label class="block__label" for="m_phone">Номер телефона</label>
+			<input class="block__field" id="m_phone" name="m_phone" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="MAdres">Адрес проживания</label>
-			<input class="block__field" id="MAdres" name="MAdres" type="text">
+			<label class="block__label" for="m_address">Адрес проживания</label>
+			<input class="block__field" id="m_address" name="m_address" type="text">
 		</div>
 
 		<div class="field-wrap">
-			<input class="block__field" id="MPensioner" name="MPensioner" type="checkbox" value="checked">
-			<label class="block__label" for="MPensioner"><span></span>Пенсионер</label>
+			<input class="block__field" id="m_pensioner" name="m_pensioner" type="checkbox" value="checked">
+			<label class="block__label" for="m_pensioner"><span></span>Пенсионер</label>
 		</div>
 		<div class="field-wrap">
-			<input class="block__field" id="MRabota" name="MRabota" type="checkbox" value="checked">
-			<label class="block__label" for="MRabota"><span></span>Работа</label>
+			<input class="block__field" id="m_work" name="m_work" type="checkbox" value="checked">
+			<label class="block__label" for="m_work"><span></span>Работа</label>
 		</div>
 
 
 		<h3 class="block__subtitle">Опекун</h3>
 		<div class="field-wrap">
-			<label class="block__label" for="FIOOpekun">ФИО опекуна</label>
-			<input class="block__field" id="FIOOpekun" name="FIOOpekun" type="text">
+			<label class="block__label" for="guardian_name">ФИО опекуна</label>
+			<input class="block__field" id="guardian_name" name="guardian_name" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="OMestoR">Место работы</label>
-			<input class="block__field" id="OMestoR" name="OMestoR" type="text">
+			<label class="block__label" for="g_workplace">Место работы</label>
+			<input class="block__field" id="g_workplace" name="g_workplace" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="OPhoner">Номер телефона</label>
-			<input class="block__field" id="OPhoner" name="OPhoner" type="text">
+			<label class="block__label" for="g_phone">Номер телефона</label>
+			<input class="block__field" id="g_phone" name="g_phone" type="text">
 		</div>
 		<div class="field-wrap">
-			<label class="block__label" for="OAdres">Адрес проживания</label>
-			<input class="block__field" id="OAdres" name="OAdres" type="text">
-		</div>
-
-		<div class="field-wrap">
-			<input class="block__field" id="OPensioner" name="OPensioner" type="checkbox" value="checked">
-			<label class="block__label" for="OPensioner"><span></span>Пенсионер</label>			
+			<label class="block__label" for="g_address">Адрес проживания</label>
+			<input class="block__field" id="g_address" name="g_address" type="text">
 		</div>
 
 		<div class="field-wrap">
-			<input class="block__field" id="ORabota" name="ORabota" type="checkbox" value="checked">
-			<label class="block__label" for="ORabota"><span></span>Работа</label>	
+			<input class="block__field" id="g_pensioner" name="g_pensioner" type="checkbox" value="checked">
+			<label class="block__label" for="g_pensioner"><span></span>Пенсионер</label>			
+		</div>
+
+		<div class="field-wrap">
+			<input class="block__field" id="g_work" name="g_work" type="checkbox" value="checked">
+			<label class="block__label" for="g_work"><span></span>Работа</label>	
 		</div>				
 
 		<div class="field-wrap">
-			<input class="block__field" id="Maloobespech" name="Maloobespech" type="checkbox" value="checked">
-			<label class="block__label" for="Maloobespech"><span></span>Малообеспеченные</label>
+			<input class="block__field" id="lowincome" name="lowincome" type="checkbox" value="checked">
+			<label class="block__label" for="lowincome"><span></span>Малообеспеченные</label>
 		</div>
 
 		<div class="field-wrap">
-			<input class="block__field" id="Mnogodet" name="Mnogodet" type="checkbox" value="checked">
-			<label class="block__label" for="Mnogodet"><span></span>Многодетные</label>
+			<input class="block__field" id="children" name="children" type="checkbox" value="checked">
+			<label class="block__label" for="children"><span></span>Многодетные</label>
 		</div>
 
 		<div class="field-wrap">
-			<input class="block__field" id="Socialrisk" name="Socialrisk" type="checkbox" value="checked">
-			<label class="block__label" for="Socialrisk"><span></span>Семья социального риска</label>
+			<input class="block__field" id="socialrisk" name="socialrisk" type="checkbox" value="checked">
+			<label class="block__label" for="socialrisk"><span></span>Семья социального риска</label>
 		</div>
 
 		<input class="block__btn" name="submit" type="submit" value="Добавить запись">

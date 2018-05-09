@@ -1,372 +1,107 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8.2
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
--- Хост: sql303.byethost.com
--- Время создания: Апр 29 2018 г., 07:46
--- Версия сервера: 5.6.35-81.0
--- Версия PHP: 5.3.3
+-- Хост: 127.0.0.1
+-- Время создания: Май 09 2018 г., 12:37
+-- Версия сервера: 10.1.31-MariaDB
+-- Версия PHP: 7.2.3
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `b7_19728308_lich`
+-- База данных: `lich`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `111_2015`
+-- Структура таблицы `groups`
 --
 
-CREATE TABLE IF NOT EXISTS `111_2015` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(40) DEFAULT NULL,
-  `LastName` varchar(40) DEFAULT NULL,
-  `Otchestvo` varchar(40) DEFAULT NULL,
-  `NumberGroup` varchar(3) DEFAULT NULL,
-  `Specialnost` varchar(40) DEFAULT NULL,
-  `BirthDate` varchar(40) DEFAULT NULL,
-  `Phone` varchar(12) DEFAULT NULL,
-  `Propiska` varchar(40) DEFAULT NULL,
-  `Obshaga` varchar(10) DEFAULT NULL,
-  `Progivaet` varchar(50) DEFAULT NULL,
-  `GroupHealth` varchar(30) DEFAULT NULL,
-  `Invalidnost` varchar(10) DEFAULT NULL,
-  `KDN` varchar(10) DEFAULT NULL,
-  `Class` varchar(10) DEFAULT NULL,
-  `SrBallAt` varchar(5) DEFAULT NULL,
-  `Rabota` varchar(50) DEFAULT NULL,
-  `Hobbi` varchar(50) DEFAULT NULL,
-  `Family` varchar(50) DEFAULT NULL,
-  `Obespechenie` varchar(50) DEFAULT NULL,
-  `Maloobespech` varchar(50) DEFAULT NULL,
-  `Mnogodet` varchar(50) DEFAULT NULL,
-  `Socialrisk` varchar(50) DEFAULT NULL,
-  `FIOFather` varchar(50) DEFAULT NULL,
-  `FPensioner` varchar(10) DEFAULT NULL,
-  `FRabota` varchar(10) DEFAULT NULL,
-  `FMestoR` varchar(50) DEFAULT NULL,
-  `FPhoner` varchar(12) DEFAULT NULL,
-  `FAdres` varchar(50) DEFAULT NULL,
-  `FIOMother` varchar(50) DEFAULT NULL,
-  `MPensioner` varchar(10) DEFAULT NULL,
-  `MRabota` varchar(10) DEFAULT NULL,
-  `MMestoR` varchar(50) DEFAULT NULL,
-  `MPhoner` varchar(12) DEFAULT NULL,
-  `MAdres` varchar(50) DEFAULT NULL,
-  `FIOOpekun` varchar(50) DEFAULT NULL,
-  `OPensioner` varchar(10) DEFAULT NULL,
-  `ORabota` varchar(10) DEFAULT NULL,
-  `OMestoR` varchar(50) DEFAULT NULL,
-  `OPhoner` varchar(12) DEFAULT NULL,
-  `OAdres` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+CREATE TABLE `groups` (
+  `g_name` int(3) NOT NULL,
+  `g_year` int(4) NOT NULL,
+  `g_curator` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `111_2015`
+-- Дамп данных таблицы `groups`
 --
 
-INSERT INTO `111_2015` (`id`, `FirstName`, `LastName`, `Otchestvo`, `NumberGroup`, `Specialnost`, `BirthDate`, `Phone`, `Propiska`, `Obshaga`, `Progivaet`, `GroupHealth`, `Invalidnost`, `KDN`, `Class`, `SrBallAt`, `Rabota`, `Hobbi`, `Family`, `Obespechenie`, `Maloobespech`, `Mnogodet`, `Socialrisk`, `FIOFather`, `FPensioner`, `FRabota`, `FMestoR`, `FPhoner`, `FAdres`, `FIOMother`, `MPensioner`, `MRabota`, `MMestoR`, `MPhoner`, `MAdres`, `FIOOpekun`, `OPensioner`, `ORabota`, `OMestoR`, `OPhoner`, `OAdres`) VALUES
-(2, 'Алексей', '', '', '', 'Дошкольное образование', '1999-01-18', '', '', 'checked', '', 'I', '', '', '9', '', '', '', 'Полная', 'Гос.обеспечение', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `groups` (`g_name`, `g_year`, `g_curator`) VALUES
+(211, 2013, 2),
+(212, 2011, 3);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `112_2014`
+-- Структура таблицы `students`
 --
 
-CREATE TABLE IF NOT EXISTS `112_2014` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(40) DEFAULT NULL,
-  `LastName` varchar(40) DEFAULT NULL,
-  `Otchestvo` varchar(40) DEFAULT NULL,
-  `NumberGroup` varchar(3) DEFAULT NULL,
-  `Specialnost` varchar(40) DEFAULT NULL,
-  `BirthDate` varchar(40) DEFAULT NULL,
-  `Phone` varchar(12) DEFAULT NULL,
-  `Propiska` varchar(40) DEFAULT NULL,
-  `Obshaga` varchar(10) DEFAULT NULL,
-  `Progivaet` varchar(50) DEFAULT NULL,
-  `GroupHealth` varchar(30) DEFAULT NULL,
-  `Invalidnost` varchar(10) DEFAULT NULL,
-  `KDN` varchar(10) DEFAULT NULL,
-  `Class` varchar(10) DEFAULT NULL,
-  `SrBallAt` varchar(5) DEFAULT NULL,
-  `Rabota` varchar(50) DEFAULT NULL,
-  `Hobbi` varchar(50) DEFAULT NULL,
-  `Family` varchar(50) DEFAULT NULL,
-  `Obespechenie` varchar(50) DEFAULT NULL,
-  `Maloobespech` varchar(50) DEFAULT NULL,
-  `Mnogodet` varchar(50) DEFAULT NULL,
-  `Socialrisk` varchar(50) DEFAULT NULL,
-  `FIOFather` varchar(50) DEFAULT NULL,
-  `FPensioner` varchar(10) DEFAULT NULL,
-  `FRabota` varchar(10) DEFAULT NULL,
-  `FMestoR` varchar(50) DEFAULT NULL,
-  `FPhoner` varchar(12) DEFAULT NULL,
-  `FAdres` varchar(50) DEFAULT NULL,
-  `FIOMother` varchar(50) DEFAULT NULL,
-  `MPensioner` varchar(10) DEFAULT NULL,
-  `MRabota` varchar(10) DEFAULT NULL,
-  `MMestoR` varchar(50) DEFAULT NULL,
-  `MPhoner` varchar(12) DEFAULT NULL,
-  `MAdres` varchar(50) DEFAULT NULL,
-  `FIOOpekun` varchar(50) DEFAULT NULL,
-  `OPensioner` varchar(10) DEFAULT NULL,
-  `ORabota` varchar(10) DEFAULT NULL,
-  `OMestoR` varchar(50) DEFAULT NULL,
-  `OPhoner` varchar(12) DEFAULT NULL,
-  `OAdres` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `lastname` varchar(40) NOT NULL,
+  `father` varchar(40) NOT NULL,
+  `group_num` int(11) NOT NULL,
+  `speciality` varchar(40) NOT NULL,
+  `birthdate` date NOT NULL,
+  `phone` varchar(12) NOT NULL,
+  `registration` varchar(40) NOT NULL,
+  `dormitory` tinyint(1) NOT NULL,
+  `residence` varchar(40) NOT NULL,
+  `grouphealth` varchar(3) NOT NULL,
+  `disability` tinyint(1) NOT NULL,
+  `kdn` tinyint(1) NOT NULL,
+  `class` varchar(2) NOT NULL,
+  `midmark` varchar(4) NOT NULL,
+  `work` varchar(40) NOT NULL,
+  `hobby` varchar(40) NOT NULL,
+  `family` varchar(11) NOT NULL,
+  `security` varchar(20) NOT NULL,
+  `lowincome` tinyint(1) NOT NULL,
+  `children` tinyint(1) NOT NULL,
+  `socialrisk` tinyint(1) NOT NULL,
+  `father_name` varchar(40) NOT NULL,
+  `f_pensioner` tinyint(1) NOT NULL,
+  `f_work` tinyint(1) NOT NULL,
+  `f_workplace` varchar(40) NOT NULL,
+  `f_phone` varchar(12) NOT NULL,
+  `f_address` varchar(40) NOT NULL,
+  `mother_name` varchar(40) NOT NULL,
+  `m_pensioner` tinyint(1) NOT NULL,
+  `m_work` tinyint(1) NOT NULL,
+  `m_workplace` varchar(40) NOT NULL,
+  `m_phone` varchar(12) NOT NULL,
+  `m_address` varchar(40) NOT NULL,
+  `guardian_name` varchar(40) NOT NULL,
+  `g_pensioner` tinyint(1) NOT NULL,
+  `g_work` tinyint(1) NOT NULL,
+  `g_workplace` varchar(40) NOT NULL,
+  `g_phone` varchar(12) NOT NULL,
+  `g_address` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Структура таблицы `123_2014`
+-- Дамп данных таблицы `students`
 --
 
-CREATE TABLE IF NOT EXISTS `123_2014` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(40) DEFAULT NULL,
-  `LastName` varchar(40) DEFAULT NULL,
-  `Otchestvo` varchar(40) DEFAULT NULL,
-  `NumberGroup` varchar(3) DEFAULT NULL,
-  `Specialnost` varchar(40) DEFAULT NULL,
-  `BirthDate` varchar(40) DEFAULT NULL,
-  `Phone` varchar(12) DEFAULT NULL,
-  `Propiska` varchar(40) DEFAULT NULL,
-  `Obshaga` varchar(10) DEFAULT NULL,
-  `Progivaet` varchar(50) DEFAULT NULL,
-  `GroupHealth` varchar(30) DEFAULT NULL,
-  `Invalidnost` varchar(10) DEFAULT NULL,
-  `KDN` varchar(10) DEFAULT NULL,
-  `Class` varchar(10) DEFAULT NULL,
-  `SrBallAt` varchar(5) DEFAULT NULL,
-  `Rabota` varchar(50) DEFAULT NULL,
-  `Hobbi` varchar(50) DEFAULT NULL,
-  `Family` varchar(50) DEFAULT NULL,
-  `Obespechenie` varchar(50) DEFAULT NULL,
-  `Maloobespech` varchar(50) DEFAULT NULL,
-  `Mnogodet` varchar(50) DEFAULT NULL,
-  `Socialrisk` varchar(50) DEFAULT NULL,
-  `FIOFather` varchar(50) DEFAULT NULL,
-  `FPensioner` varchar(10) DEFAULT NULL,
-  `FRabota` varchar(10) DEFAULT NULL,
-  `FMestoR` varchar(50) DEFAULT NULL,
-  `FPhoner` varchar(12) DEFAULT NULL,
-  `FAdres` varchar(50) DEFAULT NULL,
-  `FIOMother` varchar(50) DEFAULT NULL,
-  `MPensioner` varchar(10) DEFAULT NULL,
-  `MRabota` varchar(10) DEFAULT NULL,
-  `MMestoR` varchar(50) DEFAULT NULL,
-  `MPhoner` varchar(12) DEFAULT NULL,
-  `MAdres` varchar(50) DEFAULT NULL,
-  `FIOOpekun` varchar(50) DEFAULT NULL,
-  `OPensioner` varchar(10) DEFAULT NULL,
-  `ORabota` varchar(10) DEFAULT NULL,
-  `OMestoR` varchar(50) DEFAULT NULL,
-  `OPhoner` varchar(12) DEFAULT NULL,
-  `OAdres` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Дамп данных таблицы `123_2014`
---
-
-INSERT INTO `123_2014` (`id`, `FirstName`, `LastName`, `Otchestvo`, `NumberGroup`, `Specialnost`, `BirthDate`, `Phone`, `Propiska`, `Obshaga`, `Progivaet`, `GroupHealth`, `Invalidnost`, `KDN`, `Class`, `SrBallAt`, `Rabota`, `Hobbi`, `Family`, `Obespechenie`, `Maloobespech`, `Mnogodet`, `Socialrisk`, `FIOFather`, `FPensioner`, `FRabota`, `FMestoR`, `FPhoner`, `FAdres`, `FIOMother`, `MPensioner`, `MRabota`, `MMestoR`, `MPhoner`, `MAdres`, `FIOOpekun`, `OPensioner`, `ORabota`, `OMestoR`, `OPhoner`, `OAdres`) VALUES
-(1, 'Николай', 'Керитов', 'Дмитриевич', '141', 'Дошкольное образование', '2018-02-03', '89637425211', 'ул. Каруселина', 'checked', 'ул. Каруселина и очень длинный текст, чтобы показа', 'II', '', '', '9', '5', 'Есть', 'Нет', 'Полная', 'Гос.обеспечение', '', '', 'checked', '5', '', '', '5', '5', '5', '5', '', '', '5', '5', '5', '5', 'checked', '', '5', '5', '5'),
-(2, 'Кир', 'Малеев', 'Ростиславович', '515', 'Изобразительное искусство и черчение', '2018-02-03', '5', 'ул. Ростислава', '', '5', 'II', 'checked', '', '9', '5', '5', '5', 'Неполная', 'Гос.обеспечение', '', 'checked', '', '5', '', '', '5', '5', '5', '5', '', '', '5', '5', '5', '5', '', '', '5', '5', '5'),
-(3, 'Ивано', 'Меньшиков', 'Третентьевич', '411', 'Физическая культура', '1992-02-04', '89637429145', 'ул. Лекка, галактика Мурс', 'checked', 'ул. Лекка, галактика Мурс', 'II', '', '', '9', '5', 'офис Яндекс', 'Apple Inc.', 'Полная', 'Гос.обеспечение', '', '', 'checked', 'Неверов Александр Нетеньевич', '', 'checked', 'Древний Рим', '911', 'ул. Лекка, галактика Мурс', 'Неверов Александр Нетеньевич', '', 'checked', 'Древний Рим', 'Неверов Алек', 'ул. Лекка, галактика Мурс', 'Неверов Александр Нетеньевич', '', 'checked', 'Древний Рим', 'Неверов Алек', 'ул. Лекка, галактика Мурс');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `425_673`
---
-
-CREATE TABLE IF NOT EXISTS `425_673` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(40) DEFAULT NULL,
-  `LastName` varchar(40) DEFAULT NULL,
-  `Otchestvo` varchar(40) DEFAULT NULL,
-  `NumberGroup` varchar(3) DEFAULT NULL,
-  `Specialnost` varchar(40) DEFAULT NULL,
-  `BirthDate` varchar(40) DEFAULT NULL,
-  `Phone` varchar(12) DEFAULT NULL,
-  `Propiska` varchar(40) DEFAULT NULL,
-  `Obshaga` varchar(10) DEFAULT NULL,
-  `Progivaet` varchar(50) DEFAULT NULL,
-  `GroupHealth` varchar(30) DEFAULT NULL,
-  `Invalidnost` varchar(10) DEFAULT NULL,
-  `KDN` varchar(10) DEFAULT NULL,
-  `Class` varchar(10) DEFAULT NULL,
-  `SrBallAt` varchar(5) DEFAULT NULL,
-  `Rabota` varchar(50) DEFAULT NULL,
-  `Hobbi` varchar(50) DEFAULT NULL,
-  `Family` varchar(50) DEFAULT NULL,
-  `Obespechenie` varchar(50) DEFAULT NULL,
-  `Maloobespech` varchar(50) DEFAULT NULL,
-  `Mnogodet` varchar(50) DEFAULT NULL,
-  `Socialrisk` varchar(50) DEFAULT NULL,
-  `FIOFather` varchar(50) DEFAULT NULL,
-  `FPensioner` varchar(10) DEFAULT NULL,
-  `FRabota` varchar(10) DEFAULT NULL,
-  `FMestoR` varchar(50) DEFAULT NULL,
-  `FPhoner` varchar(12) DEFAULT NULL,
-  `FAdres` varchar(50) DEFAULT NULL,
-  `FIOMother` varchar(50) DEFAULT NULL,
-  `MPensioner` varchar(10) DEFAULT NULL,
-  `MRabota` varchar(10) DEFAULT NULL,
-  `MMestoR` varchar(50) DEFAULT NULL,
-  `MPhoner` varchar(12) DEFAULT NULL,
-  `MAdres` varchar(50) DEFAULT NULL,
-  `FIOOpekun` varchar(50) DEFAULT NULL,
-  `OPensioner` varchar(10) DEFAULT NULL,
-  `ORabota` varchar(10) DEFAULT NULL,
-  `OMestoR` varchar(50) DEFAULT NULL,
-  `OPhoner` varchar(12) DEFAULT NULL,
-  `OAdres` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `753_6268`
---
-
-CREATE TABLE IF NOT EXISTS `753_6268` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(40) DEFAULT NULL,
-  `LastName` varchar(40) DEFAULT NULL,
-  `Otchestvo` varchar(40) DEFAULT NULL,
-  `NumberGroup` varchar(3) DEFAULT NULL,
-  `Specialnost` varchar(40) DEFAULT NULL,
-  `BirthDate` varchar(40) DEFAULT NULL,
-  `Phone` varchar(12) DEFAULT NULL,
-  `Propiska` varchar(40) DEFAULT NULL,
-  `Obshaga` varchar(10) DEFAULT NULL,
-  `Progivaet` varchar(50) DEFAULT NULL,
-  `GroupHealth` varchar(30) DEFAULT NULL,
-  `Invalidnost` varchar(10) DEFAULT NULL,
-  `KDN` varchar(10) DEFAULT NULL,
-  `Class` varchar(10) DEFAULT NULL,
-  `SrBallAt` varchar(5) DEFAULT NULL,
-  `Rabota` varchar(50) DEFAULT NULL,
-  `Hobbi` varchar(50) DEFAULT NULL,
-  `Family` varchar(50) DEFAULT NULL,
-  `Obespechenie` varchar(50) DEFAULT NULL,
-  `Maloobespech` varchar(50) DEFAULT NULL,
-  `Mnogodet` varchar(50) DEFAULT NULL,
-  `Socialrisk` varchar(50) DEFAULT NULL,
-  `FIOFather` varchar(50) DEFAULT NULL,
-  `FPensioner` varchar(10) DEFAULT NULL,
-  `FRabota` varchar(10) DEFAULT NULL,
-  `FMestoR` varchar(50) DEFAULT NULL,
-  `FPhoner` varchar(12) DEFAULT NULL,
-  `FAdres` varchar(50) DEFAULT NULL,
-  `FIOMother` varchar(50) DEFAULT NULL,
-  `MPensioner` varchar(10) DEFAULT NULL,
-  `MRabota` varchar(10) DEFAULT NULL,
-  `MMestoR` varchar(50) DEFAULT NULL,
-  `MPhoner` varchar(12) DEFAULT NULL,
-  `MAdres` varchar(50) DEFAULT NULL,
-  `FIOOpekun` varchar(50) DEFAULT NULL,
-  `OPensioner` varchar(10) DEFAULT NULL,
-  `ORabota` varchar(10) DEFAULT NULL,
-  `OMestoR` varchar(50) DEFAULT NULL,
-  `OPhoner` varchar(12) DEFAULT NULL,
-  `OAdres` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `12333_4415`
---
-
-CREATE TABLE IF NOT EXISTS `12333_4415` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(40) DEFAULT NULL,
-  `LastName` varchar(40) DEFAULT NULL,
-  `Otchestvo` varchar(40) DEFAULT NULL,
-  `NumberGroup` varchar(3) DEFAULT NULL,
-  `Specialnost` varchar(40) DEFAULT NULL,
-  `BirthDate` varchar(40) DEFAULT NULL,
-  `Phone` varchar(12) DEFAULT NULL,
-  `Propiska` varchar(40) DEFAULT NULL,
-  `Obshaga` varchar(10) DEFAULT NULL,
-  `Progivaet` varchar(50) DEFAULT NULL,
-  `GroupHealth` varchar(30) DEFAULT NULL,
-  `Invalidnost` varchar(10) DEFAULT NULL,
-  `KDN` varchar(10) DEFAULT NULL,
-  `Class` varchar(10) DEFAULT NULL,
-  `SrBallAt` varchar(5) DEFAULT NULL,
-  `Rabota` varchar(50) DEFAULT NULL,
-  `Hobbi` varchar(50) DEFAULT NULL,
-  `Family` varchar(50) DEFAULT NULL,
-  `Obespechenie` varchar(50) DEFAULT NULL,
-  `Maloobespech` varchar(50) DEFAULT NULL,
-  `Mnogodet` varchar(50) DEFAULT NULL,
-  `Socialrisk` varchar(50) DEFAULT NULL,
-  `FIOFather` varchar(50) DEFAULT NULL,
-  `FPensioner` varchar(10) DEFAULT NULL,
-  `FRabota` varchar(10) DEFAULT NULL,
-  `FMestoR` varchar(50) DEFAULT NULL,
-  `FPhoner` varchar(12) DEFAULT NULL,
-  `FAdres` varchar(50) DEFAULT NULL,
-  `FIOMother` varchar(50) DEFAULT NULL,
-  `MPensioner` varchar(10) DEFAULT NULL,
-  `MRabota` varchar(10) DEFAULT NULL,
-  `MMestoR` varchar(50) DEFAULT NULL,
-  `MPhoner` varchar(12) DEFAULT NULL,
-  `MAdres` varchar(50) DEFAULT NULL,
-  `FIOOpekun` varchar(50) DEFAULT NULL,
-  `OPensioner` varchar(10) DEFAULT NULL,
-  `ORabota` varchar(10) DEFAULT NULL,
-  `OMestoR` varchar(50) DEFAULT NULL,
-  `OPhoner` varchar(12) DEFAULT NULL,
-  `OAdres` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `config`
---
-
-CREATE TABLE IF NOT EXISTS `config` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `groups` varchar(40) DEFAULT NULL,
-  `years` varchar(40) DEFAULT NULL,
-  `obshee` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Дамп данных таблицы `config`
---
-
-INSERT INTO `config` (`id`, `groups`, `years`, `obshee`) VALUES
-(1, '123', '2014', '123_2014'),
-(2, '111', '2015', '111_2015'),
-(3, '12333', '4415', '12333_4415'),
-(4, '425', '673', '425_673'),
-(5, '753', '6268', '753_6268'),
-(6, '112', '2014', '112_2014');
+INSERT INTO `students` (`id`, `name`, `lastname`, `father`, `group_num`, `speciality`, `birthdate`, `phone`, `registration`, `dormitory`, `residence`, `grouphealth`, `disability`, `kdn`, `class`, `midmark`, `work`, `hobby`, `family`, `security`, `lowincome`, `children`, `socialrisk`, `father_name`, `f_pensioner`, `f_work`, `f_workplace`, `f_phone`, `f_address`, `mother_name`, `m_pensioner`, `m_work`, `m_workplace`, `m_phone`, `m_address`, `guardian_name`, `g_pensioner`, `g_work`, `g_workplace`, `g_phone`, `g_address`) VALUES
+(4, 'Кен', 'Толиров', 'Кураптович', 211, 'Дошкольное образование', '2018-05-19', '89637442114', '4', 1, 'ул. Мурманская, д. 4, кв. 3', 'II', 0, 0, '9', '54', '4', '4', 'Полная', 'Опекун', 0, 0, 1, '4', 0, 0, '4', '4', '4', '4', 0, 0, '4', '4', '4', '4', 0, 1, '4', '4', '4'),
+(5, 'Евгений', 'Дуров', 'Петрович', 211, 'Дошкольное образование', '2018-05-09', '8911559193', '5', 1, 'ул. Молоторная, д. 4, кв. 24', 'II', 0, 0, '9', '5', '5', '5', 'Полная', 'Гос.обеспечение', 0, 0, 0, '5', 0, 0, '5', '5', '5', '5', 0, 0, '5', '5', '5', '5', 1, 0, '5', '5', '5'),
+(6, 'Кувеев', 'Третьяк', 'Морозович', 212, 'Физическая культура', '2018-05-12', '89637044154', '43', 0, 'ул. Малохольного, д. 2, кв. 24', 'II', 1, 0, '11', '4', '43', '3', 'Неполная', 'Опекун', 0, 0, 0, '43', 0, 0, '3', '3', '3', '3', 1, 1, '3', '3', '3', '3', 0, 0, '3', '3', '3'),
+(7, 'Геога', 'Маога', 'Литрач', 212, 'Прикладная информатика', '2018-05-19', '8911441155', '5', 0, 'ул. Петрова, д. 4, кв. 14', 'II', 0, 0, '11', '5', '5', '5', 'Неполная', 'Опекун', 0, 0, 0, '5', 0, 1, '5', '5', '5', '5', 0, 1, '5', '5', '5', '5', 0, 0, '5', '5', '5'),
+(8, 'Алла', 'Трунова', 'Машоновна', 211, 'Физическая культура', '2018-05-02', '89637424449', 'ул. Кирова, д. 4, кв. 24', 0, 'ул. Кирова, д. 4, кв. 24', 'I', 1, 0, '11', '3.6', '5', '5', 'Полная', 'Гос.обеспечение', 0, 1, 0, '5', 1, 0, '5', '5', '5', '5', 0, 0, '5', '5', '5', '5', 0, 0, '5', '5', '5');
 
 -- --------------------------------------------------------
 
@@ -374,28 +109,84 @@ INSERT INTO `config` (`id`, `groups`, `years`, `obshee`) VALUES
 -- Структура таблицы `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` varchar(40) DEFAULT NULL,
-  `pass` varchar(40) DEFAULT NULL,
-  `priv` varchar(40) DEFAULT NULL,
-  `grup` varchar(30) DEFAULT NULL,
-  `year` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+CREATE TABLE `users` (
+  `uid` int(11) NOT NULL,
+  `username` varchar(25) NOT NULL,
+  `pass` varchar(32) NOT NULL,
+  `admin` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `user`, `pass`, `priv`, `grup`, `year`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', '666', NULL),
-(2, 'qwer', '962012d09b8170d912f0669f6d7d9d07', 'kurator', '123', '2014'),
-(3, 'aleksey', '202cb962ac59075b964b07152d234b70', 'kurator', '111', '2015'),
-(4, 'lol', '9cdfb439c7876e703e307864c9167a15', 'kurator', '12333', '4415'),
-(5, 'lsl', '9f05b617878c89b529edf5b73f69b822', 'admin', '425', '673'),
-(6, 'tyui', '15137ac9aa4a99ca503af92199223644', 'kurator', '753', '6268'),
-(7, 'aleksey', '202cb962ac59075b964b07152d234b70', 'kurator', '112', '2014');
+INSERT INTO `users` (`uid`, `username`, `pass`, `admin`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
+(2, 'qwer', '962012d09b8170d912f0669f6d7d9d07', 0),
+(3, 'asdf', '912ec803b2ce49e4a541068d495ab570', 0);
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `groups`
+--
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`g_name`),
+  ADD KEY `g_curator` (`g_curator`);
+
+--
+-- Индексы таблицы `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `group_num` (`group_num`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`uid`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `groups`
+--
+ALTER TABLE `groups`
+  MODIFY `g_name` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
+
+--
+-- AUTO_INCREMENT для таблицы `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `groups`
+--
+ALTER TABLE `groups`
+  ADD CONSTRAINT `groups_ibfk_1` FOREIGN KEY (`g_curator`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`group_num`) REFERENCES `groups` (`g_name`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

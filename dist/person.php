@@ -1,8 +1,8 @@
 <?php
 	include ('header.php');
-	if (!(isset($_SESSION['login']))){
+	if (!isset($_COOKIE["curator"])){
 		echo "Пожалуйста, войдите в учетную запись!";
-	} elseif ($_SESSION['priv']== "admin") {
+	} else if(isset($_COOKIE["admin"])){
 		echo "Вы админ!";
 	} else {
 	$group = $_SESSION['Table'];

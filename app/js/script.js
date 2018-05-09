@@ -3,7 +3,7 @@ $(document).on('submit', '#loginForm', function(e) {
 	$.ajax({
 	       data: form.serialize(),
 	       type: "post",
-	       url: "function.php",
+	       url: "functions.php",
 	       success: function(data) {
 	       		//trim удаляет лишние пробелы, которые есть в response
 	       		if($.trim(data) === "error") {  $(".login__error").show(); $(".login__error").html("Неверный логин или пароль"); }
@@ -43,14 +43,14 @@ $(document).on('submit', '#new_user', function(e) {
 		       	$(".msg").append($.trim(data));
 		       	form.find("input[type='text'], input[type='password']").val('');
 		       	form.find("input[type='checkbox']").prop("checked", false);
-		       	form.find("select").prop("selectedIndex", 0);		       		   
+		       	form.find("select").prop("selectedIndex", 0);
 	       } 
 	});	
 	e.preventDefault();
 });
 
-$(document).on('click', '.load_student', function() {
-	document.location.href = "doc1.php";
+$(document).on("click", ".load_student", function() {
+	document.location.href = "download.php";
 });
 
 
@@ -167,7 +167,7 @@ $(document).keyup(function(e) {
 });
 
 //Соритровка студентов по ОВЗ и общаге
-$(document).on('click', '.radio', function() {
+$(document).on('click', '.sort_btn, .filter_title', function() {
 	var sort = $(this).attr("data-sort");
 	$.ajax({
 	       data: "sel_id="+sort,
@@ -178,7 +178,6 @@ $(document).on('click', '.radio', function() {
 	       } 
 	});	
 });
-
 
 //Подтверждение пароля
 $(document).on("keyup keydown focus", "#confpass", function(){
