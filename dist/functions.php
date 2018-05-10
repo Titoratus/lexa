@@ -1,27 +1,35 @@
 <?php
-	session_start();
 	include("bd.php");
 
 	//Вход
 	if(isset($_POST["e_login"])){
 		$e_login = $_POST["e_login"];
-		$e_password = md5($_POST["e_password"]);
+		$e_password = password_hash($_POST["e_password"], PASSWORD_DEFAULT);
 		$query = mysqli_query($load, "SELECT * FROM users WHERE username = '$e_login'");
 		if(mysqli_num_rows($query) == 0) die("error");
 
-		$user_data = mysqli_fetch_array($query);				
-		if($user_data["pass"] == $e_password){
+		$user_data = mysqli_fetch_array($query);
+
+		if(password_verify($_POST["e_password"], $user_data["pass"])){
+			//Если админ, то set куки
+			if($user_data["admin"] == 1) {
+				setcookie("admin", "1", time() + 7200);
+				exit;
+			}
+
 			setcookie("curator", "$e_login", time() + 7200);
 			$query = mysqli_query($load, "SELECT uid FROM users WHERE username = '$e_login'");
 			$query = mysqli_fetch_array($query);
 			$uid = $query["uid"];
 			$query = mysqli_query($load, "SELECT g_name FROM groups WHERE g_curator = '$uid'");
-			$query = mysqli_fetch_array($query);
-			$group = $query["g_name"];
-			//Куки с ID группы
-			setcookie("group", "$group", time() + 7200);
-			//Если админ, то set куки
-			if($user_data["admin"] == 1) setcookie("admin", "1", time() + 7200);
+
+			//Если админ удалил группу
+			if(mysqli_num_rows($query) > 0){
+				$query = mysqli_fetch_array($query);
+				$group = $query["g_name"];
+				//Куки с ID группы
+				setcookie("group", "$group", time() + 7200);
+			}
 		} else die("error");
 	}
 
@@ -110,17 +118,21 @@ if(isset($_POST["edit_stud"])){
 		</div>
 		<div class="field-wrap">
 			<label for="group_num" class="block__label">Номер группы</label>
-			<select class="block__field" id="group_num" name="group_num" required>
-				<?php
-					$query = mysqli_query($load, "SELECT DISTINCT group_num FROM students"); 
-					while($group = mysqli_fetch_array($query)){
-				?>
-						<option value="<?php echo $group["group_num"]; ?>" <?php echo $group["group_num"] == $row["group_num"] ? "selected" : ""; ?>><?php echo $group["group_num"]; ?></option>
-				<?php
+			<?php if(isset($_COOKIE["admin"])){ ?>
+				<select class="block__field" id="group_num" name="group_num" required>
+					<?php
+						$query = mysqli_query($load, "SELECT DISTINCT group_num FROM students"); 
+						while($group = mysqli_fetch_array($query)){
+					?>
+							<option value="<?php echo $group["group_num"]; ?>" <?php echo $group["group_num"] == $row["group_num"] ? "selected" : ""; ?>><?php echo $group["group_num"]; ?></option>
+					<?php
 
-					}
-				?>
-		  </select>
+						}
+					?>
+			  </select>
+		  <?php } else { ?>
+		  	<input type="text" class="block__field" id="group_num" name="group_num" value="<?php echo $_COOKIE["group"]; ?>" disabled>
+		  <?php } ?>
 		</div>
 		<div class="field-wrap">
 			<label for="speciality" class="block__label">Специальность</label>
@@ -309,7 +321,7 @@ if(isset($_POST["edit_stud_save"])){
 		$name = $_POST["name"];
 		$lastname = $_POST["lastname"];
 		$father = $_POST["father"];
-		$group_num = $_POST["group_num"]; 
+		isset($_COOKIE["admin"]) ? $group_num = $_POST["group_num"] : $group_num = $_COOKIE["group"]; 
 		$speciality = $_POST["speciality"];
 		$birthdate = $_POST["birthdate"];
 		$phone = $_POST["phone"];
@@ -568,7 +580,7 @@ if(isset($_POST["view_stud"])){
 			<label class="block__label" for="Socialrisk"><span></span>Семья социального риска</label>
 		</div>
 
-		<input class="block__btn" type="submit" name="doc" value="Скачать">
+		<input class="block__btn" type="submit" value="Скачать">
 	</div>
 </form>
 <?php
@@ -617,9 +629,9 @@ if(isset($_POST["sel_id"])){
 			<?php if(isset($_COOKIE["admin"])) { ?>
 			<td><?php echo $stud["group_num"]; ?></td>
 			<?php } ?>
-			<td><a class="view_stud" data-view_stud="<?php echo $stud["id"]; ?>">Просмотр</a></td>
-			<td><a class="edit_stud" data-edit_stud="<?php echo $stud["id"]; ?>">Редактировать</a></td>
-			<td><a class="del_stud" data-del_stud="<?php echo $stud["id"]; ?>">Удалить</a></td>
+			<td><a class="view_stud" data-view_stud="<?php echo $stud["id"]; ?>"></a></td>
+			<td><a class="edit_stud" data-edit_stud="<?php echo $stud["id"]; ?>"></a></td>
+			<td><a class="del_stud" data-del_stud="<?php echo $stud["id"]; ?>"></a></td>
 		</tr>
 <?php
 			$i++;
@@ -627,31 +639,73 @@ if(isset($_POST["sel_id"])){
 }
 
 //Новый пользователь
-if(isset($_POST["year"])){
+if(isset($_POST["login"])){
 	$username = $_POST["login"];
-	$pass = md5($_POST["pass"]);
+	$pass = password_hash($_POST["pass"], PASSWORD_DEFAULT);
 	$confpass = $_POST["confpass"];
 	$admin = $_POST["priv"] == "admin" ? "1" : "0";
 	$confpass = $_POST["confpass"];
-	$group = $_POST["number"];
-	$year = $_POST["year"];
 
 	$query = mysqli_query($load, "SELECT username FROM users WHERE username = '$username'");
 	if(mysqli_num_rows($query)) die("<span class='info_error'>Пользователь с таким логином уже есть!</span>");
 
-	$query = mysqli_query($load, "SELECT g_name FROM groups WHERE g_name = '$group'");
-	if(mysqli_num_rows($query)) die("<span class='info_error'>Такая группа уже есть!</span>");
-	
 	if(!($_POST["pass"] == $confpass)) die("<span class='info_error'>Пароли не совпадают!</span>");
+
+	if($admin == "0"){
+		$group = $_POST["number"];
+		$year = $_POST["year"];
+		$query = mysqli_query($load, "SELECT g_name FROM groups WHERE g_name = '$group'");
+		if(mysqli_num_rows($query)) die("<span class='info_error'>Такая группа уже есть!</span>");		
+	}
 
 	$query = mysqli_query($load, "INSERT INTO users (`uid`, `username`, `pass`, `admin`) VALUES (NULL, '$username', '$pass', '$admin')");
 	if(!$query) die("<span class='info_error'>Не удалось добавить пользователя :(</span>");
+	else echo "success";
 
-	echo "Пользователь успешно добавлен!";
-	$getuid = mysqli_query($load, "SELECT uid FROM users WHERE username = '$username'");
-	$getuid = mysqli_fetch_array($getuid);
-	$uid = $getuid["uid"];
+	if($admin == "0"){
+		$getuid = mysqli_query($load, "SELECT uid FROM users WHERE username = '$username'");
+		$getuid = mysqli_fetch_array($getuid);
+		$uid = $getuid["uid"];
 
-	$query = mysqli_query($load, "INSERT INTO groups (`g_name`, `g_year`, `g_curator`) VALUES ('$group', '$year', '$uid')");
+		$query = mysqli_query($load, "INSERT INTO groups (`g_name`, `g_year`, `g_curator`) VALUES ('$group', '$year', '$uid')");
+	}
+}
+
+//Изменение пароля пользователя
+if(isset($_POST["userlist"])){
+	$uid = $_POST["userlist"];
+	$pass = password_hash($_POST["newpass"], PASSWORD_DEFAULT);
+	$query = mysqli_query($load, "UPDATE users SET pass = '$pass' WHERE uid = '$uid'");
+	if($query) echo "success";
+	else echo "Не удалось изменить пароль";
+}
+
+//Удаление группы
+if(isset($_POST["del_groupid"])){
+	$id = $_POST["del_groupid"];
+	$query = mysqli_query($load, "DELETE FROM groups WHERE g_name = '$id'");
+	if($query) echo "success";
+	else echo "Не удалось удалить группу";
+}
+
+//Добавление группы при входе после удаления в админке
+
+if(isset($_POST["new_group_num"])){
+	$id = $_POST["new_group_num"];
+	$year = $_POST["new_group_y"];
+	$curator = $_COOKIE["curator"];
+	$query = mysqli_query($load, "SELECT uid FROM users WHERE username = '$curator'");
+	$query = mysqli_fetch_array($query);
+	$cur_id = $query["uid"];
+
+	$query = mysqli_query($load, "SELECT g_name FROM groups WHERE g_name = '$id'");
+	if(mysqli_num_rows($query)) die("<span class='info_error'>Такая группа уже есть!</span>");	
+	
+	$query = mysqli_query($load, "INSERT INTO groups (`g_name`, `g_year`, `g_curator`) VALUES ('$id', '$year', '$cur_id')");
+	if($query) {
+		echo "success";
+		setcookie("group", "$id", time() + 7200);		
+	}
+	else echo "Не удалось удалить группу";
 }
 ?>

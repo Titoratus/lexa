@@ -1,7 +1,7 @@
 <?php
 	$page = "Студенты";
 	include('header.php');
-	if(!isset($_COOKIE["curator"])) die("Пожалуйста, войдите в учётную запись!");
+	if(!isset($_COOKIE["curator"]) && !isset($_COOKIE["admin"])) die("Пожалуйста, войдите в учётную запись!");
 
 		//Админка
 	if(isset($_COOKIE["admin"])) {

@@ -13,6 +13,25 @@ $(document).on('submit', '#loginForm', function(e) {
 	e.preventDefault();
 });
 
+//Новая группа после удаления в админке
+$(document).on('submit', '#new_group', function(e) {
+	var form = $(this);
+	$.ajax({
+	       data: form.serialize(),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+		       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close'></span></div></div>");
+		       	$(".msg-popup").fadeIn();	       	
+		       	if($.trim(data) == "success"){
+			       	location.reload();
+		       	}
+		       	else $(".msg").append($.trim(data));
+	       } 
+	});	
+	e.preventDefault();
+});
+
 $(document).on('keypress', '.login__input', function(e) {
 	$(".login__error").hide();
 });
@@ -40,10 +59,57 @@ $(document).on('submit', '#new_user', function(e) {
 	       success: function(data) {
 		       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close'></span></div></div>");
 		       	$(".msg-popup").fadeIn();
-		       	$(".msg").append($.trim(data));
-		       	form.find("input[type='text'], input[type='password']").val('');
-		       	form.find("input[type='checkbox']").prop("checked", false);
-		       	form.find("select").prop("selectedIndex", 0);
+		       	if($.trim(data) == "success"){
+			       	form.find("input[type='text'], input[type='password']").val('');
+			       	form.find("input[type='checkbox']").prop("checked", false);
+			       	form.find("select").prop("selectedIndex", 0);
+			       	$(".msg").append("Пользователь успешно добавлен!");
+		       	}
+		       	else $(".msg").append($.trim(data));
+	       } 
+	});	
+	e.preventDefault();
+});
+
+//Изменение пароля пользователя
+$(document).on('submit', '#change_pass', function(e) {
+	var form = $(this);
+	$.ajax({
+	       data: form.serialize(),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+		       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close'></span></div></div>");
+		       	$(".msg-popup").fadeIn();
+		       	if($.trim(data) == "success"){
+			       	form.find("input[type='text'], input[type='password']").val('');
+			       	form.find("input[type='checkbox']").prop("checked", false);
+			       	form.find("select").prop("selectedIndex", 0);
+			       	$(".msg").append("Пароль успешно изменён!");
+		       	}
+		       	else $(".msg").append($.trim(data));
+	       } 
+	});	
+	e.preventDefault();
+});
+
+//Удаление пароля пользователя
+$(document).on('submit', '#del_group', function(e) {
+	var form = $(this);
+	$.ajax({
+	       data: form.serialize(),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+		       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close msg__close_refresh'></span></div></div>");
+		       	$(".msg-popup").fadeIn();
+		       	if($.trim(data) == "success"){
+			       	form.find("input[type='text'], input[type='password']").val('');
+			       	form.find("input[type='checkbox']").prop("checked", false);
+			       	form.find("select").prop("selectedIndex", 0);
+			       	$(".msg").append("Группа успешно удалена!");
+		       	}
+		       	else $(".msg").append($.trim(data));
 	       } 
 	});	
 	e.preventDefault();
@@ -114,11 +180,24 @@ $(document).on('click', '.edit_stud', function() {
 	       success: function(data) {
 	       	$("body").append("<div class='msg-popup'></div>");
 	       	$(".msg-popup").html(data);
+	       	$(".field-wrap .block__field").prop("required", true);
 	       	$(".msg-popup").fadeIn();
 	       	$(".block").append("<span class='msg__close msg__close_white'></span>")
 	       } 
 	});
 });
+
+$(document).on("change", "select[name='priv']", function(){
+	if(this.value == "admin") {
+		$(".for_curator").hide();
+		$(".for_curator .block__field").prop("disabled", true);
+	}
+	else {
+		$(".for_curator").show();
+		$(".for_curator .block__field").prop("disabled", false);
+	}
+});
+
 
 //Сохранить изменения
 $(document).on('submit', '#form_save', function(e) {

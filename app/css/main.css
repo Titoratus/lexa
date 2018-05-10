@@ -178,6 +178,13 @@ select {
     .block__label span:hover {
       opacity: 1; }
 
+.block__alert {
+  display: block;
+  font: 14px "Raleway-SemiBold", sans-serif;
+  background: #ce5454;
+  border: 1px dashed #9e3131;
+  padding: 10px 15px; }
+
 .block__field {
   border: none;
   background-color: #22283b;
@@ -225,11 +232,12 @@ select {
   font: 1.4em "Raleway-Bold", sans-serif;
   margin-top: 60px;
   margin-bottom: 30px;
-  text-align: center; }
+  text-align: center;
+  color: #e4ebff; }
 
-.block__subtitle {
-  margin-top: 35px;
-  color: #D9E3FF; }
+.block__subtitle_nm {
+  margin-top: 0;
+  color: #e4ebff; }
 
 .block__btn {
   background: #3399ff;
@@ -243,6 +251,13 @@ select {
   font: 0.875em "Raleway-SemiBold", sans-serif;
   cursor: pointer;
   margin-top: 15px; }
+
+.block__exit {
+  position: absolute;
+  right: 15px;
+  top: -40px;
+  color: #dc7878;
+  font: 14px Arial; }
 
 .form_table {
   width: 100%; }

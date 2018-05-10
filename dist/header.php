@@ -5,7 +5,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><?php echo $page; //Вывод заголовка активной вкладки ?></title>
 	<script src="js/font-loader.js"></script>
-	<link rel="stylesheet" href="css/libs.min.css">
 	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -22,7 +21,7 @@
 		</ul>
 	</header>
 
-	<?php } else if(isset($_COOKIE["curator"])){ ?>
+	<?php } else if(isset($_COOKIE["curator"]) && isset($_COOKIE["group"])){ ?>
 
 	<header>
 		<ul class="top-line">
