@@ -35,12 +35,19 @@ gulp.task('browser-sync', function(){
 });
 
 gulp.task('scripts', function(){
-	return gulp.src([
+	gulp.src([
 		'app/libs/jquery/dist/jquery.min.js'
 	])
 	.pipe(concat('libs.min.js'))
 	.pipe(uglify())
-	.pipe(gulp.dest('app/js'))
+	.pipe(gulp.dest('app/js'));
+
+	gulp.src([
+		'app/js/script.js'
+	])
+	.pipe(uglify())
+	.pipe(rename({ suffix: '.min' }))
+	.pipe(gulp.dest('app/js'));	
 });
 
 gulp.task('css-libs', ['sass'], function(){

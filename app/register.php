@@ -5,7 +5,7 @@
 		echo "Пожалуйста, войдите в учетную запись!";
 	} else if(isset($_COOKIE["admin"])){
 ?>
-<form id="new_user" method="POST" action="">
+<form class="block_form" id="new_user" method="POST" action="">
 	<div class="block">
 		<h2 class="block__subtitle block__subtitle_nm">Новый пользователь</h2>
 		<div class="field-wrap">
@@ -31,17 +31,18 @@
 		<div class="for_curator">
 			<div class="field-wrap">
 				<label for="number" class="block__label">Номер группы</label>
-				<input type="text" class="block__field field_nocap" id="number" name="number" minlength="3" maxlength="3" required>
+				<input type="text" class="block__field field_nocap" id="number" name="number" minlength="3" maxlength="3" pattern="[0-9]+" title="Только цифры!" required>
 			</div>
 			<div class="field-wrap">
 				<label for="year" class="block__label">Год поступления</label>
-				<input type="text" class="block__field field_nocap" id="year" name="year" minlength="4" maxlength="4" required>
+				<input type="text" class="block__field field_nocap" id="year" name="year" minlength="4" maxlength="4" pattern="[0-9]+" title="Только цифры!" required>
 			</div>
 		</div>
 		<input type="submit" class="block__btn" value="Добавить пользователя" name="but">
 	</div>
 </form>
-<form id="change_pass">
+
+<form class="block_form" id="change_pass">
 	<div class="block">
 		<h2 class="block__subtitle block__subtitle_nm">Изменение пароля</h2>
 		<div class="field-wrap">
@@ -64,7 +65,7 @@
 		<input type="submit" class="block__btn" value="Изменить пароль" name="but">
 	</div>
 </form>
-<form id="del_group">
+<form class="block_form" id="del_group">
 	<div class="block">
 		<h2 class="block__subtitle block__subtitle_nm">Удаление группы</h2>
 		<div class="field-wrap">
@@ -73,17 +74,52 @@
 			<?php
 				$query = mysqli_query($load, "SELECT * FROM groups");
 				while($row = mysqli_fetch_array($query)){
+					$id = $row["g_curator"];
+					$cur = mysqli_query($load, "SELECT username FROM users WHERE uid='$id'");
+					$cur = mysqli_fetch_array($cur);
 			?>
-				<option value="<?php echo $row["g_name"]; ?>"><?php echo $row["g_name"]; ?></option>
+				<option value="<?php echo $row["g_name"]; ?>"><?php echo $row["g_name"]." — ".$cur["username"]; ?></option>
 			<?php
 				}
 			?>
 			</select>
 		</div>
 		<div class="field-wrap">
-			<label for="newpass" class="block__alert">Данные студентов выбранной группы будут безвозвратно удалены!</label>	
+			<label class="block__alert">Данные студентов выбранной группы будут безвозвратно удалены!</label>	
 		</div>		
 		<input type="submit" class="block__btn" value="Удалить группу" name="but">
+	</div>
+</form>
+
+<form class="block_form" id="edt_group" method="POST" action="">
+	<div class="block">
+		<h2 class="block__subtitle block__subtitle_nm">Изменение группы</h2>
+		<div class="field-wrap">
+			<label for="edt_groupid" class="block__label">Группа</label>
+			<select class="block__field" name="edt_groupid" id="edt_groupid" required>
+			<?php
+				$query = mysqli_query($load, "SELECT * FROM groups");
+				$i = false;
+				while($row = mysqli_fetch_array($query)){
+					$id = $row["g_curator"];
+					$cur = mysqli_query($load, "SELECT username FROM users WHERE uid='$id'");
+					$cur = mysqli_fetch_array($cur);
+					if(!$i){
+						$i = true;
+						$firstopt = $row["g_name"];
+					}
+			?>
+				<option value="<?php echo $row["g_name"]; ?>"><?php echo $row["g_name"]." — ".$cur["username"]; ?></option>
+			<?php
+				}
+			?>
+			</select>
+		</div>
+		<div class="field-wrap">
+			<label for="edt_newgroup" class="block__label">Новое название</label>
+			<input type="text" class="block__field" name="edt_newgroup" id="edt_newgroup" value="<?php echo isset($firstopt) ? $firstopt : ""; ?>" minlength="3" maxlength="3" pattern="[0-9]+" title="Только цифры!" required>
+		</div>		
+		<input type="submit" class="block__btn" value="Изменить" name="but">
 	</div>
 </form>
 <?php

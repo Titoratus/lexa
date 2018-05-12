@@ -1,7 +1,9 @@
 <?php
-	$page = "Главная";
-	include("header.php");
+  if(isset($_COOKIE["curator"]) || isset($_COOKIE["admin"])) $page = "Главная";
+	else $page = "Вход";
+	
 	if(!(isset($_COOKIE["curator"]) || isset($_COOKIE["admin"]))){
+		include("header.php");
 ?>
 
 <form id="loginForm" class="login" method="POST" action="">
@@ -15,6 +17,8 @@
 <?php
 	}
 	else if(!isset($_COOKIE["group"]) && isset($_COOKIE["curator"])){
+		$page = "Вход";
+		include("header.php");
 ?>
 <form id="new_group">
 	<div class="block">
@@ -33,5 +37,6 @@
 </form>
 <?php
 	}
+	else include("header.php");
 	include("footer.php");
 ?>

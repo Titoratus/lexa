@@ -11,17 +11,17 @@
 
 			<div class="field-wrap">
 				<label class="block__label" for="name">Имя</label>
-				<input class="block__field" id="name" name="name" type="text" autocomplete="off">
+				<input class="block__field" id="name" name="name" type="text" autocomplete="off" required>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="lastname">Фамилия</label>
-				<input class="block__field" id="lastname" name="lastname" type="text" autocomplete="off">
+				<input class="block__field" id="lastname" name="lastname" type="text" autocomplete="off" required>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="father">Отчество</label>
-				<input class="block__field" id="father" name="father" type="text" autocomplete="off">
+				<input class="block__field" id="father" name="father" type="text" autocomplete="off" required>
 			</div>
 
 			<div class="field-wrap">
@@ -44,22 +44,22 @@
 			
 			<div class="field-wrap">
 				<label class="block__label" for="birthdate">Дата рождения</label>
-				<input class="block__field" id="birthdate" name="birthdate" type="date">
+				<input class="block__field" id="birthdate" name="birthdate" type="date" required>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="phone">Номер телефона</label>
-				<input class="block__field" id="phone" name="phone" type="text">
+				<input class="block__field" id="phone" name="phone" type="text" required>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="registration">Адрес прописки</label>
-				<input class="block__field" id="registration" name="registration" type="text">
+				<input class="block__field" id="registration" name="registration" type="text" required>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="residence">Адрес проживания</label>
-				<input class="block__field" id="residence" name="residence" type="text">
+				<input class="block__field" id="residence" name="residence" type="text" required>
 			</div>
 
 			<div class="field-wrap">
@@ -85,17 +85,17 @@
 
 			<div class="field-wrap">
 				<label class="block__label" for="midmark">Средний балл аттестата</label>
-				<input class="block__field" id="midmark" name="midmark" type="text">
+				<input class="block__field" id="midmark" name="midmark" type="text" required>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="work">Подработка</label>
-				<input class="block__field" id="work" name="work" type="text">
+				<input class="block__field" id="work" name="work" type="text" required>
 			</div>
 
 			<div class="field-wrap">
 				<label class="block__label" for="hobby">Кружки, секции</label>
-				<input class="block__field" id="hobby" name="hobby" type="text">
+				<input class="block__field" id="hobby" name="hobby" type="text" required>
 			</div>
 
 			<div class="field-wrap">				
@@ -129,7 +129,7 @@
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="security">Обеспечение</label>
-			<select class="block__field" id="security" name="security">
+			<select class="block__field" id="security" name="security" required>
 				<option selected disabled></option>
 				<option value="Гос.обеспечение">Гос.обеспечение</option>
 				<option value="Опекун">Опекун</option>
@@ -139,19 +139,19 @@
 		<h3 class="block__subtitle">Отец</h3>
 		<div class="field-wrap">
 			<label class="block__label" for="father_name">ФИО отца</label>
-			<input class="block__field" id="father_name" name="father_name" type="text">
+			<input class="block__field" id="father_name" name="father_name" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="f_workplace">Место работы</label>
-			<input class="block__field" id="f_workplace" name="f_workplace" type="text">
+			<input class="block__field" id="f_workplace" name="f_workplace" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="f_phone">Номер телефона</label>
-			<input class="block__field" id="f_phone" name="f_phone" type="text">
+			<input class="block__field" id="f_phone" name="f_phone" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="f_address">Адрес проживания</label>
-			<input class="block__field" id="f_address" name="f_address" type="text">
+			<input class="block__field" id="f_address" name="f_address" type="text" required>
 		</div>
 
 		<div class="field-wrap">
@@ -166,19 +166,19 @@
 		<h3 class="block__subtitle">Мать</h3>
 		<div class="field-wrap">
 			<label class="block__label" for="mother_name">ФИО матери</label>
-			<input class="block__field" id="mother_name" name="mother_name" type="text">
+			<input class="block__field" id="mother_name" name="mother_name" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="m_workplace">Место работы</label>
-			<input class="block__field" id="m_workplace" name="m_workplace" type="text">
+			<input class="block__field" id="m_workplace" name="m_workplace" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="m_phone">Номер телефона</label>
-			<input class="block__field" id="m_phone" name="m_phone" type="text">
+			<input class="block__field" id="m_phone" name="m_phone" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="m_address">Адрес проживания</label>
-			<input class="block__field" id="m_address" name="m_address" type="text">
+			<input class="block__field" id="m_address" name="m_address" type="text" required>
 		</div>
 
 		<div class="field-wrap">
@@ -194,19 +194,19 @@
 		<h3 class="block__subtitle">Опекун</h3>
 		<div class="field-wrap">
 			<label class="block__label" for="guardian_name">ФИО опекуна</label>
-			<input class="block__field" id="guardian_name" name="guardian_name" type="text">
+			<input class="block__field" id="guardian_name" name="guardian_name" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="g_workplace">Место работы</label>
-			<input class="block__field" id="g_workplace" name="g_workplace" type="text">
+			<input class="block__field" id="g_workplace" name="g_workplace" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="g_phone">Номер телефона</label>
-			<input class="block__field" id="g_phone" name="g_phone" type="text">
+			<input class="block__field" id="g_phone" name="g_phone" type="text" required>
 		</div>
 		<div class="field-wrap">
 			<label class="block__label" for="g_address">Адрес проживания</label>
-			<input class="block__field" id="g_address" name="g_address" type="text">
+			<input class="block__field" id="g_address" name="g_address" type="text" required>
 		</div>
 
 		<div class="field-wrap">

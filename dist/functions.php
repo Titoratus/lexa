@@ -3,6 +3,7 @@
 
 	//Вход
 	if(isset($_POST["e_login"])){
+		include("password.php");
 		$e_login = $_POST["e_login"];
 		$e_password = password_hash($_POST["e_password"], PASSWORD_DEFAULT);
 		$query = mysqli_query($load, "SELECT * FROM users WHERE username = '$e_login'");
@@ -121,10 +122,10 @@ if(isset($_POST["edit_stud"])){
 			<?php if(isset($_COOKIE["admin"])){ ?>
 				<select class="block__field" id="group_num" name="group_num" required>
 					<?php
-						$query = mysqli_query($load, "SELECT DISTINCT group_num FROM students"); 
+						$query = mysqli_query($load, "SELECT g_name FROM groups"); 
 						while($group = mysqli_fetch_array($query)){
 					?>
-							<option value="<?php echo $group["group_num"]; ?>" <?php echo $group["group_num"] == $row["group_num"] ? "selected" : ""; ?>><?php echo $group["group_num"]; ?></option>
+							<option value="<?php echo $group["g_name"]; ?>" <?php echo $group["g_name"] == $row["group_num"] ? "selected" : ""; ?>><?php echo $group["g_name"]; ?></option>
 					<?php
 
 						}
@@ -589,27 +590,18 @@ if(isset($_POST["view_stud"])){
 //Сортировка
 if(isset($_POST["sel_id"])){
 	$id = $_POST["sel_id"];
-	if(isset($_COOKIE["admin"])) $result = mysqli_query($load, "SELECT * FROM students WHERE $id = '1' ORDER BY lastname ASC");
+
+	//Значение в строке поиска
+	$search = $_POST["search"];
+	if($search != '0') $search = "$search%";
+	else $search = "%";
+
+	if(isset($_COOKIE["admin"])) $result = mysqli_query($load, "SELECT * FROM students WHERE $id = '1' AND lastname LIKE '$search' ORDER BY lastname ASC");
 	else {
 		$group = $_COOKIE["group"];
-		$result = mysqli_query($load, "SELECT * FROM students WHERE $id = '1' AND group_num = '$group' ORDER BY lastname ASC");		
+		$result = mysqli_query($load, "SELECT * FROM students WHERE $id = '1' AND group_num = '$group' AND lastname LIKE '$search' ORDER BY lastname ASC");		
 	}
-?>	
-		<tr>
-			<th>№</th>
-			<th><a class="sort_table" data-sort="lastname">Фамилия</a></th>
-			<th><a class="sort_table" data-sort="name">Имя</a></th>
-			<th><a class="sort_table" data-sort="father">Отчество</a></th>
-			<th><a class="sort_table" data-sort="birthdate">Дата рождения</a></th>
-			<th><a class="sort_table" data-sort="dormitory">Общежитие</a></th>
-			<th><a class="sort_table" data-sort="registration">Адрес проживания</a></th>
-			<th><a class="sort_table" data-sort="phone">Телефон</a></th>
-			<?php if(isset($_COOKIE["admin"])){ ?>
-				<th><a>Группа</a></th>
-			<?php } ?>
-		</tr>
-
-<?php
+	
 		$i = 1;
 		while($stud = mysqli_fetch_array($result)){
 			$h = $stud["id"];
@@ -640,6 +632,7 @@ if(isset($_POST["sel_id"])){
 
 //Новый пользователь
 if(isset($_POST["login"])){
+	include("password.php");
 	$username = $_POST["login"];
 	$pass = password_hash($_POST["pass"], PASSWORD_DEFAULT);
 	$confpass = $_POST["confpass"];
@@ -673,6 +666,7 @@ if(isset($_POST["login"])){
 
 //Изменение пароля пользователя
 if(isset($_POST["userlist"])){
+	include("password.php");
 	$uid = $_POST["userlist"];
 	$pass = password_hash($_POST["newpass"], PASSWORD_DEFAULT);
 	$query = mysqli_query($load, "UPDATE users SET pass = '$pass' WHERE uid = '$uid'");
@@ -708,4 +702,13 @@ if(isset($_POST["new_group_num"])){
 	}
 	else echo "Не удалось удалить группу";
 }
+if(isset($_POST["edt_groupid"])){
+	$old = $_POST["edt_groupid"];
+	$new = $_POST["edt_newgroup"];
+	$query = mysqli_query($load, "UPDATE groups SET g_name = '$new' WHERE g_name = '$old'");
+	if($query) echo "Название группы успешно изменено!";
+	else echo "<span class='info_error'>Не удалось изменить название!</span>";
+}
+
+mysqli_close($load);
 ?>

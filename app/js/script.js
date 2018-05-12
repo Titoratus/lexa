@@ -42,12 +42,30 @@ $(document).on("click", ".exit", function(){
 	}
 });
 
+//Поиск по студентам
+$(document).on("keyup", ".search_stud", function(){
+	if(this.value.length >= 2 || this.value == ""){
+		var filter = $(".filter:checked").attr("data-filter");
+		if(filter == undefined){
+			filter = 0;
+		}
+		$.ajax({
+		  type: 'post',
+		  url: "search.php",
+		  data: "value="+this.value+"&filter="+filter,
+		  success: function(data){
+		      $(".table tr:not(:first)").remove();
+		      $(".table tbody").append(data).fadeIn(); 
+		 }
+		});
+	}
+});
+
 $(document).ready(function(){
     $(document).on('focus', '.block__field', function(){
         $(this).attr('autocomplete', 'off');
     });
 });
-
 
 //Новый пользователь
 $(document).on('submit', '#new_user', function(e) {
@@ -131,9 +149,9 @@ $(document).on('submit', '#new_student', function(e) {
 	       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close'></span></div></div>");
 	       	$(".msg-popup").fadeIn();
 	       	$(".msg").append(data);
-	       	form.find("input[type='text']").val('');
-	       	form.find("input[type='checkbox']").prop("checked", false);
-	       	form.find("select").prop("selectedIndex", 0);
+	       	form.find("input[type='text']:not(:disabled)").val('');
+	       	form.find("input[type='checkbox']:not(:disabled)").prop("checked", false);
+	       	form.find("select:not(:disabled)").prop("selectedIndex", 0);
 	       }
 	});	
 	e.preventDefault();
@@ -180,7 +198,6 @@ $(document).on('click', '.edit_stud', function() {
 	       success: function(data) {
 	       	$("body").append("<div class='msg-popup'></div>");
 	       	$(".msg-popup").html(data);
-	       	$(".field-wrap .block__field").prop("required", true);
 	       	$(".msg-popup").fadeIn();
 	       	$(".block").append("<span class='msg__close msg__close_white'></span>")
 	       } 
@@ -246,14 +263,36 @@ $(document).keyup(function(e) {
 });
 
 //Соритровка студентов по ОВЗ и общаге
-$(document).on('click', '.sort_btn, .filter_title', function() {
-	var sort = $(this).attr("data-sort");
+$(document).on('click', '.sort_btn, .filter_title', function(e) {
+
+	//Если что-то есть в поиске
+	if($.trim($(".search_stud").val()).length >= 2) var search = $.trim($(".search_stud").val());
+	else var search = 0;
+
+	//Сброс фильтра
+	if($(this).attr("for") == $(".filter:checked").attr("id")) {
+		e.preventDefault();
+		$(".filter:checked").prop("checked", false);
+		$.ajax({
+		       data: "full=1&search="+search,
+		       type: "post",
+		       url: "search.php",
+		       success: function(data) {
+		       		$(".table tr:not(:first)").remove();
+		       		$(".table tbody").append(data);
+		       }
+		});
+		return;
+	}
+
+	var sort = $(this).attr("data-sort");	
 	$.ajax({
-	       data: "sel_id="+sort,
+	       data: "sel_id="+sort+"&search="+search,
 	       type: "post",
 	       url: "functions.php",
 	       success: function(data) {
-	       		$(".table").html(data);
+	       		$(".table tr:not(:first)").remove();
+	       		$(".table tbody").append(data);
 	       } 
 	});	
 });
@@ -271,4 +310,24 @@ $(document).on("blur", "#confpass", function(){
 
 $(document).on("keyup keydown", "#pass", function(){
 	$("#confpass").val("");
+});
+
+$(document).on("change", "#edt_groupid", function(){
+	$("#edt_newgroup").val($(this).val());
+});
+
+//Изменение названия группы
+$(document).on('submit', '#edt_group', function(e) {
+	var form = $(this);
+	$.ajax({
+	       data: form.serialize(),
+	       type: "post",
+	       url: "functions.php",
+	       success: function(data) {
+	       	$("body").append("<div class='msg-popup'><div class='msg'><span class='msg__close msg__close_refresh'></span></div></div>");
+	       	$(".msg-popup").fadeIn();
+	       	$(".msg").append(data);
+	       }
+	});	
+	e.preventDefault();
 });

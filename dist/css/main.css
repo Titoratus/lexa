@@ -95,6 +95,7 @@ select {
 
 .top-line__elem {
   display: inline-block;
+  position: relative;
   margin-left: 63px; }
   .top-line__elem:first-of-type {
     margin-left: 0; }
@@ -109,6 +110,59 @@ select {
   font-size: .938em; }
   .top-line__link:not(.link_active):hover {
     opacity: .7; }
+
+.top-line__greeting {
+  background: -webkit-gradient(linear, left top, left bottom, from(#6eb7ff), to(#3399ff));
+  background: -webkit-linear-gradient(#6eb7ff, #3399ff);
+  background: -o-linear-gradient(#6eb7ff, #3399ff);
+  background: linear-gradient(#6eb7ff, #3399ff);
+  -webkit-box-shadow: 0 11px 32px rgba(75, 162, 255, 0.26);
+          box-shadow: 0 11px 32px rgba(75, 162, 255, 0.26);
+  padding: 20px 35px;
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+  text-shadow: 0 2px 0 #3782d3; }
+
+.menu_desc {
+  width: 220px;
+  font: 15px Arial;
+  line-height: 1.5;
+  opacity: .6;
+  cursor: default;
+  position: absolute;
+  top: 216px; }
+  .menu_desc::before {
+    content: "";
+    display: block;
+    width: 84px;
+    height: 148px;
+    position: absolute;
+    top: -168px;
+    left: 50%;
+    margin-left: -42px; }
+
+.stud_desc {
+  left: -100px; }
+  .stud_desc::before {
+    background: url(../img/curve-line.png) 97% 50% no-repeat; }
+
+.admin_desc {
+  left: 44px; }
+  .admin_desc::before {
+    background: url(../img/curve-line.png) 2% 50% no-repeat;
+    margin-left: auto;
+    left: 5%; }
+
+.add_desc {
+  left: -178px; }
+  .add_desc::before {
+    background: url(../img/curve-line.png) 97% 50% no-repeat;
+    margin-left: auto;
+    -webkit-transform: rotate(10deg);
+        -ms-transform: rotate(10deg);
+            transform: rotate(10deg); }
 
 .link_active {
   color: #53a9ff;
@@ -144,7 +198,8 @@ select {
   display: inline-block;
   margin-top: 10px;
   width: 226px;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  font-family: "Roboto-Medium", sans-serif; }
   .field-wrap:nth-of-type(2n) {
     margin-left: 25px; }
 
@@ -188,7 +243,7 @@ select {
 .block__field {
   border: none;
   background-color: #22283b;
-  font: 0.875em "Raleway-SemiBold", sans-serif;
+  font: 0.875em "Roboto-Medium", sans-serif;
   color: #fff;
   height: 36px;
   width: 226px;
@@ -361,7 +416,7 @@ select {
 
 .filter_title {
   display: inline-block;
-  padding: 0 20px;
+  margin-left: 22px;
   background: none;
   font-size: .95em;
   opacity: .5;
@@ -401,3 +456,21 @@ select {
 
 .edit_stud {
   background: url(../img/tools.png) 50% 50%; }
+
+.search_stud {
+  border: none;
+  opacity: .6;
+  font-size: 14px;
+  padding: 5px 15px;
+  width: 160px;
+  padding-left: 35px;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-transition: .25s;
+  -o-transition: .25s;
+  transition: .25s;
+  background: url(../img/search.png) 5% 50% no-repeat;
+  background-color: #fff;
+  position: relative; }
+  .search_stud:focus {
+    opacity: 1; }

@@ -2,3 +2,4 @@ function loadFont(a,b,c,d){function e(){if(!window.FontFace)return!1;var a=new F
 
 loadFont('Raleway-Bold', 'css/Raleway-Bold.css');
 loadFont('Raleway-SemiBold', 'css/Raleway-SemiBold.css');
+loadFont('Roboto-Medium', 'css/Roboto-Medium.css');

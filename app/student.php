@@ -1,6 +1,6 @@
 <?php
 	$page = "Студенты";
-	include('header.php');
+	include("header.php");
 	if(!isset($_COOKIE["curator"]) && !isset($_COOKIE["admin"])) die("Пожалуйста, войдите в учётную запись!");
 
 		//Админка
@@ -14,9 +14,10 @@
 ?>
 		<h1 class="table__cap">Таблица студентов <?php echo $group; ?> группы <div class="load_student">Скачать</div></h1>
 <?php } ?>
-	<input type="radio" class="hidden filter" id="filter_dorm" name="selection">
+	<input type="text" placeholder="Поиск по фамилии..." maxlength="15" class="search_stud">
+	<input type="radio" data-filter="dormitory" class="hidden filter" id="filter_dorm" name="selection">
 	<label data-sort="dormitory" class="filter_title" for="filter_dorm">Проживание в общежитии</label>
-	<input type="radio" class="hidden filter" id="ovz" name="selection">
+	<input type="radio" data-filter="disability" class="hidden filter" id="ovz" name="selection">
 	<label data-sort="disability" class="filter_title" for="ovz"><span></span>Студенты с ОВЗ</label>
 
 	<table class="table">		
